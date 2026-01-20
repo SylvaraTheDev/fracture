@@ -8,6 +8,7 @@
 {
   home-manager.users.elyria =
     { pkgs, ... }:
+
     {
       programs.fastfetch.enable = true;
       programs.btop.enable = true;
@@ -17,4 +18,8 @@
       programs.zoxide.enable = true;
       programs.ripgrep.enable = true;
     };
+
+  environment.systemPackages = with pkgs; [
+    fastfetch
+  ];
 }

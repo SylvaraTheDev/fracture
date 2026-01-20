@@ -19,7 +19,6 @@
 
       xdg.configFile = {
         "mako".source = ../../dotfiles/mako;
-        "nushell".source = ../../dotfiles/nushell;
         "fastfetch/images".source = ../../dotfiles/fastfetch/images;
         "deckmaster".source = ../../dotfiles/deckmaster;
       };
