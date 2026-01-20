@@ -1,0 +1,51 @@
+# Deckmaster main deck configuration
+# Uses the overlay patch for full-size icons with text on top
+
+[[keys]]
+index = 0
+[keys.widget]
+id = "button"
+[keys.widget.config]
+icon = "assets/upgrade.png"
+label = "Upgrade"
+overlay = true
+labelTop = true
+color = "#ffffff"
+[keys.action]
+exec = "ghostty --wait-after-command -e nu --config ~/.config/nushell/config.nu -c upgrade"
+
+[[keys]]
+index = 1
+[keys.widget]
+id = "button"
+[keys.widget.config]
+icon = "assets/rebuild.png"
+label = "Rebuild"
+overlay = true
+labelTop = true
+color = "#ffffff"
+[keys.action]
+exec = "ghostty --wait-after-command -e nu --config ~/.config/nushell/config.nu -c rebuild"
+
+[[keys]]
+index = 2
+[keys.widget]
+id = "button"
+[keys.widget.config]
+icon = "assets/filetx.png"
+label = "Files"
+overlay = true
+labelTop = true
+color = "#ffffff"
+[keys.action]
+exec = "thunar"
+
+[[keys]]
+index = 14
+[keys.widget]
+id = "button"
+[keys.widget.config]
+label = "Reload"
+color = "#ff9900"
+[keys.action]
+exec = "systemctl --user restart deckmaster"

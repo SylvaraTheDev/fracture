@@ -10,6 +10,5 @@
     { pkgs, ... }:
     {
       programs.ghostty.enable = true;
-      programs.alacritty.enable = true;
     };
 }

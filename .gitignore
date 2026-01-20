@@ -1,0 +1,7 @@
+# VM artifacts
+*.qcow2
+result
+result/
+
+# Nix build outputs
+.direnv/

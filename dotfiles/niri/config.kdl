@@ -1,0 +1,190 @@
+// Prefer server-side borders/focus rings drawn around windows,
+// avoids borders “shining through” semitransparent clients.
+prefer-no-csd
+
+// Input and keyboard
+input {
+  focus-follows-mouse
+  warp-mouse-to-focus
+  // Basic pointer feel; tune to preference
+  mouse {
+    accel-speed -0.65
+    accel-profile "flat"
+  }
+
+  keyboard {
+    xkb {
+      layout "us"
+      // Set options if desired: options "ctrl:nocaps"
+    }
+    // Optional: set Mod override (since 25.05; defaults are fine)
+    // mod "Super"
+  }
+}
+
+// Outputs (monitors)
+// Run `niri msg outputs` to confirm names and supported modes[2].
+output "DP-1" {
+  mode "2560x1440"
+  scale 1.0
+  position x=0 y=0
+}
+output "DP-2" {
+  mode "2560x1440@119.989"
+  scale 1.0
+  position x=-2560 y=0
+}
+
+// Named workspaces keep per-output slots alive so Super+1-0 is deterministic
+workspace "left-1" {
+  open-on-output "DP-1"
+}
+workspace "left-2" {
+  open-on-output "DP-1"
+}
+workspace "left-3" {
+  open-on-output "DP-1"
+}
+workspace "left-4" {
+  open-on-output "DP-1"
+}
+workspace "left-5" {
+  open-on-output "DP-1"
+}
+
+workspace "right-1" {
+  open-on-output "DP-2"
+}
+workspace "right-2" {
+  open-on-output "DP-2"
+}
+workspace "right-3" {
+  open-on-output "DP-2"
+}
+workspace "right-4" {
+  open-on-output "DP-2"
+}
+workspace "right-5" {
+  open-on-output "DP-2"
+}
+
+// Wallpaper helper using swaybg until Cosmic background lands in Niri
+spawn-sh-at-startup "pkill -x swaybg 2>/dev/null; exec swaybg -m fill -o DP-1 -i $HOME/.config/niri/wallpapers/deltahub-black.jpg -o DP-2 -i $HOME/.config/niri/wallpapers/deltahub-black2.jpg"
+spawn-sh-at-startup "vicinae server"
+spawn-at-startup "waybar"
+
+// Layout: gaps, rounding, borders, gradients, animations
+layout {
+  // Window gaps and border styling
+  gaps 10
+
+  // Border settings
+  border {
+    width 2
+    // Gradient example (Oklch/sRGB-linear supported)
+    active-gradient from="#fc03f0" to="#5300a1" angle=45
+    inactive-color "#120121"
+    urgent-color "#ff4d4d"
+  }
+
+  // Focus ring for active window (can mirror border)
+  focus-ring {
+    width 2
+    active-gradient from="#fc03f0" to="#5300a1" angle=45
+    inactive-color "#120121"
+  }
+
+  // Tab indicator (for tabbed groups) to match border styling if you tab
+  tab-indicator {
+    width 6
+    gap 6
+    position "top"
+    // Colors inherit from border/focus by default[10]
+  }
+
+}
+
+// Binds — adapt your Super-based shortcuts
+binds {
+  // Launcher / terminal / files
+  Super+space { spawn "vicinae" "toggle"; }
+  Super+Z { spawn "ghostty"; }
+  Super+E { spawn "cosmic-files"; }
+
+  // Screenshot selection (grim+slurp pipeline)
+  Super+X { spawn "sh" "-lc" "grim -g \"$(slurp -d)\" - | wl-copy"; }
+
+  // Fullscreen toggle for focused window
+  Super+F { fullscreen-window; }
+
+  // Focus navigation (left/right/up/down across columns/workspaces)
+  Super+Left { focus-column-or-monitor-left; }
+  Super+Right { focus-column-or-monitor-right; }
+  Super+Up { focus-window-or-workspace-up; }
+  Super+Down { focus-window-or-workspace-down; }
+  Super+WheelScrollUp cooldown-ms=120 { focus-workspace-up; }
+  Super+WheelScrollDown cooldown-ms=120 { focus-workspace-down; }
+
+  // Move windows between columns/workspaces
+  Super+Alt+Left { move-column-left; }
+  Super+Alt+Right { move-column-right; }
+  Super+Alt+Up { move-window-up; }
+  Super+Alt+Down { move-window-down; }
+
+  // Close window
+  Super+Q { close-window; }
+
+  // Toggle floating (Niri has pin/move-floating as different model; use float if needed)
+  // Super+V { toggle-floating; } // Placeholder: use pin or create a floating rule set as needed.
+
+  // Workspace key numbers — Niri has vertical dynamic workspaces per monitor.
+  // Bindings below emulate quick jumps:
+  Super+1 { focus-workspace "left-1"; }
+  Super+2 { focus-workspace "left-2"; }
+  Super+3 { focus-workspace "left-3"; }
+  Super+4 { focus-workspace "left-4"; }
+  Super+5 { focus-workspace "left-5"; }
+  Super+6 { focus-workspace "right-1"; }
+  Super+7 { focus-workspace "right-2"; }
+  Super+8 { focus-workspace "right-3"; }
+  Super+9 { focus-workspace "right-4"; }
+  Super+0 { focus-workspace "right-5"; }
+
+  // Move focused window to workspace N
+  Super+Shift+1 { move-window-to-workspace "left-1"; }
+  Super+Shift+2 { move-window-to-workspace "left-2"; }
+  Super+Shift+3 { move-window-to-workspace "left-3"; }
+  Super+Shift+4 { move-window-to-workspace "left-4"; }
+  Super+Shift+5 { move-window-to-workspace "left-5"; }
+  Super+Shift+6 { move-window-to-workspace "right-1"; }
+  Super+Shift+7 { move-window-to-workspace "right-2"; }
+  Super+Shift+8 { move-window-to-workspace "right-3"; }
+  Super+Shift+9 { move-window-to-workspace "right-4"; }
+  Super+Shift+0 { move-window-to-workspace "right-5"; }
+
+  // GNOME-style workspace shortcuts (Ctrl+Alt+N)
+  Ctrl+Alt+1 { focus-workspace "left-1"; }
+  Ctrl+Alt+2 { focus-workspace "left-2"; }
+  Ctrl+Alt+3 { focus-workspace "left-3"; }
+  Ctrl+Alt+4 { focus-workspace "left-4"; }
+  Ctrl+Alt+5 { focus-workspace "left-5"; }
+  Ctrl+Alt+6 { focus-workspace "right-1"; }
+  Ctrl+Alt+7 { focus-workspace "right-2"; }
+  Ctrl+Alt+8 { focus-workspace "right-3"; }
+  Ctrl+Alt+9 { focus-workspace "right-4"; }
+  Ctrl+Alt+0 { focus-workspace "right-5"; }
+
+  Ctrl+Alt+Shift+1 { move-window-to-workspace "left-1"; }
+  Ctrl+Alt+Shift+2 { move-window-to-workspace "left-2"; }
+  Ctrl+Alt+Shift+3 { move-window-to-workspace "left-3"; }
+  Ctrl+Alt+Shift+4 { move-window-to-workspace "left-4"; }
+  Ctrl+Alt+Shift+5 { move-window-to-workspace "left-5"; }
+  Ctrl+Alt+Shift+6 { move-window-to-workspace "right-1"; }
+  Ctrl+Alt+Shift+7 { move-window-to-workspace "right-2"; }
+  Ctrl+Alt+Shift+8 { move-window-to-workspace "right-3"; }
+  Ctrl+Alt+Shift+9 { move-window-to-workspace "right-4"; }
+  Ctrl+Alt+Shift+0 { move-window-to-workspace "right-5"; }
+
+  // Overview
+  Super+Tab { toggle-overview; }
+}

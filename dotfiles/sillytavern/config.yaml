@@ -1,0 +1,54 @@
+# === SERVER SETTINGS ===
+listen: true
+host: 0.0.0.0
+port: 8000
+enableHttps: false
+sslCert: ''
+sslKey: ''
+secureCookies: false
+disablePersistence: false
+disableCsrf: false
+userData: '/home/aeon/.local/share/sillytavern'
+
+# === WHISPER TTS SETTINGS ===
+whisperAutoStart: false
+ffmpegPath: ''
+
+# === STT SETTINGS ===
+enableStt: false
+sttService: 'whisper'
+whisperModel: ''
+openaiSttApiKey: ''
+sttLang: 'en'
+
+# === SAMPLING SETTINGS ===
+defaultSampler: 'system'
+temperature: 0.7
+rep_pen: 1.1
+rep_pen_range: 0
+rep_pen_slope: 0
+top_k: 40
+top_p: 0.9
+typical: 1
+tfs: 1
+order: [ 4, 5, 6 ]
+
+# === UI SETTINGS ===
+vnMode: false
+autoSaveInterval: 0
+enablePromptCache: true
+maxPromptCache: 10
+
+# === API SETTINGS (OpenRouter Integration) ===
+defaultApi: 'openai'
+openaiApiUrl: 'https://openrouter.ai/api/v1'
+openaiApiKey: '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'
+koboldUrl: ''
+hordeApiKey: ''
+
+# === ADVANCED ===
+enableExtensions: true
+customCss: ''
+customJs: ''
+logLevel: 'info'
+enableIPv6: false
