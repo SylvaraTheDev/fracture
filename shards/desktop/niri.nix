@@ -34,12 +34,8 @@
         settings = {
           # Spawn Noctalia at startup
           spawn-at-startup = [
-            {
-              command = [
-                "noctalia-shell"
-                "ghostty"
-              ];
-            }
+            { command = [ "noctalia-shell" ]; }
+            # { command = [ "ghostty" ]; }
           ];
 
           # Basic layout

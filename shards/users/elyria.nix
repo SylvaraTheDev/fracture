@@ -15,7 +15,6 @@
       "wheel"
       "video"
       "input"
-      "docker"
       "podman"
       "kvm"
     ];
@@ -46,7 +45,5 @@
           user.email = "wing@elyria.dev";
         };
       };
-
-      programs.starship.enable = true;
     };
 }

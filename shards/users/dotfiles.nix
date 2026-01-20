@@ -19,17 +19,12 @@
 
       xdg.configFile = {
         "mako".source = ../../dotfiles/mako;
-        "gemini".source = ../../dotfiles/gemini;
         "nushell".source = ../../dotfiles/nushell;
         "fastfetch/images".source = ../../dotfiles/fastfetch/images;
-        "quickshell".source = ../../dotfiles/quickshell;
-        "opencode".source = ../../dotfiles/opencode;
         "deckmaster".source = ../../dotfiles/deckmaster;
       };
 
-      home.file = {
-        ".emacs.d".source = ../../dotfiles/emacs;
-      };
+      programs.starship.enable = true;
 
       # Cursor Theme (migrated from old dotfiles module)
       home.pointerCursor = {
