@@ -15,7 +15,10 @@
       programs.eza.enable = true;
       programs.bat.enable = true;
       programs.fzf.enable = true;
-      programs.zoxide.enable = true;
+      programs.zoxide = {
+        enable = true;
+        enableNushellIntegration = true;
+      };
       programs.ripgrep.enable = true;
     };
 

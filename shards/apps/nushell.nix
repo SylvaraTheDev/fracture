@@ -28,6 +28,12 @@
           # Editor config
           $env.EDITOR = "zed"
           $env.VISUAL = "zed"
+
+          # Dev shell helper - enter fracture devshells
+          # Requires: nix registry add fracture /home/aeon/git/sylvara/fracture
+          def dev [lang: string] {
+            nix develop $"fracture#($lang)" -c nu
+          }
         '';
 
         # Shell aliases (converted from functions/aliases.nu)
@@ -45,17 +51,5 @@
           deck = "deckmaster -deck ~/.config/deckmaster/main.deck";
         };
       };
-
-      # Zoxide integration (idiomatic)
-      programs.zoxide = {
-        enable = true;
-        enableNushellIntegration = true;
-      };
-
-      # Required tools for aliases
-      home.packages = with pkgs; [
-        eza
-        zoxide
-      ];
     };
 }

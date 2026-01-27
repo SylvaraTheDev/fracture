@@ -34,6 +34,7 @@
         settings = {
           # Spawn Noctalia at startup
           spawn-at-startup = [
+            { command = [ "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1" ]; }
             { command = [ "noctalia-shell" ]; }
             # { command = [ "ghostty" ]; }
           ];

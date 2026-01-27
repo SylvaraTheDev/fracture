@@ -1,6 +1,11 @@
 {
   description = "Fracture - Dendritic System Configuration";
 
+  nixConfig = {
+    extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
+    extra-substituters = "https://devenv.cachix.org";
+  };
+
   inputs = {
     # System
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -51,6 +56,14 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+
+    devenv.url = "github:cachix/devenv";
+
+    # Utilities
+    infuse = {
+      url = "git+https://codeberg.org/amjoseph/infuse.nix";
+      flake = false;
+    };
   };
 
   outputs =
@@ -58,7 +71,9 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" ];
 
-      imports = [ ];
+      imports = [
+
+      ];
 
       flake.nixosConfigurations.fracture = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -81,8 +96,13 @@
           system,
           ...
         }:
+        let
+          mkDevShell = import ./lib/shells.nix { inherit inputs pkgs; };
+          importers = import ./lib/importers.nix { inherit (pkgs) lib; };
+          shells = importers.importShells ./shells;
+        in
         {
-          # Future: devShells etc.
+          devShells = pkgs.lib.mapAttrs (n: v: v { inherit pkgs mkDevShell; }) shells;
         };
     };
 }
