@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   ...
 }:
@@ -6,7 +7,7 @@
 {
   services = {
     # Auto-login for VM testing
-    getty.autologinUser = "elyria";
+    getty.autologinUser = config.fracture.user.login;
 
     # Use greetd with Niri for graphical login
     greetd = {
@@ -14,7 +15,7 @@
       settings = {
         default_session = {
           command = "${pkgs.niri}/bin/niri-session";
-          user = "elyria";
+          user = config.fracture.user.login;
         };
       };
     };

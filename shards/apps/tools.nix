@@ -1,10 +1,11 @@
 {
+  config,
   pkgs,
   ...
 }:
 
 {
-  home-manager.users.elyria = _: {
+  home-manager.users.${config.fracture.user.login} = _: {
     programs = {
       fastfetch.enable = true;
       btop.enable = true;

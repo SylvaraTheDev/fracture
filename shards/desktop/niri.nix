@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   inputs,
   ...
@@ -25,7 +26,7 @@
   };
 
   # Configure Niri via Home Manager (niri-flake auto-imports its config module)
-  home-manager.users.elyria =
+  home-manager.users.${config.fracture.user.login} =
     { pkgs, ... }:
     {
       # Wallpapers and compositor config

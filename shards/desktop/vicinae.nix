@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   ...
 }:
@@ -7,7 +8,7 @@
   # Vicinae - Wayland Launcher
 
   # Enable the service and package via Home Manager
-  home-manager.users.elyria =
+  home-manager.users.${config.fracture.user.login} =
     { ... }:
     {
       imports = [ inputs.vicinae.homeManagerModules.default ];

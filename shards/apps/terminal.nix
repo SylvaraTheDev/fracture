@@ -1,7 +1,7 @@
-_:
+{ config, ... }:
 
 {
-  home-manager.users.elyria = _: {
+  home-manager.users.${config.fracture.user.login} = _: {
     programs.ghostty.enable = true;
   };
 }

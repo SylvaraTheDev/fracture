@@ -1,4 +1,6 @@
 {
+  config,
+  lib,
   pkgs,
   inputs,
   ...
@@ -10,7 +12,7 @@
       inputs.nix-cachyos-kernel.packages.${pkgs.system}.linux-cachyos-latest;
 
   # Serial console for VM access
-  boot.kernelParams = [ "console=ttyS0" ];
+  boot.kernelParams = lib.optionals config.fracture.vm.enable [ "console=ttyS0" ];
 
   # Scx (Scheduler)
   services.scx.enable = true;

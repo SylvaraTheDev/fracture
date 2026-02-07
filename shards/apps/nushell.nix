@@ -1,7 +1,7 @@
-_:
+{ config, ... }:
 
 {
-  home-manager.users.elyria = _: {
+  home-manager.users.${config.fracture.user.login} = _: {
     programs.nushell = {
       enable = true;
       extraConfig = builtins.readFile ../../dotfiles/nushell/config.nu;

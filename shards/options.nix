@@ -23,9 +23,16 @@
         description = "Primary user display name.";
       };
 
-      email = lib.mkOption {
-        type = lib.types.str;
-        description = "Primary user email address.";
+      git = {
+        name = lib.mkOption {
+          type = lib.types.str;
+          description = "Git author name.";
+        };
+
+        email = lib.mkOption {
+          type = lib.types.str;
+          description = "Git author email.";
+        };
       };
 
       groups = lib.mkOption {

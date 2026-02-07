@@ -1,10 +1,11 @@
 {
+  config,
   inputs,
   ...
 }:
 
 {
-  home-manager.users.elyria =
+  home-manager.users.${config.fracture.user.login} =
     { ... }:
     {
       imports = [ inputs.zen-browser.homeModules.twilight ];

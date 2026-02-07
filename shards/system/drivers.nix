@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   # Graphics
@@ -7,16 +7,13 @@
     enable32Bit = true;
   };
 
-  # NVIDIA (Optimistic default, user might need to tune)
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia = {
+  # NVIDIA
+  services.xserver.videoDrivers = lib.mkIf (config.fracture.gpu == "nvidia") [ "nvidia" ];
+  hardware.nvidia = lib.mkIf (config.fracture.gpu == "nvidia") {
     modesetting.enable = true;
     powerManagement.enable = false;
     open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
-
-  # AMD (If present, usually automatic, but good to ensure)
-  # boot.initrd.kernelModules = [ "amdgpu" ];
 }

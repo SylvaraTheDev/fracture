@@ -21,16 +21,19 @@ let
 in
 {
   flake.nixosConfigurations.fracture = inputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
     specialArgs = { inherit inputs; };
     modules = [
       ../hardware.nix
+      ../host.nix
       inputs.home-manager.nixosModules.home-manager
       inputs.sops-nix.nixosModules.sops
-      {
-        networking.hostName = "fracture";
-        system.stateVersion = "25.11";
-      }
+      (
+        { config, ... }:
+        {
+          networking.hostName = config.fracture.hostname;
+          system.stateVersion = config.fracture.stateVersion;
+        }
+      )
     ]
     ++ (findModules ../shards);
   };

@@ -6,7 +6,10 @@
     user = {
       login = "elyria";
       name = "Elyria";
-      email = "wing@elyria.dev";
+      git = {
+        name = "SylvaraTheDev";
+        email = "wing@elyria.dev";
+      };
       groups = [
         "networkmanager"
         "wheel"

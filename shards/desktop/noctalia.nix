@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   inputs,
   ...
@@ -23,7 +24,7 @@
     evolution-data-server # Calendar events
   ];
 
-  home-manager.users.elyria =
+  home-manager.users.${config.fracture.user.login} =
     { ... }:
     {
       imports = [ inputs.noctalia.homeModules.default ];

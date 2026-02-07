@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   # === Bootloader ===
@@ -52,8 +52,8 @@
   programs.command-not-found.enable = true;
 
   # === Base System Configuration ===
-  time.timeZone = "Australia/Brisbane";
-  i18n.defaultLocale = "en_AU.UTF-8";
+  time.timeZone = config.fracture.timezone;
+  i18n.defaultLocale = config.fracture.locale;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
@@ -94,7 +94,7 @@
     mission-center
     easyeffects
     thunar
-    zenith-nvidia
+    (if config.fracture.gpu == "nvidia" then zenith-nvidia else zenith)
     adoptopenjdk-icedtea-web
 
     # Custom/Other

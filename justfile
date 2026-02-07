@@ -1,6 +1,8 @@
 # Fracture - NixOS VM Configuration
 # ===================================
 
+hostname := "fracture"
+
 # === Safety Checks ===
 
 # Run all pre-commit hooks (enters devshell automatically)
@@ -22,40 +24,40 @@ secrets:
 # Build and run VM (graphics + serial console)
 run: check
     just clean
-    nixos-rebuild build-vm --flake .#fracture
-    QEMU_OPTS="-device virtio-vga-gl -display gtk,gl=on -serial mon:stdio -m 4096" ./result/bin/run-fracture-vm
+    nixos-rebuild build-vm --flake .#{{hostname}}
+    QEMU_OPTS="-device virtio-vga-gl -display gtk,gl=on -serial mon:stdio -m 4096" ./result/bin/run-{{hostname}}-vm
 
 # Run with graphics only (no terminal)
 run-graphics: check
-    nixos-rebuild build-vm --flake .#fracture
-    QEMU_OPTS="-device virtio-vga-gl -display gtk,gl=on -m 4096" ./result/bin/run-fracture-vm
+    nixos-rebuild build-vm --flake .#{{hostname}}
+    QEMU_OPTS="-device virtio-vga-gl -display gtk,gl=on -m 4096" ./result/bin/run-{{hostname}}-vm
 
 # Run with serial console only (no graphics)
 run-console: check
-    nixos-rebuild build-vm --flake .#fracture
-    QEMU_OPTS="-nographic -serial mon:stdio -m 4096" ./result/bin/run-fracture-vm
+    nixos-rebuild build-vm --flake .#{{hostname}}
+    QEMU_OPTS="-nographic -serial mon:stdio -m 4096" ./result/bin/run-{{hostname}}-vm
 
 # Dry run verification
 verify: check
-    nixos-rebuild build --flake .#fracture --dry-run
+    nixos-rebuild build --flake .#{{hostname}} --dry-run
 
 # === Unsafe Operations (skip checks) ===
 
 # Build and run WITHOUT safety checks (use carefully)
 run-unsafe:
     just clean
-    nixos-rebuild build-vm --flake .#fracture
-    QEMU_OPTS="-device virtio-vga-gl -display gtk,gl=on -serial mon:stdio -m 4096" ./result/bin/run-fracture-vm
+    nixos-rebuild build-vm --flake .#{{hostname}}
+    QEMU_OPTS="-device virtio-vga-gl -display gtk,gl=on -serial mon:stdio -m 4096" ./result/bin/run-{{hostname}}-vm
 
 # Verify WITHOUT safety checks
 verify-unsafe:
-    nixos-rebuild build --flake .#fracture --dry-run
+    nixos-rebuild build --flake .#{{hostname}} --dry-run
 
 # === Maintenance ===
 
 # Clean VM artifacts
 clean:
-    rm -rf result fracture.qcow2
+    rm -rf result {{hostname}}.qcow2
 
 # Install/update git hooks
 hooks:
