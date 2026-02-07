@@ -1,6 +1,8 @@
 _:
 
 {
-  # Local AI (System)
-  services.ollama.enable = true;
+  services.ollama = {
+    enable = true;
+    home = "/projects/ollama";
+  };
 }

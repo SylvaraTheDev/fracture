@@ -48,5 +48,12 @@ in
         user.email = user.git.email;
       };
     };
+
+    home.persistence."/persist" = {
+      directories = [
+        ".local/share/nix"
+        ".config/sops"
+      ];
+    };
   };
 }

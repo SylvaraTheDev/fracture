@@ -27,19 +27,7 @@
     extraModulePackages = [ ];
   };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "ext4";
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/BOOT";
-    fsType = "vfat";
-  };
-
-  swapDevices = [
-    { device = "/dev/disk/by-label/swap"; }
-  ];
+  # Filesystem and swap are managed by disko (see shards/system/disks.nix)
 
   networking.useDHCP = lib.mkDefault true;
 

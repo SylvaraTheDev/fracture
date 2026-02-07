@@ -55,51 +55,57 @@
   time.timeZone = config.fracture.timezone;
   i18n.defaultLocale = config.fracture.locale;
 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  environment = {
+    sessionVariables.NIXOS_OZONE_WL = "1";
 
-  # === Packages ===
-  environment.systemPackages = with pkgs; [
-    # Core
-    coreutils-full
-    busybox
-    libgcc
-    gccgo
+    # === Packages ===
+    systemPackages = with pkgs; [
+      # Core
+      coreutils-full
+      busybox
+      libgcc
+      gccgo
 
-    # Utils
-    git
-    git-lfs
-    wget
-    gnupg
-    tree
-    btop
-    btrfs-progs
-    xdg-utils
-    unrar
-    unzip
-    inotify-tools
-    jq
-    nixfmt
+      # Utils
+      git
+      git-lfs
+      wget
+      gnupg
+      tree
+      btop
+      btrfs-progs
+      xdg-utils
+      unrar
+      unzip
+      inotify-tools
+      jq
+      nixfmt
 
-    # System
-    upower
-    xwayland
-    gtk4-layer-shell
-    xdg-dbus-proxy
-    libsecret
-    mono
+      # System
+      upower
+      xwayland
+      gtk4-layer-shell
+      xdg-dbus-proxy
+      libsecret
+      mono
 
-    # Apps (System wide)
-    zed-editor
-    obsidian
-    mission-center
-    easyeffects
-    thunar
-    (if config.fracture.gpu == "nvidia" then zenith-nvidia else zenith)
-    adoptopenjdk-icedtea-web
+      # Apps (System wide)
+      zed-editor
+      obsidian
+      mission-center
+      easyeffects
+      thunar
+      (if config.fracture.gpu == "nvidia" then zenith-nvidia else zenith)
+      adoptopenjdk-icedtea-web
 
-    # Custom/Other
-    greetd
-  ];
+      # Custom/Other
+      greetd
+    ];
+
+    persistence."/persist".directories = [
+      "/var/lib/bluetooth"
+    ];
+  };
 
   # === Fonts ===
   fonts.packages = with pkgs; [

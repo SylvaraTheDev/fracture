@@ -5,6 +5,9 @@
   ...
 }:
 
+let
+  inherit (config.fracture.user) login;
+in
 {
   # Noctalia Shell - Desktop shell for Wayland
   # Uses Home Manager module for configuration
@@ -24,10 +27,14 @@
     evolution-data-server # Calendar events
   ];
 
-  home-manager.users.${config.fracture.user.login} =
+  home-manager.users.${login} =
     { ... }:
     {
       imports = [ inputs.noctalia.homeModules.default ];
+
+      home.persistence."/persist".directories = [
+        ".cache/cliphist"
+      ];
 
       # Mako notification daemon config
       xdg.configFile."mako".source = ../../dotfiles/mako;

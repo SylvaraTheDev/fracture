@@ -1,7 +1,10 @@
 { config, ... }:
 
+let
+  inherit (config.fracture.user) login;
+in
 {
-  home-manager.users.${config.fracture.user.login} = _: {
+  home-manager.users.${login} = _: {
     programs.nushell = {
       enable = true;
       extraConfig = builtins.readFile ../../dotfiles/nushell/config.nu;
@@ -10,5 +13,9 @@
 
     # Functions directory (not managed by nushell module)
     xdg.configFile."nushell/functions".source = ../../dotfiles/nushell/functions;
+
+    home.persistence."/persist".directories = [
+      ".local/share/nushell"
+    ];
   };
 }

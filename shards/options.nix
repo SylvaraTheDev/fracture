@@ -70,6 +70,32 @@
       description = "GPU driver to configure.";
     };
 
+    disks = {
+      boot = lib.mkOption {
+        type = lib.types.str;
+        default = "/dev/disk/by-id/PLACEHOLDER_BOOT_NVME";
+        description = "Device path (by-id) for the boot NVMe drive.";
+      };
+
+      projects = lib.mkOption {
+        type = lib.types.str;
+        default = "/dev/disk/by-id/PLACEHOLDER_PROJECTS_NVME";
+        description = "Device path (by-id) for the projects NVMe drive.";
+      };
+
+      games = lib.mkOption {
+        type = lib.types.str;
+        default = "/dev/disk/by-id/PLACEHOLDER_GAMES_NVME";
+        description = "Device path (by-id) for the games NVMe drive.";
+      };
+
+      swapSize = lib.mkOption {
+        type = lib.types.str;
+        default = "32G";
+        description = "Size of the swapfile on the @swap subvolume.";
+      };
+    };
+
     vm = {
       enable = lib.mkOption {
         type = lib.types.bool;

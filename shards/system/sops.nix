@@ -4,14 +4,17 @@
 }:
 
 {
-  # Sops-nix configuration for secrets management
   sops = {
     defaultSopsFormat = "yaml";
-    age.keyFile = "/etc/sops/age/keys.txt";
+    age.keyFile = "/persist/etc/sops/age/keys.txt";
   };
 
   environment.systemPackages = with pkgs; [
     sops
     age
+  ];
+
+  environment.persistence."/persist".files = [
+    "/etc/sops/age/keys.txt"
   ];
 }

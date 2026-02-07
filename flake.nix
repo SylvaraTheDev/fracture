@@ -43,6 +43,11 @@
 
     # === System ===
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    impermanence.url = "github:nix-community/impermanence";
     infuse = {
       url = "git+https://codeberg.org/amjoseph/infuse.nix";
       flake = false;
