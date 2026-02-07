@@ -1,14 +1,16 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   inherit (config.fracture.user) login;
 in
 {
   home-manager.users.${login} = _: {
-    programs.ghostty.enable = true;
+    home.packages = with pkgs; [
+      deluge
+    ];
 
     home.persistence."/persist".directories = [
-      ".config/ghostty"
+      ".config/deluge"
     ];
   };
 }

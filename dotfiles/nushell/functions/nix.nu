@@ -22,6 +22,30 @@ def --env upgrade [] {
   nix flake update
 }
 
+# Drop into a devenv shell
+def dev [shell?: string] {
+  let flake = $"($env.HOME)/git/sylvara/fracture"
+  let available = ["dart" "elixir" "go" "kubernetes" "nix" "packaging" "python"]
+
+  if ($shell | is-empty) {
+    print "Usage: dev <shell>"
+    print ""
+    print "Available shells:"
+    $available | each { |s| print $"  ($s)" }
+    return
+  }
+
+  if $shell not-in $available {
+    print $"Unknown shell '($shell)'"
+    print ""
+    print "Available shells:"
+    $available | each { |s| print $"  ($s)" }
+    return
+  }
+
+  nix develop $"($flake)#($shell)" --no-pure-eval
+}
+
 export def --env clean [arg?: string] {
   let help = [
     "Usage:"

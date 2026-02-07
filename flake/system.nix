@@ -29,11 +29,13 @@ in
       inputs.sops-nix.nixosModules.sops
       inputs.disko.nixosModules.disko
       inputs.impermanence.nixosModules.impermanence
+      inputs.nix-flatpak.nixosModules.nix-flatpak
       (
         { config, ... }:
         {
           networking.hostName = config.fracture.hostname;
           system.stateVersion = config.fracture.stateVersion;
+          home-manager.useGlobalPkgs = true;
         }
       )
     ]

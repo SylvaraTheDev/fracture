@@ -1,0 +1,25 @@
+_:
+
+{
+  services.flatpak = {
+    enable = true;
+    packages = [
+      "com.adamcake.Bolt"
+      "com.github.tchx84.Flatseal"
+    ];
+    overrides = {
+      "com.adamcake.Bolt" = {
+        Environment = {
+          MESA_LOADER_DRIVER_OVERRIDE = "zink";
+          GALLIUM_DRIVER = "zink";
+          __GLX_VENDOR_LIBRARY_NAME = "mesa";
+          LIBVA_DRIVER_NAME = "mesa";
+        };
+      };
+    };
+  };
+
+  environment.persistence."/persist".directories = [
+    "/var/lib/flatpak"
+  ];
+}

@@ -88,17 +88,6 @@
       xdg-dbus-proxy
       libsecret
       mono
-
-      # Apps (System wide)
-      zed-editor
-      obsidian
-      mission-center
-      easyeffects
-      thunar
-      (if config.fracture.gpu == "nvidia" then zenith-nvidia else zenith)
-      adoptopenjdk-icedtea-web
-
-      # Custom/Other
       greetd
     ];
 
