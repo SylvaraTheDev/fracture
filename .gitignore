@@ -5,3 +5,4 @@ result/
 
 # Nix build outputs
 .direnv/
+.devenv

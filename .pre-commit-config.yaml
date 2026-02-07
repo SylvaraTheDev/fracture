@@ -47,9 +47,9 @@ repos:
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
-        exclude: \.patch$
+        exclude: (\.patch$|\.devenv/)
       - id: end-of-file-fixer
-        exclude: \.patch$
+        exclude: (\.patch$|\.devenv/)
       - id: check-yaml
         args: [--unsafe]  # Allow custom YAML tags
       - id: check-added-large-files

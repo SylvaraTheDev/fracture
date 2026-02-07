@@ -27,18 +27,20 @@
   };
 
   home-manager.users.elyria = _: {
-    home.stateVersion = "25.11";
-    home.username = "elyria";
-    home.homeDirectory = "/home/elyria";
+    home = {
+      stateVersion = "25.11";
+      username = "elyria";
+      homeDirectory = "/home/elyria";
+      sessionVariables = {
+        XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
+        # For synced terminal/GUI in VM - connect to Niri Wayland session
+        WAYLAND_DISPLAY = "wayland-1";
+        XDG_RUNTIME_DIR = "/run/user/1000";
+      };
+    };
 
     # XDG
     xdg.enable = true;
-    home.sessionVariables = {
-      XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
-      # For synced terminal/GUI in VM - connect to Niri Wayland session
-      WAYLAND_DISPLAY = "wayland-1";
-      XDG_RUNTIME_DIR = "/run/user/1000";
-    };
 
     programs.git = {
       enable = true;

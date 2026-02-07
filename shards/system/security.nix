@@ -1,7 +1,9 @@
 _:
 
 {
-  security.sudo.enable = false;
-  security.polkit.enable = true;
-  security.run0.enableSudoAlias = true;
+  security = {
+    sudo.enable = false;
+    polkit.enable = true;
+    run0.enableSudoAlias = true;
+  };
 }

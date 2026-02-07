@@ -2,44 +2,53 @@
 
 {
   # === Bootloader ===
-  boot.loader.limine.enable = true;
-  boot.loader.limine.efiSupport = true;
-  boot.loader.limine.maxGenerations = 10;
-  boot.loader.timeout = 1;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      limine = {
+        enable = true;
+        efiSupport = true;
+        maxGenerations = 10;
+      };
+      timeout = 1;
+      efi.canTouchEfiVariables = true;
+    };
 
-  boot.extraModprobeConfig = ''
-    options snd_hda_intel power_save=0
-  '';
+    extraModprobeConfig = ''
+      options snd_hda_intel power_save=0
+    '';
+  };
 
   # === Nix Settings ===
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-  nix.settings.trusted-users = [
-    "root"
-    "@wheel"
-  ];
-  nix.settings.warn-dirty = false;
-
-  nix.settings.substituters = [
-    "https://cache.nixos.org/"
-    "https://vicinae.cachix.org"
-    "https://cache.flox.dev"
-    "https://attic.xuyh0120.win/lantian"
-    "https://nix-gaming.cachix.org"
-  ];
-  nix.settings.trusted-public-keys = [
-    "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-    "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
-    "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
-    "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
-    "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-  ];
+  nix = {
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
+      warn-dirty = false;
+      substituters = [
+        "https://cache.nixos.org/"
+        "https://vicinae.cachix.org"
+        "https://cache.flox.dev"
+        "https://attic.xuyh0120.win/lantian"
+        "https://nix-gaming.cachix.org"
+      ];
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+        "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
+        "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+        "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      ];
+    };
+    package = pkgs.lixPackageSets.stable.lix;
+  };
 
   nixpkgs.config.allowUnfree = true;
-  nix.package = pkgs.lixPackageSets.stable.lix;
   programs.command-not-found.enable = true;
 
   # === Base System Configuration ===
@@ -102,15 +111,16 @@
   ];
 
   # === Services ===
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+  services = {
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+    dbus.enable = true;
+    upower.enable = true;
   };
-
-  services.dbus.enable = true;
-  services.upower.enable = true;
 
   hardware.bluetooth = {
     enable = true;

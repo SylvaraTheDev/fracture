@@ -6,16 +6,16 @@
 # Run all pre-commit hooks (enters devshell automatically)
 check:
     @echo "Running safety checks..."
-    nix develop .#nix --command prek run --all-files
+    nix develop .#nix --no-pure-eval --command prek run --all-files
 
 # Run checks without hook installation
 check-quick:
     @echo "Running quick checks..."
-    nix develop .#nix --command sh -c "statix check . && deadnix --fail . && gitleaks detect --source . --redact --verbose"
+    nix develop .#nix --no-pure-eval --command sh -c "statix check . && deadnix --fail . && gitleaks detect --source . --redact --verbose"
 
 # Scan for secrets only
 secrets:
-    nix develop .#nix --command gitleaks detect --source . --redact --verbose
+    nix develop .#nix --no-pure-eval --command gitleaks detect --source . --redact --verbose
 
 # === Build & Run ===
 
@@ -59,12 +59,12 @@ clean:
 
 # Install/update git hooks
 hooks:
-    nix develop .#nix --command prek install --install-hooks
+    nix develop .#nix --no-pure-eval --command prek install --install-hooks
 
 # Format all Nix files
 fmt:
-    nix develop .#nix --command nixfmt .
+    nix develop .#nix --no-pure-eval --command nixfmt .
 
 # Fix auto-fixable issues
 fix:
-    nix develop .#nix --command sh -c "statix fix . && deadnix --edit . && nixfmt ."
+    nix develop .#nix --no-pure-eval --command sh -c "statix fix . && deadnix --edit . && nixfmt ."
