@@ -1,9 +1,5 @@
 # This is the global file to hold all Nushell aliases
 
-# Zoxide
-alias z = zoxide query
-alias zi = zoxide query --interacive
-
 alias sudo = run0
 
 # Modern file tools

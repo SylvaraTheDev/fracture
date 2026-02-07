@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   # === Bootloader ===
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 10;
+  boot.loader.limine.enable = true;
+  boot.loader.limine.efiSupport = true;
+  boot.loader.limine.maxGenerations = 10;
   boot.loader.timeout = 1;
   boot.loader.efi.canTouchEfiVariables = true;
 

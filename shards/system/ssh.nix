@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+_:
 
 {
   # Enable SSH for VM access

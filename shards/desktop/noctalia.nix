@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   inputs,
   ...
@@ -25,9 +24,12 @@
   ];
 
   home-manager.users.elyria =
-    { pkgs, ... }:
+    { ... }:
     {
       imports = [ inputs.noctalia.homeModules.default ];
+
+      # Mako notification daemon config
+      xdg.configFile."mako".source = ../../dotfiles/mako;
 
       programs.noctalia-shell = {
         enable = true;

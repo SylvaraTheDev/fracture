@@ -1,0 +1,27 @@
+# Sops configuration for Fracture
+#
+# Setup:
+#   1. Generate an age key:  age-keygen -o ~/.config/sops/age/keys.txt
+#   2. Add the public key below (replace the placeholder)
+#   3. Populate the secret files under secrets/
+#   4. Encrypt each file:    sops --encrypt --in-place <file>
+#
+# For system-level access, copy the age key to /etc/sops/age/keys.txt
+
+keys:
+  # Add your age public key here (age1...)
+  - &user age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+creation_rules:
+  - path_regex: secrets/auth/.*\.yaml$
+    key_groups:
+      - age:
+          - *user
+  - path_regex: secrets/ssh/.*\.yaml$
+    key_groups:
+      - age:
+          - *user
+  - path_regex: secrets/api/.*\.yaml$
+    key_groups:
+      - age:
+          - *user

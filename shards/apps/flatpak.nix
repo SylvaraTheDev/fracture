@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
+_:
 
 {
   services.flatpak.enable = true;

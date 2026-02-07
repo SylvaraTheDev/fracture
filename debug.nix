@@ -1,6 +1,6 @@
 let
   pkgs = import <nixpkgs> { };
-  lib = pkgs.lib;
+  inherit (pkgs) lib;
   importers = import ./lib/importers.nix { inherit lib; };
 in
 importers.findModules ./shards

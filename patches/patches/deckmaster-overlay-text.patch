@@ -1,0 +1,77 @@
+diff --git a/widget_button.go b/widget_button.go
+index e57025d..patched 100644
+--- a/widget_button.go
++++ b/widget_button.go
+@@ -14,6 +14,8 @@ type ButtonWidget struct {
+ 	fontsize float64
+ 	color    color.Color
+ 	flatten  bool
++	overlay  bool
++	labelTop bool
+ }
+ 
+ // NewButtonWidget returns a new ButtonWidget.
+@@ -28,6 +30,10 @@ func NewButtonWidget(bw *BaseWidget, opts WidgetConfig) (*ButtonWidget, error) {
+ 	_ = ConfigValue(opts.Config["color"], &color)
+ 	var flatten bool
+ 	_ = ConfigValue(opts.Config["flatten"], &flatten)
++	var overlay bool
++	_ = ConfigValue(opts.Config["overlay"], &overlay)
++	var labelTop bool
++	_ = ConfigValue(opts.Config["labelTop"], &labelTop)
+ 
+ 	if color == nil {
+ 		color = DefaultColor
+@@ -39,6 +45,8 @@ func NewButtonWidget(bw *BaseWidget, opts WidgetConfig) (*ButtonWidget, error) {
+ 		fontsize:   fontsize,
+ 		color:      color,
+ 		flatten:    flatten,
++		overlay:    overlay,
++		labelTop:   labelTop,
+ 	}
+ 	if icon != "" {
+ 		if err := w.LoadImage(icon); err != nil {
+@@ -68,7 +76,42 @@ func (w *ButtonWidget) Update() error {
+ 	height := size - (margin * 2)
+ 	img := image.NewRGBA(image.Rect(0, 0, size, size))
+ 
+-	if w.label != "" {
++	if w.label != "" && w.overlay {
++		// Overlay mode: full-size icon with text rendered on top
++		if w.icon != nil {
++			err := drawImage(img,
++				w.icon,
++				height,
++				image.Pt(-1, -1))
++
++			if err != nil {
++				return err
++			}
++		}
++
++		// Draw label overlaid on the icon
++		labelBounds := img.Bounds()
++		labelHeight := size / 5
++
++		if w.labelTop {
++			// Label at top
++			labelBounds.Max.Y = labelHeight + margin
++		} else {
++			// Label at bottom (default)
++			labelBounds.Min.Y = size - labelHeight - margin
++		}
++
++		drawString(img, labelBounds, ttfFont, w.label, w.dev.DPI, w.fontsize, w.color, image.Pt(-1, -1))
++	} else if w.label != "" && w.labelTop && w.icon != nil {
++		// Label on top, icon below (non-overlay stacked mode)
++		labelHeight := size / 5
++		labelBounds := img.Bounds()
++		labelBounds.Max.Y = labelHeight + margin
++		drawString(img, labelBounds, ttfFont, w.label, w.dev.DPI, w.fontsize, w.color, image.Pt(-1, -1))
++
++		iconsize := height - labelHeight - margin
++		drawImage(img, w.icon, iconsize, image.Pt(-1, labelHeight+margin))
++	} else if w.label != "" {
+ 		iconsize := int((float64(height) / 3.0) * 2.0)
+ 		bounds := img.Bounds()
+ 

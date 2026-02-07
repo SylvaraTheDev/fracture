@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   inputs,
   ...
@@ -27,8 +26,25 @@
 
   # Configure Niri via Home Manager (niri-flake auto-imports its config module)
   home-manager.users.elyria =
-    { pkgs, lib, ... }:
+    { pkgs, ... }:
     {
+      # Wallpapers and compositor config
+      xdg.configFile."niri/wallpapers".source = ../../dotfiles/niri/wallpapers;
+
+      # Cursor theme
+      home.pointerCursor = {
+        name = "Bibata-Modern-Ice";
+        size = 24;
+        package = pkgs.bibata-cursors;
+        gtk.enable = true;
+        x11.enable = true;
+      };
+
+      home.sessionVariables = {
+        XCURSOR_THEME = "Bibata-Modern-Ice";
+        XCURSOR_SIZE = "24";
+      };
+
       # Don't import niri.homeModules.niri - it's auto-imported by NixOS module
       programs.niri = {
         settings = {

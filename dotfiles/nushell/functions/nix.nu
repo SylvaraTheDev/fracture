@@ -1,21 +1,22 @@
 # Rebuild NixOS
 def --env rebuild [] {
-  echo "Changing directory to ~/.config/nix"
-  cd ~/.config/nix
+  echo "Changing directory to ~/git/sylvara/fracture"
+  cd ~/git/sylvara/fracture
 
   echo "Pulling git updates..."
   git pull
 
-  echo "Authenticating run0 access..."
+  echo "Running safety checks..."
+  just check
 
   echo "Running nixos-rebuild..."
-  bash -c "run0 nixos-rebuild switch --flake .#forge --log-format internal-json 2>&1 | nom --json"
+  bash -c "run0 nixos-rebuild switch --flake .#fracture --log-format internal-json 2>&1 | nom --json"
 }
 
 # Update flake
 def --env upgrade [] {
-  echo "Switching to ~/.config/nix"
-  cd ~/.config/nix
+  echo "Switching to ~/git/sylvara/fracture"
+  cd ~/git/sylvara/fracture
 
   echo "Upgrading flake..."
   nix flake update

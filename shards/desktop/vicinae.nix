@@ -1,6 +1,4 @@
 {
-  config,
-  pkgs,
   inputs,
   ...
 }:
@@ -10,7 +8,7 @@
 
   # Enable the service and package via Home Manager
   home-manager.users.elyria =
-    { pkgs, ... }:
+    { ... }:
     {
       imports = [ inputs.vicinae.homeManagerModules.default ];
 

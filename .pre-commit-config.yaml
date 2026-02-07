@@ -1,0 +1,68 @@
+# Pre-commit configuration for Fracture
+# Uses Prek (Rust) for execution: https://github.com/j178/prek
+#
+# Install hooks: prek install --install-hooks
+# Run manually:  prek run --all-files
+# Run on commit: automatic after install
+
+repos:
+  # === Nix ===
+  - repo: local
+    hooks:
+      - id: nixfmt
+        name: Format Nix files
+        entry: nixfmt --check
+        language: system
+        files: \.nix$
+        exclude: |
+          (?x)^(
+            hardware\.nix|
+            secrets/.*
+          )$
+
+      - id: statix
+        name: Lint Nix (statix)
+        entry: statix check
+        language: system
+        files: \.nix$
+        pass_filenames: false
+
+      - id: deadnix
+        name: Find dead Nix code
+        entry: deadnix --fail
+        language: system
+        files: \.nix$
+
+  # === Secret Detection ===
+  - repo: local
+    hooks:
+      - id: gitleaks
+        name: Detect secrets
+        entry: gitleaks protect --staged --redact --verbose
+        language: system
+        pass_filenames: false
+
+  # === General Hygiene ===
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: \.patch$
+      - id: end-of-file-fixer
+        exclude: \.patch$
+      - id: check-yaml
+        args: [--unsafe]  # Allow custom YAML tags
+      - id: check-added-large-files
+        args: [--maxkb=500]
+      - id: check-merge-conflict
+      - id: check-case-conflict
+
+  # === Nix Flake Validation (pre-push only) ===
+  - repo: local
+    hooks:
+      - id: flake-check
+        name: Validate flake
+        entry: nix flake check
+        language: system
+        pass_filenames: false
+        stages: [pre-push]

@@ -1,16 +1,15 @@
 {
-  config,
   pkgs,
-  inputs,
   ...
 }:
 
 {
   home-manager.users.elyria =
-    { pkgs, ... }:
+    _:
 
     {
       programs.fastfetch.enable = true;
+      xdg.configFile."fastfetch/images".source = ../../dotfiles/fastfetch/images;
       programs.btop.enable = true;
       programs.eza.enable = true;
       programs.bat.enable = true;

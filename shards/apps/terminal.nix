@@ -1,14 +1,7 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
+_:
 
 {
-  home-manager.users.elyria =
-    { pkgs, ... }:
-    {
-      programs.ghostty.enable = true;
-    };
+  home-manager.users.elyria = _: {
+    programs.ghostty.enable = true;
+  };
 }

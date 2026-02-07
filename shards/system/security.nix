@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+_:
 
 {
   security.sudo.enable = false;

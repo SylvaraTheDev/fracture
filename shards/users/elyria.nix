@@ -1,15 +1,19 @@
 {
   config,
   pkgs,
-  inputs,
   ...
 }:
 
 {
+  sops.secrets."users/elyria/password" = {
+    sopsFile = ../../secrets/auth/users.yaml;
+    neededForUsers = true;
+  };
+
   users.users.elyria = {
     isNormalUser = true;
     description = "Elyria";
-    initialPassword = "1142";
+    hashedPasswordFile = config.sops.secrets."users/elyria/password".path;
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -22,28 +26,26 @@
     ignoreShellProgramCheck = true;
   };
 
-  home-manager.users.elyria =
-    { pkgs, ... }:
-    {
-      home.stateVersion = "25.11";
-      home.username = "elyria";
-      home.homeDirectory = "/home/elyria";
+  home-manager.users.elyria = _: {
+    home.stateVersion = "25.11";
+    home.username = "elyria";
+    home.homeDirectory = "/home/elyria";
 
-      # XDG
-      xdg.enable = true;
-      home.sessionVariables = {
-        XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
-        # For synced terminal/GUI in VM - connect to Niri Wayland session
-        WAYLAND_DISPLAY = "wayland-1";
-        XDG_RUNTIME_DIR = "/run/user/1000";
-      };
+    # XDG
+    xdg.enable = true;
+    home.sessionVariables = {
+      XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
+      # For synced terminal/GUI in VM - connect to Niri Wayland session
+      WAYLAND_DISPLAY = "wayland-1";
+      XDG_RUNTIME_DIR = "/run/user/1000";
+    };
 
-      programs.git = {
-        enable = true;
-        settings = {
-          user.name = "Elyria";
-          user.email = "wing@elyria.dev";
-        };
+    programs.git = {
+      enable = true;
+      settings = {
+        user.name = "Elyria";
+        user.email = "wing@elyria.dev";
       };
     };
+  };
 }
