@@ -15,7 +15,7 @@ in
   # System-level dependencies for Noctalia
   environment.systemPackages = with pkgs; [
     # Core dependencies (required)
-    inputs.quickshell.packages.${pkgs.system}.default # Quickshell - core shell framework
+    inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default # Quickshell - core shell framework
     brightnessctl # Monitor brightness control
     git # Required for update checking and plugins
 

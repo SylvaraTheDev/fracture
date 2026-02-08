@@ -31,6 +31,21 @@
       swapSize = "32G";
     };
 
+    obsidian.vaults = {
+      sola = {
+        name = "Sola";
+      };
+    };
+
+    rclone.b2.jobs = {
+      openclaw = {
+        source = "/projects/openclaw/workspace";
+        bucket = "REPLACE-WITH-B2-BUCKET";
+        dest = "openclaw/workspace";
+        excludes = [ ".git/**" ];
+      };
+    };
+
     vm = {
       enable = true;
       waylandDisplay = "wayland-1";

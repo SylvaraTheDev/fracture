@@ -1,11 +1,14 @@
 { config, pkgs, ... }:
 
+let
+  inherit (config.fracture.user) login;
+in
 {
-  environment.systemPackages = with pkgs; [
-    prismlauncher
-  ];
+  home-manager.users.${login} = _: {
+    home.packages = with pkgs; [
+      prismlauncher
+    ];
 
-  home-manager.users.${config.fracture.user.login} = _: {
     home.persistence."/persist".directories = [
       ".local/share/PrismLauncher"
     ];

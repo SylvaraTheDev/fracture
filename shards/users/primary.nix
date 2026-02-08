@@ -9,18 +9,23 @@ let
   inherit (config.fracture) user;
 in
 {
-  sops.secrets."users/${user.login}/password" = {
-    sopsFile = ../../secrets/auth/users.yaml;
+  sops.secrets."users/${user.login}/password" = lib.mkIf (!config.fracture.vm.enable) {
+    sopsFile = config.fracture.secretsDir + "/auth/users.yaml";
     neededForUsers = true;
   };
 
   users.users.${user.login} = {
     isNormalUser = true;
     description = user.name;
-    hashedPasswordFile = config.sops.secrets."users/${user.login}/password".path;
     extraGroups = user.groups;
     shell = pkgs.nushell;
     ignoreShellProgramCheck = true;
+  }
+  // lib.optionalAttrs config.fracture.vm.enable {
+    initialPassword = "1142";
+  }
+  // lib.optionalAttrs (!config.fracture.vm.enable) {
+    hashedPasswordFile = config.sops.secrets."users/${user.login}/password".path;
   };
 
   home-manager.users.${user.login} = _: {
@@ -40,14 +45,6 @@ in
 
     # XDG
     xdg.enable = true;
-
-    programs.git = {
-      enable = true;
-      settings = {
-        user.name = user.git.name;
-        user.email = user.git.email;
-      };
-    };
 
     home.persistence."/persist" = {
       directories = [

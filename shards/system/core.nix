@@ -2,20 +2,14 @@
 
 {
   # === Bootloader ===
-  boot = {
-    loader = {
-      limine = {
-        enable = true;
-        efiSupport = true;
-        maxGenerations = 10;
-      };
-      timeout = 1;
-      efi.canTouchEfiVariables = true;
+  boot.loader = {
+    limine = {
+      enable = true;
+      efiSupport = true;
+      maxGenerations = 10;
     };
-
-    extraModprobeConfig = ''
-      options snd_hda_intel power_save=0
-    '';
+    timeout = 1;
+    efi.canTouchEfiVariables = true;
   };
 
   # === Nix Settings ===
@@ -58,7 +52,6 @@
   environment = {
     sessionVariables.NIXOS_OZONE_WL = "1";
 
-    # === Packages ===
     systemPackages = with pkgs; [
       # Core
       coreutils-full
@@ -72,14 +65,12 @@
       wget
       gnupg
       tree
-      btop
       btrfs-progs
       xdg-utils
       unrar
       unzip
       inotify-tools
       jq
-      nixfmt
 
       # System
       upower
@@ -88,37 +79,11 @@
       xdg-dbus-proxy
       libsecret
       mono
-      greetd
-    ];
-
-    persistence."/persist".directories = [
-      "/var/lib/bluetooth"
     ];
   };
 
-  # === Fonts ===
-  fonts.packages = with pkgs; [
-    nerd-fonts.fira-code
-    noto-fonts-color-emoji
-    nerd-fonts.symbols-only
-    noto-fonts
-    noto-fonts-cjk-sans
-  ];
-
-  # === Services ===
   services = {
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
     dbus.enable = true;
     upower.enable = true;
-  };
-
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
   };
 }

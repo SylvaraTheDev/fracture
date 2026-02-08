@@ -1,11 +1,14 @@
 { config, pkgs, ... }:
 
+let
+  inherit (config.fracture.user) login;
+in
 {
-  environment.systemPackages = with pkgs; [
-    lutris
-  ];
+  home-manager.users.${login} = _: {
+    home.packages = with pkgs; [
+      lutris
+    ];
 
-  home-manager.users.${config.fracture.user.login} = _: {
     home.persistence."/persist".directories = [
       ".local/share/lutris"
     ];

@@ -1,0 +1,26 @@
+{ config, ... }:
+
+let
+  inherit (config.fracture.user) login;
+in
+{
+  home-manager.users.${login} = _: {
+    programs.claude-code = {
+      enable = true;
+      settings = {
+        env = {
+          ANTHROPIC_MODEL = "claude-opus-4-6";
+        };
+        projects = {
+          "/projects" = {
+            hasTrustDialogAccepted = true;
+          };
+        };
+      };
+    };
+
+    home.persistence."/persist".directories = [
+      ".config/claude-code"
+    ];
+  };
+}

@@ -4,13 +4,12 @@ let
   inherit (config.fracture.user) login;
 in
 {
-  environment.systemPackages = with pkgs; [
-    zed-editor
-    adoptopenjdk-icedtea-web
-  ];
-
   home-manager.users.${login} = _: {
     home.packages = with pkgs; [
+      # Editors
+      zed-editor
+      adoptopenjdk-icedtea-web
+
       # Languages
       zig
       elixir
@@ -21,6 +20,7 @@ in
       nil
       nixd
       nixdoc
+      nixfmt
       nh
       nix-output-monitor
       deadnix

@@ -96,6 +96,12 @@
       };
     };
 
+    secretsDir = lib.mkOption {
+      type = lib.types.path;
+      default = ../secrets;
+      description = "Path to the SOPS secrets directory.";
+    };
+
     vm = {
       enable = lib.mkOption {
         type = lib.types.bool;

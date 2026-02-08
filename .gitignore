@@ -6,3 +6,6 @@ result/
 # Nix build outputs
 .direnv/
 .devenv
+
+# Age private keys (NEVER commit)
+secrets/age-keyfile

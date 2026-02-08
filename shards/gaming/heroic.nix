@@ -1,11 +1,14 @@
 { config, pkgs, ... }:
 
+let
+  inherit (config.fracture.user) login;
+in
 {
-  environment.systemPackages = with pkgs; [
-    heroic
-  ];
+  home-manager.users.${login} = _: {
+    home.packages = with pkgs; [
+      heroic
+    ];
 
-  home-manager.users.${config.fracture.user.login} = _: {
     home.persistence."/persist".directories = [
       ".config/heroic"
     ];

@@ -5,15 +5,14 @@
   ...
 }:
 
+let
+  inherit (config.fracture.user) login;
+in
 {
   # Import niri-flake NixOS module (automatically imports home-manager config module)
   imports = [ inputs.niri.nixosModules.niri ];
 
-  # Enable Niri via niri-flake
   programs.niri.enable = true;
-
-  # Use niri-stable from the flake (with binary cache)
-  nixpkgs.overlays = [ inputs.niri.overlays.niri ];
 
   # XDG Portals
   xdg.portal = {
@@ -26,7 +25,7 @@
   };
 
   # Configure Niri via Home Manager (niri-flake auto-imports its config module)
-  home-manager.users.${config.fracture.user.login} =
+  home-manager.users.${login} =
     { pkgs, ... }:
     {
       # Wallpapers and compositor config

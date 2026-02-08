@@ -1,26 +1,35 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
 
+let
+  inherit (config.fracture) user;
+in
 {
-  services = {
-    # Auto-login for VM testing
-    getty.autologinUser = config.fracture.user.login;
+  # Auto-login on TTY only in VM mode
+  services.getty.autologinUser = lib.mkIf config.fracture.vm.enable user.login;
 
-    # Use greetd with Niri for graphical login
-    greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          command = "${pkgs.niri}/bin/niri-session";
-          user = config.fracture.user.login;
-        };
-      };
+  # Fix NVIDIA hardware cursor bug in cage (regreet's compositor)
+  systemd.services.greetd.environment = lib.mkIf (config.fracture.gpu == "nvidia") {
+    WLR_NO_HARDWARE_CURSORS = "1";
+  };
+
+  programs.regreet = {
+    enable = true;
+    settings = {
+      appearance.greeting_msg = "Welcome to Fracture";
     };
-
-    # Disable SDDM (using greetd instead for VM)
-    displayManager.sddm.enable = false;
+    cursorTheme = {
+      name = "Bibata-Modern-Ice";
+      package = pkgs.bibata-cursors;
+    };
+    font = {
+      name = "FiraCode Nerd Font";
+      size = 14;
+      package = pkgs.nerd-fonts.fira-code;
+    };
   };
 }

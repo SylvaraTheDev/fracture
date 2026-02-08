@@ -1,5 +1,8 @@
 { config, ... }:
 
+let
+  inherit (config.fracture.user) login;
+in
 {
   programs.steam = {
     enable = true;
@@ -7,7 +10,7 @@
     dedicatedServer.openFirewall = false;
   };
 
-  home-manager.users.${config.fracture.user.login} = _: {
+  home-manager.users.${login} = _: {
     home.persistence."/persist".directories = [
       ".local/share/Steam"
     ];

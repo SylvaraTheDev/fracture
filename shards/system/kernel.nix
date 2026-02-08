@@ -9,7 +9,7 @@
 {
   boot.kernelPackages =
     pkgs.linuxPackagesFor
-      inputs.nix-cachyos-kernel.packages.${pkgs.system}.linux-cachyos-latest;
+      inputs.nix-cachyos-kernel.packages.${pkgs.stdenv.hostPlatform.system}.linux-cachyos-latest;
 
   # Serial console for VM access
   boot.kernelParams = lib.optionals config.fracture.vm.enable [ "console=ttyS0" ];

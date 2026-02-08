@@ -1,9 +1,14 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
+let
+  inherit (config.fracture.user) login;
+in
 {
-  environment.systemPackages = with pkgs; [
-    podman-tui
-    podman-compose
-    podman-desktop
-  ];
+  home-manager.users.${login} = _: {
+    home.packages = with pkgs; [
+      podman-tui
+      podman-compose
+      podman-desktop
+    ];
+  };
 }

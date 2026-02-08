@@ -9,8 +9,7 @@
 # For system-level access, copy the age key to /etc/sops/age/keys.txt
 
 keys:
-  # Add your age public key here (age1...)
-  - &user age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  - &user age12md8stgfw6cuyqr8r7lqesfs4yjua06ud2p8d4x5ftqx32a3eeus26v7rn
 
 creation_rules:
   - path_regex: secrets/auth/.*\.yaml$

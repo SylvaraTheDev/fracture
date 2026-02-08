@@ -1,27 +1,18 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
+let
+  inherit (config.fracture.user) login;
+in
 {
-  environment.systemPackages = with pkgs; [
-    networkmanagerapplet
-  ];
-
   networking = {
     networkmanager.enable = true;
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [
-        7865
-        14159
-        8000
-        34197
-      ];
-      allowedUDPPorts = [
-        7865
-        14159
-        8000
-        34197
-      ];
-    };
+    firewall.enable = true;
+  };
+
+  home-manager.users.${login} = _: {
+    home.packages = with pkgs; [
+      networkmanagerapplet
+    ];
   };
 
   environment.persistence."/persist".directories = [

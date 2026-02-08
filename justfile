@@ -53,6 +53,76 @@ run-unsafe:
 verify-unsafe:
     nixos-rebuild build --flake .#{{hostname}} --dry-run
 
+# === Installer ===
+
+iso_dir := "result/iso"
+
+# Installer ISO management: build, flash <drive>, delete
+iso action *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    case "{{action}}" in
+      build)
+        echo "Building Fracture installer ISO..."
+        if [ ! -f secrets/age-keyfile ] || grep -q PLACEHOLDER secrets/age-keyfile 2>/dev/null; then
+          echo "ERROR: Place your age key at secrets/age-keyfile first"
+          echo "  age-keygen -o secrets/age-keyfile"
+          echo "  OR: cp ~/.config/sops/age/keys.txt secrets/age-keyfile"
+          exit 1
+        fi
+        git add -f secrets/age-keyfile
+        cleanup() { git reset secrets/age-keyfile 2>/dev/null; }
+        trap cleanup EXIT
+        nix build .#installer-iso --no-pure-eval
+        ISO=$(find {{iso_dir}} -name '*.iso' 2>/dev/null | head -1)
+        echo ""
+        echo "ISO built: $ISO"
+        echo "Size: $(du -h "$ISO" | cut -f1)"
+        ;;
+      flash)
+        DRIVE="{{args}}"
+        if [ -z "$DRIVE" ]; then
+          echo "Usage: just iso flash /dev/sdX"
+          echo ""
+          echo "Available drives:"
+          lsblk -d -o NAME,SIZE,MODEL,TRAN | grep -E "usb|NAME" || lsblk -d -o NAME,SIZE,MODEL
+          exit 1
+        fi
+        ISO=$(find {{iso_dir}} -name '*.iso' 2>/dev/null | head -1)
+        if [ -z "$ISO" ]; then
+          echo "ERROR: No ISO found. Run 'just iso build' first."
+          exit 1
+        fi
+        echo "Flashing: $ISO"
+        echo "Target:   $DRIVE"
+        echo ""
+        read -rp "This will ERASE $DRIVE. Type YES to continue: " CONFIRM
+        if [ "$CONFIRM" != "YES" ]; then
+          echo "Aborted."
+          exit 1
+        fi
+        sudo dd if="$ISO" of="$DRIVE" bs=4M status=progress oflag=sync
+        echo ""
+        echo "Flash complete. Safe to remove drive."
+        ;;
+      delete)
+        if [ -L result ]; then
+          rm -f result
+          echo "ISO deleted."
+        else
+          echo "No ISO to delete."
+        fi
+        ;;
+      *)
+        echo "Usage: just iso <action>"
+        echo ""
+        echo "Actions:"
+        echo "  build          Build the installer ISO"
+        echo "  flash <drive>  Flash the ISO to a USB drive"
+        echo "  delete         Remove the built ISO"
+        ;;
+    esac
+
 # === Maintenance ===
 
 # Clean VM artifacts
