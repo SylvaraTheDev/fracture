@@ -7,6 +7,7 @@
 
 let
   inherit (config.fracture.user) login;
+  dotfiles = config.fracture.dotfilesDir;
 in
 {
   # Noctalia Shell - Desktop shell for Wayland
@@ -32,12 +33,25 @@ in
     {
       imports = [ inputs.noctalia.homeModules.default ];
 
-      home.persistence."/persist".directories = [
-        ".cache/cliphist"
-      ];
+      home = {
+        persistence."/persist".directories = [
+          ".cache/cliphist"
+        ];
 
-      # Mako notification daemon config
-      xdg.configFile."mako".source = ../../dotfiles/mako;
+        # Mako notification daemon config
+        file.".config/mako" = {
+          source = dotfiles + "/mako";
+          recursive = true;
+          force = true;
+        };
+
+        # Quickshell config
+        file.".config/quickshell" = {
+          source = dotfiles + "/quickshell";
+          recursive = true;
+          force = true;
+        };
+      };
 
       programs.noctalia-shell = {
         enable = true;

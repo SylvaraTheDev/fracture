@@ -6,6 +6,7 @@
 
 let
   inherit (config.fracture.user) login;
+  dotfiles = config.fracture.dotfilesDir;
 in
 {
   home-manager.users.${login} = _: {
@@ -114,7 +115,11 @@ in
       };
     };
 
-    xdg.configFile."fastfetch/images".source = ../../dotfiles/fastfetch/images;
+    home.file.".config/fastfetch/images" = {
+      source = dotfiles + "/fastfetch/images";
+      recursive = true;
+      force = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [

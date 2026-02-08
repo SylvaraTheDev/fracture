@@ -1,5 +1,8 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
+let
+  inherit (config.fracture.user) login;
+in
 {
   environment.systemPackages = with pkgs; [
     keychain
@@ -18,6 +21,17 @@
   };
 
   programs.ssh.startAgent = true;
+
+  home-manager.users.${login} = _: {
+    programs.ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+      matchBlocks."github.com" = {
+        identityFile = "~/.ssh/id_ed25519_github";
+        identitiesOnly = true;
+      };
+    };
+  };
 
   programs.ssh.knownHosts = {
     github = {

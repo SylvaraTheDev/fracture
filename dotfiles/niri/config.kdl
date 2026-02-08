@@ -68,10 +68,13 @@ workspace "right-5" {
   open-on-output "DP-2"
 }
 
-// Wallpaper helper using swaybg until Cosmic background lands in Niri
-spawn-sh-at-startup "pkill -x swaybg 2>/dev/null; exec swaybg -m fill -o DP-1 -i $HOME/.config/niri/wallpapers/deltahub-black.jpg -o DP-2 -i $HOME/.config/niri/wallpapers/deltahub-black2.jpg"
+// Startup applications
+spawn-at-startup "/run/current-system/sw/libexec/polkit-gnome-authentication-agent-1"
+spawn-at-startup "noctalia-shell"
 spawn-sh-at-startup "vicinae server"
-spawn-at-startup "waybar"
+
+// Wallpaper helper using swaybg
+spawn-sh-at-startup "pkill -x swaybg 2>/dev/null; exec swaybg -m fill -o DP-1 -i $HOME/.config/niri/wallpapers/deltahub-black.jpg -o DP-2 -i $HOME/.config/niri/wallpapers/deltahub-black2.jpg"
 
 // Layout: gaps, rounding, borders, gradients, animations
 layout {

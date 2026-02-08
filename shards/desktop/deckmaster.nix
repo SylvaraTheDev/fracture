@@ -4,11 +4,18 @@
   ...
 }:
 
+let
+  dotfiles = config.fracture.dotfilesDir;
+in
 {
   environment.systemPackages = [ pkgs.deckmaster ];
 
   home-manager.users.${config.fracture.user.login} = _: {
-    xdg.configFile."deckmaster".source = ../../dotfiles/deckmaster;
+    home.file.".config/deckmaster" = {
+      source = dotfiles + "/deckmaster";
+      recursive = true;
+      force = true;
+    };
 
     systemd.user.services.deckmaster = {
       Unit = {

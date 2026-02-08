@@ -2,6 +2,7 @@
 
 let
   inherit (config.fracture.user) login;
+  dotfiles = config.fracture.dotfilesDir;
 in
 {
   home-manager.users.${login} = _: {
@@ -43,5 +44,11 @@ in
       onefetch
       gource
     ];
+
+    home.file.".config/zed" = {
+      source = dotfiles + "/zed";
+      recursive = true;
+      force = true;
+    };
   };
 }

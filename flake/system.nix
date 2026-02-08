@@ -36,6 +36,8 @@ in
           networking.hostName = config.fracture.hostname;
           system.stateVersion = config.fracture.stateVersion;
           home-manager.useGlobalPkgs = true;
+          home-manager.backupFileExtension = "nixbak";
+          programs.dconf.enable = true;
         }
       )
     ]

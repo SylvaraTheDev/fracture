@@ -21,6 +21,7 @@ in
     enable = true;
     settings = {
       appearance.greeting_msg = "Welcome to Fracture";
+      GTK.application_prefer_dark_theme = true;
     };
     cursorTheme = {
       name = "Bibata-Modern-Ice";
@@ -32,4 +33,16 @@ in
       package = pkgs.nerd-fonts.fira-code;
     };
   };
+
+  # Pre-seed regreet state to default to Niri for the primary user
+  environment.etc."greetd/regreet-state.toml".text = ''
+    last_user = "${user.login}"
+
+    [user_sessions]
+    ${user.login} = "niri-session"
+  '';
+
+  systemd.tmpfiles.rules = [
+    "C /var/lib/regreet/state.toml 0600 greeter greeter - /etc/greetd/regreet-state.toml"
+  ];
 }

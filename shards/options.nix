@@ -102,6 +102,12 @@
       description = "Path to the SOPS secrets directory.";
     };
 
+    dotfilesDir = lib.mkOption {
+      type = lib.types.path;
+      default = ../dotfiles;
+      description = "Path to the dotfiles directory.";
+    };
+
     vm = {
       enable = lib.mkOption {
         type = lib.types.bool;
