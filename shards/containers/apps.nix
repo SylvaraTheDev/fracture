@@ -8,7 +8,6 @@ in
     home.packages = with pkgs; [
       podman-tui
       podman-compose
-      podman-desktop
     ];
   };
 }

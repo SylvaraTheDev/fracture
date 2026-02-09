@@ -34,6 +34,10 @@ in
   };
 
   config = lib.mkIf (cfg.vaults != { }) {
+    environment.persistence."/persist-projects".directories = [
+      "/projects/obsidian"
+    ];
+
     # Create vault directories on activation
     systemd.tmpfiles.rules = lib.mapAttrsToList (
       id: _vault: "d ${cfg.basePath}/${id} 0755 ${login} users -"

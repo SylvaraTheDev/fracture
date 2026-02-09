@@ -43,6 +43,10 @@ let
   );
 in
 {
+  environment.persistence."/persist-projects".directories = [
+    "/projects/openclaw"
+  ];
+
   sops.secrets = {
     "openclaw/anthropic_api_key".sopsFile = secretsFile;
     "openclaw/discord_bot_token".sopsFile = secretsFile;
@@ -69,7 +73,7 @@ in
         "${vaultPath}:${vaultPath}:rw"
         "/projects/openclaw/obsidian-cli-bin:/opt/obsidian-cli:ro"
         "/home/${user.login}/.config/obsidian:/home/node/.config/obsidian:rw"
-        "/projects/git/sylvara/fracture:/git/fracture:ro"
+        "/projects/repos/github.com/sylvara/fracture:/git/fracture:ro"
       ];
       extraOptions = [ "--network=host" ];
     };

@@ -4,17 +4,18 @@ let
   inherit (config.fracture.user) login;
 in
 {
-  environment.persistence."/persist-games".directories = [
-    "/games/lutris"
-  ];
-
   home-manager.users.${login} = _: {
     home.packages = with pkgs; [
-      lutris
+      godot
     ];
 
     home.persistence."/persist".directories = [
-      ".local/share/lutris"
+      ".config/godot"
+      ".local/share/godot"
     ];
   };
+
+  environment.persistence."/persist-projects".directories = [
+    "/projects/godot"
+  ];
 }

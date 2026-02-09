@@ -648,46 +648,6 @@
         "type": "github"
       }
     },
-    "noctalia": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1768882219,
-        "narHash": "sha256-VAGE2aEbHOm9KS3dC0tm1oRRHjnfKeRSso/uHbkbAMg=",
-        "owner": "noctalia-dev",
-        "repo": "noctalia-shell",
-        "rev": "cfdbe2bb6a2f178b5a7a5ab02771dcf0c0da2a6b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "noctalia-dev",
-        "repo": "noctalia-shell",
-        "type": "github"
-      }
-    },
-    "quickshell": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1768689040,
-        "narHash": "sha256-Tlnr5BulJcMers/cb+YvmBQW4nKHjdKo9loInJkyO2k=",
-        "ref": "refs/heads/master",
-        "rev": "7a427ce1979ce7447e885c4f30129b40f3d466f5",
-        "revCount": 729,
-        "type": "git",
-        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
-      }
-    },
     "root": {
       "inputs": {
         "devenv": "devenv",
@@ -700,8 +660,6 @@
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs_4",
-        "noctalia": "noctalia",
-        "quickshell": "quickshell",
         "sops-nix": "sops-nix",
         "vicinae": "vicinae",
         "zen-browser": "zen-browser"

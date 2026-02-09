@@ -22,5 +22,10 @@ in
       recursive = true;
       force = true;
     };
+
+    home.persistence."/persist".directories = [
+      ".config/emacs"
+      ".local/share/emacs"
+    ];
   };
 }

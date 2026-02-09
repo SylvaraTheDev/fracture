@@ -10,6 +10,14 @@ let
     "discard=async"
     "space_cache=v2"
   ];
+
+  # Games drive: no compression, optimized for large binary assets
+  gamesMountOpts = [
+    "noatime"
+    "ssd"
+    "discard=async"
+    "space_cache=v2"
+  ];
 in
 {
   disko.devices = {
@@ -80,7 +88,7 @@ in
         };
       };
 
-      # Projects Drive (1TB NVMe) - BTRFS
+      # Projects Drive (1TB NVMe) - BTRFS (ephemeral with persistence)
       projects = {
         type = "disk";
         device = cfg.projects;
@@ -97,6 +105,10 @@ in
                     mountpoint = "/projects";
                     mountOptions = btrfsMountOpts;
                   };
+                  "@persist-projects" = {
+                    mountpoint = "/persist-projects";
+                    mountOptions = btrfsMountOpts;
+                  };
                 };
               };
             };
@@ -104,7 +116,7 @@ in
         };
       };
 
-      # Games Drive (2TB NVMe) - XFS
+      # Games Drive (2TB NVMe) - BTRFS (ephemeral with persistence)
       games = {
         type = "disk";
         device = cfg.games;
@@ -114,13 +126,18 @@ in
             main = {
               size = "100%";
               content = {
-                type = "filesystem";
-                format = "xfs";
-                mountpoint = "/games";
-                mountOptions = [
-                  "defaults"
-                  "noatime"
-                ];
+                type = "btrfs";
+                extraArgs = [ "-f" ];
+                subvolumes = {
+                  "@games" = {
+                    mountpoint = "/games";
+                    mountOptions = gamesMountOpts;
+                  };
+                  "@persist-games" = {
+                    mountpoint = "/persist-games";
+                    mountOptions = gamesMountOpts;
+                  };
+                };
               };
             };
           };

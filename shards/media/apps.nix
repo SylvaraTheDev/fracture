@@ -6,8 +6,6 @@ in
 {
   home-manager.users.${login} = _: {
     home.packages = with pkgs; [
-      easyeffects
-      plex-desktop
       pwvucontrol
       playerctl
       pamixer

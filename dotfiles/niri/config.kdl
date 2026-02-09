@@ -70,11 +70,11 @@ workspace "right-5" {
 
 // Startup applications
 spawn-at-startup "/run/current-system/sw/libexec/polkit-gnome-authentication-agent-1"
-spawn-at-startup "noctalia-shell"
+spawn-at-startup "mako"
 spawn-sh-at-startup "vicinae server"
 
 // Wallpaper helper using swaybg
-spawn-sh-at-startup "pkill -x swaybg 2>/dev/null; exec swaybg -m fill -o DP-1 -i $HOME/.config/niri/wallpapers/deltahub-black.jpg -o DP-2 -i $HOME/.config/niri/wallpapers/deltahub-black2.jpg"
+spawn-sh-at-startup "pkill -x swaybg 2>/dev/null; exec swaybg -m fill -o DP-0 -i $HOME/.config/niri/wallpapers/deltahub-white.jpg -o DP-1 -i $HOME/.config/niri/wallpapers/deltahub-red.jpg"
 
 // Layout: gaps, rounding, borders, gradients, animations
 layout {

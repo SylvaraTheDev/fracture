@@ -6,6 +6,10 @@
 }:
 
 {
+  environment.persistence."/persist-projects".directories = [
+    "/projects/ollama"
+  ];
+
   services.ollama = {
     enable = true;
     package = lib.mkIf (config.fracture.gpu == "nvidia") pkgs.ollama-cuda;

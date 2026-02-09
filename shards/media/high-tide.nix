@@ -8,5 +8,10 @@ in
     home.packages = with pkgs; [
       high-tide
     ];
+
+    home.persistence."/persist".directories = [
+      ".config/high-tide"
+      ".local/share/high-tide"
+    ];
   };
 }

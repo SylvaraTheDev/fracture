@@ -14,9 +14,6 @@ in
       protonup-qt
       winetricks
       protontricks
-      r2modman
-      parsec-bin
-      bottles
     ];
   };
 }

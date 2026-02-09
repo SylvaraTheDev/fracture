@@ -4,6 +4,10 @@ let
   inherit (config.fracture) user;
 in
 {
+  environment.persistence."/persist-projects".directories = [
+    "/projects/repos"
+  ];
+
   home-manager.users.${user.login} = _: {
     programs.git = {
       enable = true;
@@ -16,7 +20,7 @@ in
         fetch.prune = true;
         rerere.enabled = true;
         core.autocrlf = "input";
-        ghq.root = "/projects";
+        ghq.root = "/projects/repos";
       };
     };
 

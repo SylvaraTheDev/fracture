@@ -45,12 +45,91 @@
                     age
                     jq
                     btrfs-progs
-                    xfsprogs
                     dosfstools
                     nvme-cli
                     inputs.disko.packages.${system}.disko
                   ])
                   ++ [
+                    (pkgs.writeShellScriptBin "docs" ''
+                                      cat <<'DOCS'
+                      ========================================
+                        Fracture Installation Guide
+                      ========================================
+
+                      PREREQUISITES
+                      ─────────────
+                      - 3 NVMe drives (boot, projects, games)
+                      - Internet connection (ethernet recommended)
+                      - Age keyfile baked into this ISO at /etc/fracture/age-keys.txt
+
+                      COMMANDS
+                      ────────
+                      fracture-install    Run the guided installer (recommended)
+                      docs                Show this guide
+                      lsblk               List block devices
+                      nmtui               Configure WiFi if needed
+
+                      WHAT THE INSTALLER DOES
+                      ───────────────────────
+                      Step 1: Identify your 3 NVMe drives by /dev/disk/by-id/ paths
+                      Step 2: Partition all drives with disko:
+                              - Boot (1TB):     ESP + BTRFS (@persist, @nix, @log, @swap)
+                              - Projects (1TB): BTRFS (@projects, @persist-projects) + blank snapshot
+                              - Games (2TB):    BTRFS (@games, @persist-games) + blank snapshot
+                      Step 3: Place your age keyfile into /persist for SOPS decryption
+                      Step 4: Install NixOS from the embedded flake
+                      Step 5: Cleanup and prompt to reboot
+
+                      DISK LAYOUT
+                      ───────────
+                      /              tmpfs 2GB (ephemeral - wiped every reboot)
+                      /boot          ESP (vfat)
+                      /persist       BTRFS @persist (survives reboots)
+                      /nix           BTRFS @nix (nix store)
+                      /var/log       BTRFS @log (system logs)
+                      /swap          BTRFS @swap (32GB swapfile)
+                      /projects      BTRFS @projects (ephemeral - wiped every reboot)
+                      /persist-projects  BTRFS @persist-projects (survives reboots)
+                      /games         BTRFS @games (ephemeral - wiped every reboot)
+                      /persist-games BTRFS @persist-games (survives reboots)
+
+                      EPHEMERAL WIPE
+                      ──────────────
+                      On every boot, @projects and @games subvolumes are deleted and
+                      restored from read-only blank snapshots. Only directories declared
+                      in impermanence persistence entries survive reboots.
+
+                      Persisted under /persist-projects:
+                        /projects/repos      Git repositories (ghq)
+                        /projects/ollama     LLM models
+                        /projects/openclaw   AI agent workspace
+                        /projects/obsidian   Obsidian vaults
+                        /projects/godot      Godot projects
+
+                      Persisted under /persist-games:
+                        /games/steam         Steam library
+                        /games/lutris        Lutris games
+                        /games/heroic        Heroic games
+                        /games/prismlauncher Minecraft instances
+
+                      AFTER FIRST BOOT
+                      ────────────────
+                      - Login via regreet (Wayland, Niri compositor)
+                      - Clone repos: ghq get github.com/<owner>/<repo>
+                        (repos land in /projects/repos/github.com/<owner>/<repo>)
+                      - SSH key for GitHub is auto-provisioned via SOPS
+                      - All app state is persisted declaratively per-shard
+
+                      TROUBLESHOOTING
+                      ───────────────
+                      - No NVMe drives shown?  Check BIOS for NVMe mode (not RAID)
+                      - Disko fails?           Verify disk IDs with: ls /dev/disk/by-id/
+                      - Boot fails after install?  Check BIOS boot order for the ESP
+                      - SOPS errors on boot?   Age key may be missing from /persist
+                      ========================================
+                      DOCS
+                    '')
+
                     (pkgs.writeShellScriptBin "fracture-install" ''
                       set -euo pipefail
 
@@ -121,6 +200,21 @@
 
                       # Run disko
                       disko --mode disko --flake "$WORK_DIR/fracture#$TARGET_HOST"
+
+                      # Create blank snapshots for ephemeral wipe
+                      echo "Creating blank snapshots for ephemeral drives..."
+                      mkdir -p /mnt-snap
+
+                      mount -t btrfs -o subvolid=5 /dev/disk/by-partlabel/disk-projects-main /mnt-snap
+                      ${pkgs.btrfs-progs}/bin/btrfs subvolume snapshot -r /mnt-snap/@projects /mnt-snap/@projects-blank
+                      umount /mnt-snap
+
+                      mount -t btrfs -o subvolid=5 /dev/disk/by-partlabel/disk-games-main /mnt-snap
+                      ${pkgs.btrfs-progs}/bin/btrfs subvolume snapshot -r /mnt-snap/@games /mnt-snap/@games-blank
+                      umount /mnt-snap
+
+                      rmdir /mnt-snap
+                      echo "Blank snapshots created."
 
                       # --- Step 3: Place age key ---
                       echo "[3/5] Placing SOPS age keyfile..."

@@ -4,6 +4,10 @@ let
   inherit (config.fracture.user) login;
 in
 {
+  environment.persistence."/persist-games".directories = [
+    "/games/steam"
+  ];
+
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = false;

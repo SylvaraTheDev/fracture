@@ -12,7 +12,7 @@ in
           ANTHROPIC_MODEL = "claude-opus-4-6";
         };
         projects = {
-          "/projects" = {
+          "/projects/repos" = {
             hasTrustDialogAccepted = true;
           };
         };
