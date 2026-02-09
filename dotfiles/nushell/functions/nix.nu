@@ -1,7 +1,7 @@
 # Rebuild NixOS
 def --env rebuild [] {
-  echo "Changing directory to ~/git/sylvara/fracture"
-  cd ~/git/sylvara/fracture
+  echo "Changing directory to /projects/repos/github.com/fracture"
+  cd /projects/repos/github.com/fracture
 
   echo "Pulling git updates..."
   git pull
@@ -15,8 +15,8 @@ def --env rebuild [] {
 
 # Update flake
 def --env upgrade [] {
-  echo "Switching to ~/git/sylvara/fracture"
-  cd ~/git/sylvara/fracture
+  echo "Switching to /projects/repos/github.com/fracture"
+  cd /projects/repos/github.com/fracture
 
   echo "Upgrading flake..."
   nix flake update
@@ -24,7 +24,7 @@ def --env upgrade [] {
 
 # Drop into a devenv shell
 def dev [shell?: string] {
-  let flake = $"($env.HOME)/git/sylvara/fracture"
+  let flake = "/projects/repos/github.com/fracture"
   let available = ["dart" "elixir" "go" "kubernetes" "nix" "packaging" "python"]
 
   if ($shell | is-empty) {
