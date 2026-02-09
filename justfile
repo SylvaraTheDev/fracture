@@ -101,7 +101,7 @@ iso action *args:
           echo "Aborted."
           exit 1
         fi
-        sudo dd if="$ISO" of="$DRIVE" bs=4M status=progress oflag=sync
+        run0 dd if="$ISO" of="$DRIVE" bs=4M status=progress oflag=sync
         echo ""
         echo "Flash complete. Safe to remove drive."
         ;;
