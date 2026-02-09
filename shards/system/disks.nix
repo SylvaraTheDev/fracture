@@ -20,6 +20,15 @@ let
   ];
 in
 {
+  # Impermanence requires all persistence/ephemeral mounts available in initrd
+  fileSystems."/persist".neededForBoot = true;
+  fileSystems."/nix".neededForBoot = true;
+  fileSystems."/var/log".neededForBoot = true;
+  fileSystems."/persist-projects".neededForBoot = true;
+  fileSystems."/persist-games".neededForBoot = true;
+  fileSystems."/projects".neededForBoot = true;
+  fileSystems."/games".neededForBoot = true;
+
   disko.devices = {
     # Tmpfs root — ephemeral, wiped on every reboot
     nodev."/" = {

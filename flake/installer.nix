@@ -29,6 +29,17 @@
                 etc."fracture/flake".source = builtins.path {
                   path = ../.;
                   name = "fracture-flake";
+                  filter =
+                    path: type:
+                    let
+                      base = builtins.baseNameOf path;
+                    in
+                    !builtins.elem base [
+                      ".devenv"
+                      ".direnv"
+                      ".git"
+                      "result"
+                    ];
                 };
 
                 # Embed the age keyfile
@@ -41,6 +52,7 @@
                 systemPackages =
                   (with pkgs; [
                     git
+                    rsync
                     sops
                     age
                     jq
@@ -317,10 +329,11 @@
                         exit 1
                       fi
 
-                      # Create working copy with real disk IDs
+                      # Create writable copy (dereferences nix store symlinks)
                       WORK_DIR=$(mktemp -d)
-                      cp -r "$FLAKE" "$WORK_DIR/fracture"
-                      chmod -R u+w "$WORK_DIR/fracture"
+                      ${pkgs.rsync}/bin/rsync -rL --no-perms --no-owner --no-group \
+                        --exclude='.devenv' --exclude='.direnv' \
+                        "$FLAKE/" "$WORK_DIR/fracture/"
 
                       # Patch host.nix with actual disk IDs and disable VM mode
                       ${pkgs.gnused}/bin/sed -i \
