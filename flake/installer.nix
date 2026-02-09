@@ -216,13 +216,13 @@
                         echo "Wiping $DEV ($ID)..."
 
                         # Unmount any mounted partitions from this drive
-                        for part in $(${pkgs.util-linux}/bin/lsblk -lno NAME "$DEV" 2>/dev/null | tail -n +2); do
+                        for part in $(${pkgs.util-linux}/bin/lsblk -lno NAME "$DEV" 2>/dev/null | tail -n +2 || true); do
                           umount -f "/dev/$part" 2>/dev/null || true
                         done
                         umount -f "$DEV" 2>/dev/null || true
 
                         # Wipe filesystem signatures on partitions first
-                        for part in $(${pkgs.util-linux}/bin/lsblk -lno NAME "$DEV" 2>/dev/null | tail -n +2); do
+                        for part in $(${pkgs.util-linux}/bin/lsblk -lno NAME "$DEV" 2>/dev/null | tail -n +2 || true); do
                           ${pkgs.util-linux}/bin/wipefs -af "/dev/$part" 2>/dev/null || true
                         done
 
