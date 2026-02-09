@@ -12,8 +12,8 @@ let
           model = {
             primary = "anthropic/claude-opus-4-5";
             fallbacks = [
-              "anthropic/claude-sonnet-4.5"
-              "anthropic/claude-haiku-4.5"
+              "anthropic/claude-sonnet-4-5"
+              "anthropic/claude-haiku-4-5"
             ];
           };
           models = {
