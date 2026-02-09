@@ -1,10 +1,14 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   inherit (config.fracture.user) login;
   dotfiles = config.fracture.dotfilesDir;
 in
 {
+  # Register nushell as a valid login shell in /etc/shells
+  # (required for PAM pam_shells.so to accept TTY logins)
+  environment.shells = [ pkgs.nushell ];
+
   home-manager.users.${login} = _: {
     programs.nushell = {
       enable = true;
