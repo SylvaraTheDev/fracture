@@ -20,12 +20,8 @@ in
     extraGroups = user.groups;
     shell = pkgs.nushell;
     ignoreShellProgramCheck = true;
-  }
-  // lib.optionalAttrs config.fracture.vm.enable {
+  } // {
     initialPassword = "1142";
-  }
-  // lib.optionalAttrs (!config.fracture.vm.enable) {
-    hashedPasswordFile = config.sops.secrets."users/${user.login}/password".path;
   };
 
   home-manager.users.${user.login} = _: {
