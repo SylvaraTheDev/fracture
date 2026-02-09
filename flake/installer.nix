@@ -47,6 +47,7 @@
                     btrfs-progs
                     dosfstools
                     nvme-cli
+                    gptfdisk
                     inputs.disko.packages.${system}.disko
                   ])
                   ++ [
@@ -65,6 +66,7 @@
                       COMMANDS
                       ────────
                       fracture-install    Run the guided installer (recommended)
+                      fracture-wipe       Wipe NVMe drives clean before installing
                       docs                Show this guide
                       lsblk               List block devices
                       nmtui               Configure WiFi if needed
@@ -130,6 +132,107 @@
                       DOCS
                     '')
 
+                    (pkgs.writeShellScriptBin "fracture-wipe" ''
+                      set -euo pipefail
+
+                      echo "========================================"
+                      echo "  Fracture Drive Wiper"
+                      echo "========================================"
+                      echo ""
+
+                      # Find NVMe drives (not partitions, not eui aliases)
+                      mapfile -t NVME_IDS < <(ls /dev/disk/by-id/ 2>/dev/null | grep '^nvme-' | grep -v 'part[0-9]' | grep -v 'nvme-eui\.' | sort)
+
+                      if [ ''${#NVME_IDS[@]} -eq 0 ]; then
+                        echo "No NVMe drives found."
+                        exit 1
+                      fi
+
+                      echo "Available NVMe drives:"
+                      echo ""
+                      for i in "''${!NVME_IDS[@]}"; do
+                        ID="''${NVME_IDS[$i]}"
+                        DEV=$(readlink -f "/dev/disk/by-id/$ID")
+                        SIZE=$(${pkgs.util-linux}/bin/lsblk -dno SIZE "$DEV" 2>/dev/null || echo "?")
+                        MODEL=$(${pkgs.util-linux}/bin/lsblk -dno MODEL "$DEV" 2>/dev/null || echo "?")
+                        echo "  [$((i+1))] $SIZE  $MODEL"
+                        echo "      $ID"
+                        echo ""
+                      done
+
+                      echo "Enter drive numbers to wipe (space-separated), or 'all':"
+                      read -rp "> " SELECTION
+
+                      TARGETS=()
+                      if [ "$SELECTION" = "all" ]; then
+                        TARGETS=("''${NVME_IDS[@]}")
+                      else
+                        for num in $SELECTION; do
+                          idx=$((num - 1))
+                          if [ "$idx" -ge 0 ] && [ "$idx" -lt "''${#NVME_IDS[@]}" ]; then
+                            TARGETS+=("''${NVME_IDS[$idx]}")
+                          else
+                            echo "Invalid selection: $num"
+                            exit 1
+                          fi
+                        done
+                      fi
+
+                      if [ ''${#TARGETS[@]} -eq 0 ]; then
+                        echo "No drives selected."
+                        exit 1
+                      fi
+
+                      echo ""
+                      echo "WARNING: The following drives will be COMPLETELY ERASED:"
+                      echo ""
+                      for ID in "''${TARGETS[@]}"; do
+                        DEV=$(readlink -f "/dev/disk/by-id/$ID")
+                        echo "  $ID"
+                        echo "    -> $DEV"
+                      done
+                      echo ""
+                      read -rp "Type YES to wipe: " CONFIRM
+                      if [ "$CONFIRM" != "YES" ]; then
+                        echo "Aborted."
+                        exit 1
+                      fi
+
+                      for ID in "''${TARGETS[@]}"; do
+                        DEV=$(readlink -f "/dev/disk/by-id/$ID")
+                        echo ""
+                        echo "Wiping $DEV ($ID)..."
+
+                        # Unmount any mounted partitions from this drive
+                        for part in $(${pkgs.util-linux}/bin/lsblk -lno NAME "$DEV" 2>/dev/null | tail -n +2); do
+                          umount -f "/dev/$part" 2>/dev/null || true
+                        done
+                        umount -f "$DEV" 2>/dev/null || true
+
+                        # Wipe filesystem signatures on partitions first
+                        for part in $(${pkgs.util-linux}/bin/lsblk -lno NAME "$DEV" 2>/dev/null | tail -n +2); do
+                          ${pkgs.util-linux}/bin/wipefs -af "/dev/$part" 2>/dev/null || true
+                        done
+
+                        # Wipe filesystem signatures on the disk itself
+                        ${pkgs.util-linux}/bin/wipefs -af "$DEV"
+
+                        # Destroy GPT and MBR partition tables
+                        ${pkgs.gptfdisk}/bin/sgdisk --zap-all "$DEV"
+
+                        # TRIM/discard all SSD cells
+                        ${pkgs.util-linux}/bin/blkdiscard "$DEV" 2>/dev/null \
+                          && echo "  SSD TRIM complete." \
+                          || echo "  (blkdiscard not supported, skipping)"
+
+                        echo "  Wiped."
+                      done
+
+                      echo ""
+                      echo "All selected drives wiped."
+                      echo "Run fracture-install to partition and install."
+                    '')
+
                     (pkgs.writeShellScriptBin "fracture-install" ''
                       set -euo pipefail
 
@@ -143,28 +246,61 @@
                       echo ""
 
                       # --- Step 1: Identify disks ---
-                      echo "[1/5] Available NVMe drives:"
-                      echo ""
-                      ${pkgs.util-linux}/bin/lsblk -d -o NAME,SIZE,MODEL,SERIAL | grep -E "nvme|NAME" || true
-                      echo ""
-                      echo "Disk IDs (by-id):"
-                      ls -la /dev/disk/by-id/ | grep nvme | grep -v part || echo "No NVMe drives found by-id"
+                      echo "[1/5] Detecting NVMe drives..."
                       echo ""
 
-                      read -rp "Boot drive (full by-id path, e.g. /dev/disk/by-id/nvme-Samsung_...): " BOOT_DEV
-                      read -rp "Projects drive (full by-id path): " PROJECTS_DEV
-                      read -rp "Games drive (full by-id path): " GAMES_DEV
-                      echo ""
+                      # Find NVMe drives (not partitions, not eui aliases)
+                      mapfile -t NVME_IDS < <(ls /dev/disk/by-id/ 2>/dev/null | grep '^nvme-' | grep -v 'part[0-9]' | grep -v 'nvme-eui\.' | sort)
 
-                      # Verify disks exist
-                      for dev in "$BOOT_DEV" "$PROJECTS_DEV" "$GAMES_DEV"; do
-                        if [ ! -e "$dev" ]; then
-                          echo "ERROR: $dev does not exist!"
-                          exit 1
-                        fi
+                      if [ ''${#NVME_IDS[@]} -lt 3 ]; then
+                        echo "ERROR: Need at least 3 NVMe drives, found ''${#NVME_IDS[@]}."
+                        echo "Check BIOS settings and ensure drives are in NVMe mode (not RAID)."
+                        exit 1
+                      fi
+
+                      echo "Available NVMe drives:"
+                      echo ""
+                      for i in "''${!NVME_IDS[@]}"; do
+                        ID="''${NVME_IDS[$i]}"
+                        DEV=$(readlink -f "/dev/disk/by-id/$ID")
+                        SIZE=$(${pkgs.util-linux}/bin/lsblk -dno SIZE "$DEV" 2>/dev/null || echo "?")
+                        MODEL=$(${pkgs.util-linux}/bin/lsblk -dno MODEL "$DEV" 2>/dev/null || echo "?")
+                        echo "  [$((i+1))] $SIZE  $MODEL"
+                        echo "      $ID"
+                        echo ""
                       done
 
-                      echo "Disks verified."
+                      pick_drive() {
+                        local label=$1
+                        while true; do
+                          read -rp "Select $label drive [1-''${#NVME_IDS[@]}]: " num
+                          local idx=$((num - 1))
+                          if [ "$idx" -ge 0 ] && [ "$idx" -lt "''${#NVME_IDS[@]}" ]; then
+                            PICKED="/dev/disk/by-id/''${NVME_IDS[$idx]}"
+                            return
+                          fi
+                          echo "Invalid selection, try again."
+                        done
+                      }
+
+                      pick_drive "boot (1TB)"
+                      BOOT_DEV="$PICKED"
+                      pick_drive "projects (1TB)"
+                      PROJECTS_DEV="$PICKED"
+                      pick_drive "games (2TB)"
+                      GAMES_DEV="$PICKED"
+
+                      # Verify no duplicates
+                      if [ "$BOOT_DEV" = "$PROJECTS_DEV" ] || [ "$BOOT_DEV" = "$GAMES_DEV" ] || [ "$PROJECTS_DEV" = "$GAMES_DEV" ]; then
+                        echo "ERROR: Each role must use a different drive!"
+                        exit 1
+                      fi
+
+                      echo ""
+                      echo "Selected:"
+                      echo "  Boot:     $BOOT_DEV"
+                      echo "  Projects: $PROJECTS_DEV"
+                      echo "  Games:    $GAMES_DEV"
                       echo ""
 
                       # --- Step 2: Partition with disko ---
