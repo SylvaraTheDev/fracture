@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (config.fracture.user) login;
+  isVM = config.fracture.vm.enable;
 in
 {
   environment.systemPackages = with pkgs; [
@@ -12,8 +13,8 @@ in
     openssh = {
       enable = true;
       settings = {
-        PermitRootLogin = "yes";
-        PasswordAuthentication = true;
+        PermitRootLogin = if isVM then "yes" else "no";
+        PasswordAuthentication = isVM;
       };
     };
     gnome.gnome-keyring.enable = true;
