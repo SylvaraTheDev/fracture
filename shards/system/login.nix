@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
@@ -27,15 +26,6 @@ in
     settings = {
       appearance.greeting_msg = "Welcome to Fracture";
       GTK.application_prefer_dark_theme = true;
-    };
-    cursorTheme = {
-      name = "Bibata-Modern-Ice";
-      package = pkgs.bibata-cursors;
-    };
-    font = {
-      name = "FiraCode Nerd Font";
-      size = 14;
-      package = pkgs.nerd-fonts.fira-code;
     };
   };
 
