@@ -7,5 +7,5 @@ result/
 .direnv/
 .devenv
 
-# Age private keys (NEVER commit)
+# Age private keys
 secrets/age-keyfile
