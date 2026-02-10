@@ -123,10 +123,6 @@ binds {
   Super+Z { spawn "alacritty"; }
   Super+E { spawn "cosmic-files"; }
 
-  // Screenshots (native niri)
-  Super+X { screenshot write-to-disk=false; }
-  Super+Alt+X { screenshot; }
-
   // Fullscreen toggle for focused window
   Super+F { fullscreen-window; }
 
