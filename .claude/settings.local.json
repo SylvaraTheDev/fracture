@@ -58,7 +58,10 @@
       "Bash(nix hash to-sri:*)",
       "Bash(test:*)",
       "WebFetch(domain:wiki.cachyos.org)",
-      "WebFetch(domain:www.protondb.com)"
+      "WebFetch(domain:www.protondb.com)",
+      "Bash(find:*)",
+      "Bash(just build:*)",
+      "Bash(cat:*)"
     ]
   }
 }
