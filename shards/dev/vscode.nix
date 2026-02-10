@@ -28,11 +28,16 @@ in
           pkief.material-icon-theme
         ]
         ++ [
-          (pkgs.vscode-utils.extensionFromVscodeMarketplace {
-            name = "nix-embedded-languages";
-            publisher = "coopermaruyama";
+          (pkgs.vscode-utils.buildVscodeExtension {
+            name = "coopermaruyama-nix-embedded-languages-0.0.2";
+            vscodeExtPublisher = "coopermaruyama";
+            vscodeExtName = "nix-embedded-languages";
+            vscodeExtUniqueId = "coopermaruyama.nix-embedded-languages";
             version = "0.0.2";
-            sha256 = "07xpphwzyc1z32d8gfar2pxzcvdbzq3rf3ibwmzqd28xgkc4imi7";
+            src = builtins.fetchurl {
+              url = "https://open-vsx.org/api/coopermaruyama/nix-embedded-languages/0.0.2/file/coopermaruyama.nix-embedded-languages-0.0.2.vsix";
+              sha256 = "07xpphwzyc1z32d8gfar2pxzcvdbzq3rf3ibwmzqd28xgkc4imi7";
+            };
           })
         ];
       profiles.default.userSettings = {
