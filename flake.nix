@@ -52,6 +52,10 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     # === System ===
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     disko = {
       url = "github:nix-community/disko";

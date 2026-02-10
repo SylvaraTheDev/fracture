@@ -49,7 +49,8 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  programs.command-not-found.enable = true;
+  programs.command-not-found.enable = false;
+  programs.nix-index-database.comma.enable = true;
 
   # === Base System Configuration ===
   time.timeZone = config.fracture.timezone;

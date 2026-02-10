@@ -30,6 +30,7 @@ in
       inputs.disko.nixosModules.disko
       inputs.impermanence.nixosModules.impermanence
       inputs.nix-flatpak.nixosModules.nix-flatpak
+      inputs.nix-index-database.nixosModules.nix-index
       (
         { config, ... }:
         {
