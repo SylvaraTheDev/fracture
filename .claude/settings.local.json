@@ -65,7 +65,10 @@
       "Bash(nix develop:*)",
       "Bash(ls:*)",
       "Bash(xargs -I{} sh -c 'test -f \"\"{}/sine.sys.mjs\"\" && echo \"\"{}\"\"')",
-      "WebFetch(domain:deltahub.io)"
+      "WebFetch(domain:deltahub.io)",
+      "Bash(niri validate:*)",
+      "Bash(scx_lavd:*)",
+      "Bash(sysctl:*)"
     ]
   }
 }

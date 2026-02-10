@@ -13,6 +13,7 @@ in
       mediawriter
       appimage-run
       ladybird
+      cosmic-files
     ];
   };
 }

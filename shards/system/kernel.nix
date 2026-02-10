@@ -56,7 +56,7 @@
   ];
 
   # scx_lavd — latency-critical virtual deadline scheduler (developed for Valve/Steam Deck)
-  # For maximum gaming performance, run manually: scx_lavd --performance
   services.scx.enable = true;
   services.scx.scheduler = "scx_lavd";
+  services.scx.extraArgs = [ "--performance" ];
 }

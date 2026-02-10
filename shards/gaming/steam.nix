@@ -25,6 +25,19 @@ in
         __GL_VRR_ALLOWED = "1";
         __GL_MaxFramesAllowed = "1";
         __GL_YIELD = "NOTHING";
+
+        # Proton / Wine / DXVK / VKD3D — scoped to Steam FHS env
+        PROTON_USE_NTSYNC = "1";
+        PROTON_ENABLE_NVAPI = "1";
+        PROTON_DLSS_UPGRADE = "1";
+        PROTON_HIDE_NVIDIA_GPU = "0";
+        WINE_FULLSCREEN_FSR = "1";
+        WINE_FULLSCREEN_FSR_STRENGTH = "2";
+        STAGING_SHARED_MEMORY = "1";
+        DXVK_STATE_CACHE = "1";
+        DXVK_LOG_LEVEL = "none";
+        VKD3D_CONFIG = "dxr11,dxr";
+        VKD3D_DEBUG = "none";
       };
       # Steam bundles its own 32-bit mesa; the global nvidia GLX vendor
       # override breaks its bundled libGL. Unset it inside the FHS env.
