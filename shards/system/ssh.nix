@@ -21,8 +21,6 @@ in
         PasswordAuthentication = isVM;
       };
     };
-    gnome.gnome-keyring.enable = true;
-    gnome.gcr-ssh-agent.enable = false;
   };
 
   programs.ssh.startAgent = true;
@@ -37,10 +35,6 @@ in
       };
     };
 
-    # Persist GNOME Keyring data (used by High Tide, etc.)
-    home.persistence."/persist".directories = [
-      ".local/share/keyrings"
-    ];
   };
 
   programs.ssh.knownHosts = {
