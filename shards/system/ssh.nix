@@ -36,6 +36,11 @@ in
         identitiesOnly = true;
       };
     };
+
+    # Persist GNOME Keyring data (used by High Tide, etc.)
+    home.persistence."/persist".directories = [
+      ".local/share/keyrings"
+    ];
   };
 
   programs.ssh.knownHosts = {
@@ -55,11 +60,4 @@ in
     "/etc/ssh/ssh_host_rsa_key"
     "/etc/ssh/ssh_host_rsa_key.pub"
   ];
-
-  # Persist GNOME Keyring data (used by High Tide, etc.)
-  home-manager.users.${login} = _: {
-    home.persistence."/persist".directories = [
-      ".local/share/keyrings"
-    ];
-  };
 }
