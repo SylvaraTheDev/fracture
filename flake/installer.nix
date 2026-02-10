@@ -30,7 +30,7 @@
                   path = ../.;
                   name = "fracture-flake";
                   filter =
-                    path: type:
+                    path: _type:
                     let
                       base = builtins.baseNameOf path;
                     in
