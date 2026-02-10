@@ -8,7 +8,6 @@ in
     programs.ghostty = {
       enable = true;
       settings = {
-        theme = "Aura";
         gtk-single-instance = false;
         gtk-titlebar = false;
         window-decoration = true;

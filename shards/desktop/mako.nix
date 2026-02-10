@@ -2,19 +2,22 @@
 
 let
   inherit (config.fracture.user) login;
-  dotfiles = config.fracture.dotfilesDir;
 in
 {
   environment.systemPackages = with pkgs; [
-    mako
     swaybg
   ];
 
   home-manager.users.${login} = _: {
-    home.file.".config/mako" = {
-      source = dotfiles + "/mako";
-      recursive = true;
-      force = true;
+    services.mako = {
+      enable = true;
+      settings = {
+        default-timeout = 5000;
+        border-size = 2;
+        border-radius = 10;
+        max-visible = 5;
+        # Colors and font are managed by Stylix
+      };
     };
   };
 }

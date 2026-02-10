@@ -84,6 +84,9 @@ in
         };
       };
 
+      # Zen Browser manages its own theming
+      stylix.targets.zen-browser.enable = false;
+
       home.persistence."/persist".directories = [
         ".zen"
       ];

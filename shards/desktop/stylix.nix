@@ -34,7 +34,5 @@ in
       package = pkgs.bibata-cursors;
     };
 
-    # Disable targets that conflict with dotfile-managed configs
-    targets.emacs.enable = false;
   };
 }

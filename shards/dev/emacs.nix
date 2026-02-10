@@ -14,6 +14,7 @@ in
         epkgs.docker
         epkgs.doom-themes
         epkgs.doom-modeline
+        epkgs.base16-theme
       ]);
     };
 
