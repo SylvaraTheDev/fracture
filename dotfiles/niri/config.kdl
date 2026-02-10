@@ -37,7 +37,6 @@ output "DP-2" {
   mode "2560x1440@119.989"
   scale 1.0
   position x=-2560 y=0
-  variable-refresh-rate on-demand
 }
 
 // Named workspaces keep per-output slots alive so Super+1-0 is deterministic
