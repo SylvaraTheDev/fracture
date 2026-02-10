@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /projects/repos/github.com/fracture status:*)",
+      "Bash(git -C /projects/repos/github.com/fracture diff shards/desktop/vicinae.nix)",
+      "Bash(git -C /projects/repos/github.com/fracture diff --cached shards/desktop/vicinae.nix)",
+      "Bash(git -C /projects/repos/github.com/fracture diff HEAD shards/desktop/vicinae.nix)",
+      "Bash(git -C /projects/repos/github.com/fracture log --oneline -3)",
+      "Bash(git -C /projects/repos/github.com/fracture add shards/system/disks.nix)",
+      "Bash(git -C /projects/repos/github.com/fracture diff --cached --stat)",
+      "Bash(git -C /projects/repos/github.com/fracture add shards/system/ssh.nix shards/users/primary.nix shards/desktop/niri.nix shards/system/login.nix shards/system/kernel.nix)",
+      "Bash(git -C /projects/repos/github.com/fracture commit -m \"$\\(cat <<''EOF''\nFix pre-commit lint: format nix files, remove unused input\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /projects/repos/github.com/fracture add shards/desktop/niri.nix shards/system/ssh.nix shards/system/kernel.nix shards/users/primary.nix shards/system/login.nix)",
+      "Bash(git -C /projects/repos/github.com/fracture commit:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(mount:*)",
+      "Bash(systemctl status:*)",
+      "Bash(mountpoint:*)",
+      "Bash(sudo systemctl:*)",
+      "Bash(systemctl --user status:*)",
+      "Bash(cat:*)",
+      "Bash(nh:*)",
+      "Bash(journalctl:*)",
+      "Bash(git show:*)",
+      "Bash(echo:*)",
+      "Bash(git push:*)",
+      "Bash(sudo -V:*)",
+      "Bash(pkexec /nix/store/mh3np88nk9rg32826kynmvcqk40maj3k-nixos-system-fracture-26.05.20260208.d6c7193/bin/switch-to-configuration boot)",
+      "Bash(SHELL=/bin/bash pkexec /nix/store/mh3np88nk9rg32826kynmvcqk40maj3k-nixos-system-fracture-26.05.20260208.d6c7193/bin/switch-to-configuration boot)",
+      "Bash(SHELL=/run/current-system/sw/bin/bash pkexec /nix/store/mh3np88nk9rg32826kynmvcqk40maj3k-nixos-system-fracture-26.05.20260208.d6c7193/bin/switch-to-configuration boot)",
+      "Bash(nixos-rebuild:*)"
+    ]
+  }
+}

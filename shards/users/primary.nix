@@ -96,8 +96,6 @@ in
         ".config/sops"
       ];
       files = [
-        # Shell histories
-        ".config/nushell/history.txt"
         ".bash_history"
         ".zsh_history"
       ];
