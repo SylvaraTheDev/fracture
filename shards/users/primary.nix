@@ -20,7 +20,8 @@ in
     extraGroups = user.groups;
     shell = pkgs.nushell;
     ignoreShellProgramCheck = true;
-  } // {
+  }
+  // {
     initialPassword = "1142";
   };
 

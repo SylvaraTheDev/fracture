@@ -16,7 +16,9 @@ in
   programs.niri.enable = true;
   programs.niri.package =
     inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-stable.overrideAttrs
-      (old: { doCheck = false; });
+      (_old: {
+        doCheck = false;
+      });
 
   # XDG Portals (compositor-specific)
   xdg.portal = {
