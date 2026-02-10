@@ -28,7 +28,7 @@ def --env upgrade [] {
 # Drop into a devenv shell
 def dev [shell?: string] {
   let flake = "/projects/repos/github.com/sylvarathedev/fracture"
-  let available = ["dart" "elixir" "go" "kubernetes" "nix" "packaging" "python"]
+  let available = ["dart" "elixir" "go" "kubernetes" "nix" "odin" "packaging" "python"]
 
   if ($shell | is-empty) {
     print "Usage: dev <shell>"

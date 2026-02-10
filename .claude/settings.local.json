@@ -48,7 +48,10 @@
       "WebFetch(domain:discourse.nixos.org)",
       "Bash(sudo mkdir:*)",
       "Bash(sudo cp:*)",
-      "Bash(nix fmt:*)"
+      "Bash(nix fmt:*)",
+      "WebFetch(domain:wayland-book.com)",
+      "WebFetch(domain:marvyn.com)",
+      "Bash(grep:*)"
     ]
   }
 }

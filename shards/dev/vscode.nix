@@ -28,6 +28,7 @@ in
         ms-vscode.cpptools
         esbenp.prettier-vscode
         redhat.vscode-yaml
+        danielgavin.ols
         pkief.material-icon-theme
       ];
       profiles.default.userSettings = {
