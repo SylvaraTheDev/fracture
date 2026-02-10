@@ -71,7 +71,7 @@ workspace "right-5" {
 // Startup applications
 spawn-at-startup "/run/current-system/sw/libexec/polkit-gnome-authentication-agent-1"
 spawn-at-startup "mako"
-spawn-at-startup "ghostty"
+spawn-at-startup "alacritty"
 // Wallpaper helper using swaybg
 spawn-sh-at-startup "pkill -x swaybg 2>/dev/null; exec swaybg -m fill -o DP-1 -i $HOME/.config/niri/wallpapers/deltahub-white.jpg -o DP-2 -i $HOME/.config/niri/wallpapers/deltahub-red.jpg"
 
@@ -110,7 +110,7 @@ layout {
 binds {
   // Launcher / terminal / files
   Super+space { spawn "vicinae" "toggle"; }
-  Super+Z { spawn "ghostty"; }
+  Super+Z { spawn "alacritty"; }
   Super+E { spawn "cosmic-files"; }
 
   // Screenshot selection (grim+slurp pipeline)

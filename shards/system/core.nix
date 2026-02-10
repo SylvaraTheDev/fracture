@@ -85,6 +85,9 @@
       xdg-dbus-proxy
       libsecret
       mono
+
+      # Recovery terminal (system-level, independent of home-manager)
+      alacritty
     ];
   };
 
