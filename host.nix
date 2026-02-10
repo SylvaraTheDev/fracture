@@ -44,16 +44,6 @@
         dest = "openclaw/workspace";
         excludes = [ ".git/**" ];
       };
-
-      # One-time archive of /flame/ai before drive decommission
-      # Run manually: systemctl start rclone-b2-flame-archive
-      # Remove this job after migration is confirmed
-      flame-archive = {
-        source = "/flame/ai";
-        bucket = "openclaw-sola";
-        dest = "archive/flame-ai";
-        schedule = "2099-01-01";
-      };
     };
 
     vm = {
