@@ -73,6 +73,13 @@
       flake = false;
     };
 
+    # === Gaming ===
+    # Uncomment to use CachyOS-optimized Proton (x86-64-v3 compiled):
+    # nix-proton-cachyos = {
+    #   url = "github:kimjongbing/nix-proton-cachyos";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
     # === Development ===
     devenv.url = "github:cachix/devenv";
     treefmt-nix = {

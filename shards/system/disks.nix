@@ -17,6 +17,7 @@ let
     "ssd"
     "discard=async"
     "space_cache=v2"
+    "commit=120"
   ];
 in
 {
@@ -37,8 +38,9 @@ in
       fsType = "tmpfs";
       mountOptions = [
         "defaults"
-        "size=1G"
+        "size=2G"
         "mode=755"
+        "noatime"
       ];
     };
 

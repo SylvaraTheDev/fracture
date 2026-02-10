@@ -28,14 +28,16 @@ input {
 // Outputs (monitors)
 // Run `niri msg outputs` to confirm names and supported modes[2].
 output "DP-1" {
-  mode "2560x1440"
+  mode "2560x1440@239.958"
   scale 1.0
   position x=0 y=0
 }
 output "DP-2" {
+  // 144Hz also available if desired
   mode "2560x1440@119.989"
   scale 1.0
   position x=-2560 y=0
+  variable-refresh-rate on-demand
 }
 
 // Named workspaces keep per-output slots alive so Super+1-0 is deterministic
