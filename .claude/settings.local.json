@@ -39,7 +39,9 @@
       "Bash(nix eval:*)",
       "Bash(python3:*)",
       "Bash(nix-prefetch-url:*)",
-      "Bash(nixfmt:*)"
+      "Bash(nixfmt:*)",
+      "Bash(nix log:*)",
+      "WebFetch(domain:open-vsx.org)"
     ]
   }
 }
