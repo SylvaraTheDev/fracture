@@ -5,7 +5,11 @@ let
 in
 {
   environment.persistence."/persist-projects".directories = [
-    "/projects/repos"
+    {
+      directory = "/projects/repos";
+      user = user.login;
+      group = "users";
+    }
   ];
 
   environment.systemPackages = with pkgs; [
