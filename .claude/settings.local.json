@@ -62,7 +62,8 @@
       "Bash(find:*)",
       "Bash(just build:*)",
       "Bash(cat:*)",
-      "Bash(nix develop:*)"
+      "Bash(nix develop:*)",
+      "Bash(ls:*)"
     ]
   }
 }

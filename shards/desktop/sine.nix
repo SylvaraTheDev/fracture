@@ -56,6 +56,18 @@ let
     }).overrideAttrs
       (prev: {
         buildCommand = prev.buildCommand + ''
+          # zen-browser-flake sets applicationName to a display string that doesn't
+          # match the binary filename, so wrapFirefox symlinks the binary instead of
+          # copying it. Firefox resolves symlinks to find its app directory, which
+          # means it looks for autoconfig in the unwrapped package (where there is
+          # none). Fix by replacing the symlinks with copies.
+          for bin in "$out"/lib/*/zen "$out"/lib/*/zen-bin; do
+            if [ -L "$bin" ]; then
+              target=$(readlink -f "$bin")
+              rm "$bin"
+              cp "$target" "$bin"
+            fi
+          done
           echo 'pref("general.config.sandbox_enabled", false);' >> "$out"/lib/*/defaults/pref/autoconfig.js
         '';
       });
