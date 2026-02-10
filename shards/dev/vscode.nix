@@ -36,7 +36,6 @@ in
 
     home.persistence."/persist".directories = [
       ".config/Code"
-      ".vscode"
     ];
   };
 }
