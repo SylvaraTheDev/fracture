@@ -8,7 +8,10 @@ in
     "/projects/repos"
   ];
 
-  environment.systemPackages = [ pkgs.gitleaks ];
+  environment.systemPackages = with pkgs; [
+    gitleaks
+    ghq
+  ];
 
   home-manager.users.${user.login} = _: {
     programs.git = {
