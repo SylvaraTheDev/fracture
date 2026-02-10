@@ -6,12 +6,12 @@ in
 {
   home-manager.users.${login} = _: {
     home.packages = with pkgs; [
-      high-tide
+      tonearm
     ];
 
     home.persistence."/persist".directories = [
-      ".config/high-tide"
-      ".local/share/high-tide"
+      ".config/tonearm"
+      ".local/share/tonearm"
     ];
   };
 }
