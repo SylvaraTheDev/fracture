@@ -14,7 +14,10 @@ in
     services.pass-secret-service.enable = true;
 
     home.persistence."/persist".directories = [
-      ".gnupg"
+      {
+        directory = ".gnupg";
+        mode = "0700";
+      }
       ".password-store"
     ];
   };
