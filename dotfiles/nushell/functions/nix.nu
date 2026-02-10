@@ -1,5 +1,8 @@
 # Rebuild NixOS
 def --env rebuild [] {
+  # Authenticate early so sudo session persists through the whole rebuild
+  sudo true
+
   echo "Changing directory to /projects/repos/github.com/fracture"
   cd /projects/repos/github.com/fracture
 
