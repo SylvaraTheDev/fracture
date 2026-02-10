@@ -21,6 +21,7 @@ in
         rerere.enabled = true;
         core.autocrlf = "input";
         ghq.root = "/projects/repos";
+        safe.directory = "/projects/repos/github.com/fracture";
       };
     };
 
