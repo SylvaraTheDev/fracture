@@ -1,6 +1,13 @@
 _:
 
 {
+  # Ensure flatpak service starts after impermanence bind-mounts /var/lib/flatpak,
+  # otherwise it writes ~1.6GB to the tmpfs root before the mount covers it.
+  systemd.services.flatpak-managed-install = {
+    after = [ "var-lib-flatpak.mount" ];
+    requires = [ "var-lib-flatpak.mount" ];
+  };
+
   services.flatpak = {
     enable = true;
     packages = [

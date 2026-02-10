@@ -19,8 +19,13 @@ in
       };
     };
 
-    home.persistence."/persist".directories = [
-      ".config/claude-code"
-    ];
+    home.persistence."/persist" = {
+      directories = [
+        ".config/claude-code"
+      ];
+      files = [
+        ".claude.json"
+      ];
+    };
   };
 }
