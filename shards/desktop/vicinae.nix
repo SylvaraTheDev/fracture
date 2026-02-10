@@ -16,8 +16,10 @@ in
     {
       imports = [ inputs.vicinae.homeManagerModules.default ];
 
-      services.vicinae.enable = true;
-      home.packages = [ inputs.vicinae.packages.x86_64-linux.default ];
+      services.vicinae = {
+        enable = true;
+        systemd.enable = true;
+      };
 
       home.persistence."/persist".directories = [
         ".cache/vicinae"

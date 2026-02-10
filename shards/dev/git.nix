@@ -20,6 +20,7 @@ in
         fetch.prune = true;
         rerere.enabled = true;
         core.autocrlf = "input";
+        safe.directory = "*";
         ghq.root = "/projects/repos";
       };
     };
