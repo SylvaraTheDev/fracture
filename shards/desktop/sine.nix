@@ -47,6 +47,14 @@ let
     }
   '';
 
+  # fx-autoconfig utils with Sine's locales chrome registration appended.
+  # Without this, chrome://locales/content/ doesn't resolve and all Sine UI text is blank.
+  fxAutoconfigUtils = pkgs.runCommand "fx-autoconfig-utils" { } ''
+    cp -r ${fx-autoconfig-src}/profile/chrome/utils $out
+    chmod +w $out/chrome.manifest
+    echo 'content locales ../locales/' >> $out/chrome.manifest
+  '';
+
   profileName = "default";
   profilePath = ".zen/${profileName}";
 
@@ -84,45 +92,9 @@ in
       isDefault = true;
     };
 
-    # Launcher with absolute path so Vicinae always uses the overridden binary
-    xdg.desktopEntries.zen-moonlight = {
-      name = "Zen Moonlight";
-      genericName = "Web Browser";
-      exec = "${zenPackage}/bin/zen-twilight --name zen-moonlight %U";
-      icon = "zen-twilight";
-      categories = [
-        "Network"
-        "WebBrowser"
-      ];
-      mimeType = [
-        "text/html"
-        "text/xml"
-        "application/xhtml+xml"
-        "application/vnd.mozilla.xul+xml"
-        "x-scheme-handler/http"
-        "x-scheme-handler/https"
-      ];
-      terminal = false;
-      type = "Application";
-      settings = {
-        StartupWMClass = "zen-twilight";
-        StartupNotify = "true";
-      };
-      actions = {
-        new-window = {
-          name = "New Window";
-          exec = "${zenPackage}/bin/zen-twilight --new-window %U";
-        };
-        new-private-window = {
-          name = "New Private Window";
-          exec = "${zenPackage}/bin/zen-twilight --private-window %U";
-        };
-      };
-    };
-
-    # fx-autoconfig loader infrastructure
+    # fx-autoconfig loader infrastructure (with Sine locale registration patched in)
     home.file."${profilePath}/chrome/utils" = {
-      source = "${fx-autoconfig-src}/profile/chrome/utils";
+      source = "${fxAutoconfigUtils}";
       recursive = true;
     };
 
