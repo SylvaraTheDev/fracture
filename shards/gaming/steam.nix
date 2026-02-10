@@ -5,7 +5,12 @@ let
 in
 {
   environment.persistence."/persist-games".directories = [
-    "/games/steam"
+    {
+      directory = "/games/steam";
+      user = login;
+      group = "users";
+      mode = "0755";
+    }
   ];
 
   programs.steam = {

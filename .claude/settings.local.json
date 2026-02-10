@@ -41,7 +41,8 @@
       "Bash(nix-prefetch-url:*)",
       "Bash(nixfmt:*)",
       "Bash(nix log:*)",
-      "WebFetch(domain:open-vsx.org)"
+      "WebFetch(domain:open-vsx.org)",
+      "Bash(nix flake prefetch:*)"
     ]
   }
 }
