@@ -9,8 +9,8 @@ def --env rebuild [] {
   echo "Running safety checks..."
   just check
 
-  echo "Running nixos-rebuild..."
-  bash -c "run0 nixos-rebuild switch --flake .#fracture --log-format internal-json 2>&1 | nom --json"
+  echo "Running nh os switch..."
+  nh os switch -e run0 .
 }
 
 # Update flake
@@ -74,16 +74,6 @@ export def --env clean [arg?: string] {
     return (1)
   }
 
-  let sys_profile = "/nix/var/nix/profiles/system"
-
-  print $"Keeping last ($keep) generations for system profile..."
-  bash -c $"run0 nix-env --profile ($sys_profile) --delete-generations +($keep)"
-
-  print $"Keeping last ($keep) generations for current user profile..."
-  bash -c $"nix-env --delete-generations +($keep)"
-
-  print "Reclaiming store space (garbage collect)..."
-  bash -c "run0 nix-store --gc"
-
-  print "Done."
+  print $"Cleaning all profiles, keeping last ($keep) generations..."
+  nh clean all -e run0 --keep $keep --ask
 }
