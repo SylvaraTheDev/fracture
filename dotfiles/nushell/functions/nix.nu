@@ -10,7 +10,7 @@ def --env rebuild [] {
   just check
 
   echo "Running nh os switch..."
-  nh os switch -e run0 .
+  nh os switch .
 }
 
 # Update flake
@@ -75,5 +75,5 @@ export def --env clean [arg?: string] {
   }
 
   print $"Cleaning all profiles, keeping last ($keep) generations..."
-  nh clean all -e run0 --keep $keep --ask
+  nh clean all --keep $keep --ask
 }

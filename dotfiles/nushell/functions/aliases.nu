@@ -1,7 +1,5 @@
 # This is the global file to hold all Nushell aliases
 
-alias sudo = run0
-
 # Modern file tools
 alias ls = eza --icons --git
 alias la = eza --icons --git --all
