@@ -31,6 +31,7 @@ in
         "git.confirmSync" = false;
         "git.enableSmartCommit" = true;
         "explorer.confirmDelete" = false;
+        "chat.mcp.gallery.enabled" = true;
       };
     };
 
