@@ -32,7 +32,12 @@
       "Bash(pkexec /nix/store/mh3np88nk9rg32826kynmvcqk40maj3k-nixos-system-fracture-26.05.20260208.d6c7193/bin/switch-to-configuration boot)",
       "Bash(SHELL=/bin/bash pkexec /nix/store/mh3np88nk9rg32826kynmvcqk40maj3k-nixos-system-fracture-26.05.20260208.d6c7193/bin/switch-to-configuration boot)",
       "Bash(SHELL=/run/current-system/sw/bin/bash pkexec /nix/store/mh3np88nk9rg32826kynmvcqk40maj3k-nixos-system-fracture-26.05.20260208.d6c7193/bin/switch-to-configuration boot)",
-      "Bash(nixos-rebuild:*)"
+      "Bash(nixos-rebuild:*)",
+      "Bash(xargs:*)",
+      "WebFetch(domain:wiki.nixos.org)",
+      "WebFetch(domain:mynixos.com)",
+      "Bash(nix eval:*)",
+      "Bash(python3:*)"
     ]
   }
 }
