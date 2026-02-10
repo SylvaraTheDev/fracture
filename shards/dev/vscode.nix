@@ -37,6 +37,7 @@ in
         "git.confirmSync" = false;
         "git.enableSmartCommit" = true;
         "explorer.confirmDelete" = false;
+        "explorer.confirmDragAndDrop" = false;
         "chat.mcp.gallery.enabled" = true;
         "workbench.iconTheme" = "material-icon-theme";
       };
