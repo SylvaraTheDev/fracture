@@ -51,7 +51,14 @@
       "Bash(nix fmt:*)",
       "WebFetch(domain:wayland-book.com)",
       "WebFetch(domain:marvyn.com)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "WebFetch(domain:nixos.wiki)",
+      "WebFetch(domain:codeberg.org)",
+      "Bash(git ls-remote:*)",
+      "Bash(nix hash to-sri:*)",
+      "Bash(test:*)",
+      "WebFetch(domain:wiki.cachyos.org)",
+      "WebFetch(domain:www.protondb.com)"
     ]
   }
 }

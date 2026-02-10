@@ -34,6 +34,7 @@ in
       gnumake
       pre-commit
       devenv
+      meson
 
       # Package managers
       uv

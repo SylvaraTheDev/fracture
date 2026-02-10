@@ -2,6 +2,9 @@
 // avoids borders “shining through” semitransparent clients.
 prefer-no-csd
 
+// Save screenshots to ~/screenshots/
+screenshot-path "~/screenshots/Screenshot %Y-%m-%d %H-%M-%S.png"
+
 // Input and keyboard
 input {
   focus-follows-mouse
@@ -119,8 +122,9 @@ binds {
   Super+Z { spawn "alacritty"; }
   Super+E { spawn "cosmic-files"; }
 
-  // Screenshot selection (grim+slurp pipeline)
-  Super+X { spawn "sh" "-lc" "grim -g \"$(slurp -d)\" - | wl-copy"; }
+  // Screenshots (native niri)
+  Super+X { screenshot write-to-disk=false; }
+  Super+Alt+X { screenshot; }
 
   // Fullscreen toggle for focused window
   Super+F { fullscreen-window; }
