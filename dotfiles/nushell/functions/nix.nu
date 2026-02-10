@@ -3,8 +3,8 @@ def --env rebuild [] {
   # Authenticate early so sudo session persists through the whole rebuild
   sudo true
 
-  echo "Changing directory to /projects/repos/github.com/fracture"
-  cd /projects/repos/github.com/fracture
+  echo "Changing directory to /projects/repos/github.com/sylvarathedev/fracture"
+  cd /projects/repos/github.com/sylvarathedev/fracture
 
   echo "Pulling git updates..."
   git pull
@@ -18,8 +18,8 @@ def --env rebuild [] {
 
 # Update flake
 def --env upgrade [] {
-  echo "Switching to /projects/repos/github.com/fracture"
-  cd /projects/repos/github.com/fracture
+  echo "Switching to /projects/repos/github.com/sylvarathedev/fracture"
+  cd /projects/repos/github.com/sylvarathedev/fracture
 
   echo "Upgrading flake..."
   nix flake update
@@ -27,7 +27,7 @@ def --env upgrade [] {
 
 # Drop into a devenv shell
 def dev [shell?: string] {
-  let flake = "/projects/repos/github.com/fracture"
+  let flake = "/projects/repos/github.com/sylvarathedev/fracture"
   let available = ["dart" "elixir" "go" "kubernetes" "nix" "packaging" "python"]
 
   if ($shell | is-empty) {
