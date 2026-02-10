@@ -62,13 +62,6 @@
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
     NIXOS_OZONE_WL = "1";
 
-    # OpenGL performance
-    __GL_THREADED_OPTIMIZATIONS = "1";
-    __GL_GSYNC_ALLOWED = "1";
-    __GL_VRR_ALLOWED = "1";
-    __GL_MaxFramesAllowed = "1";
-    __GL_YIELD = "NOTHING";
-
     # Shader cache — persist on fast storage, never auto-clean
     __GL_SHADER_DISK_CACHE = "1";
     __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
