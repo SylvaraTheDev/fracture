@@ -37,7 +37,9 @@
       "WebFetch(domain:wiki.nixos.org)",
       "WebFetch(domain:mynixos.com)",
       "Bash(nix eval:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(nix-prefetch-url:*)",
+      "Bash(nixfmt:*)"
     ]
   }
 }
