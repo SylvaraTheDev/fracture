@@ -9,8 +9,8 @@ def --env rebuild [] {
   echo "Running safety checks..."
   just check
 
-  echo "Running nh os switch..."
-  nh os switch --elevation-program sudo .
+  echo "> Building NixOS configuration"
+  sudo nixos-rebuild switch --flake . |& nom
 }
 
 # Update flake
@@ -75,5 +75,6 @@ export def --env clean [arg?: string] {
   }
 
   print $"Cleaning all profiles, keeping last ($keep) generations..."
-  nh clean all --elevation-program sudo --keep $keep --ask
+  sudo nix-collect-garbage --delete-older-than "${keep}d"
+  sudo nixos-rebuild boot --flake .
 }
