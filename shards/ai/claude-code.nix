@@ -10,6 +10,7 @@ in
       settings = {
         env = {
           ANTHROPIC_MODEL = "claude-opus-4-6";
+          CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
         };
         projects = {
           "/projects/repos" = {
