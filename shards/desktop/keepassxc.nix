@@ -9,11 +9,12 @@ in
     keepassxc
   ];
 
-  # Persist KeePassXC database and settings
+  # Persist KeePassXC database, settings, and password databases
   home-manager.users.${login} = _: {
     home.persistence."/persist".directories = [
       ".config/keepassxc"
       ".local/share/keepassxc"
+      "Passwords"
     ];
   };
 }
