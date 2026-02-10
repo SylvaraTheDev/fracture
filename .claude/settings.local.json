@@ -61,7 +61,8 @@
       "WebFetch(domain:www.protondb.com)",
       "Bash(find:*)",
       "Bash(just build:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(nix develop:*)"
     ]
   }
 }

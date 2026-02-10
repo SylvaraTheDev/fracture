@@ -49,25 +49,63 @@ let
 
   profileName = "default";
   profilePath = ".zen/${profileName}";
+
+  zenPackage =
+    (inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight.override {
+      extraPrefs = bootstrapJS;
+    }).overrideAttrs
+      (prev: {
+        buildCommand = prev.buildCommand + ''
+          echo 'pref("general.config.sandbox_enabled", false);' >> "$out"/lib/*/defaults/pref/autoconfig.js
+        '';
+      });
 in
 {
   home-manager.users.${login} = _: {
     # Override browser package to include fx-autoconfig bootstrap in mozilla.cfg
     # and disable the autoconfig sandbox so the bootstrap can access XPCOM.
     # This only rebuilds the thin wrapFirefox wrapper (symlinks + config), not the engine.
-    programs.zen-browser.package =
-      (inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight.override {
-        extraPrefs = bootstrapJS;
-      }).overrideAttrs
-        (prev: {
-          buildCommand = prev.buildCommand + ''
-            echo 'pref("general.config.sandbox_enabled", false);' >> "$out"/lib/*/defaults/pref/autoconfig.js
-          '';
-        });
+    programs.zen-browser.package = zenPackage;
 
     # Deterministic profile path at ~/.zen/default/
     programs.zen-browser.profiles.${profileName} = {
       isDefault = true;
+    };
+
+    # Launcher with absolute path so Vicinae always uses the overridden binary
+    xdg.desktopEntries.zen-moonlight = {
+      name = "Zen Moonlight";
+      genericName = "Web Browser";
+      exec = "${zenPackage}/bin/zen-twilight --name zen-moonlight %U";
+      icon = "zen-twilight";
+      categories = [
+        "Network"
+        "WebBrowser"
+      ];
+      mimeType = [
+        "text/html"
+        "text/xml"
+        "application/xhtml+xml"
+        "application/vnd.mozilla.xul+xml"
+        "x-scheme-handler/http"
+        "x-scheme-handler/https"
+      ];
+      terminal = false;
+      type = "Application";
+      settings = {
+        StartupWMClass = "zen-twilight";
+        StartupNotify = "true";
+      };
+      actions = {
+        new-window = {
+          name = "New Window";
+          exec = "${zenPackage}/bin/zen-twilight --new-window %U";
+        };
+        new-private-window = {
+          name = "New Private Window";
+          exec = "${zenPackage}/bin/zen-twilight --private-window %U";
+        };
+      };
     };
 
     # fx-autoconfig loader infrastructure
