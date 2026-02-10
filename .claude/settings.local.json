@@ -29,7 +29,26 @@
       "Bash(sudo systemctl:*)",
       "Bash(journalctl:*)",
       "Bash(mount:*)",
-      "Bash(mountpoint:*)"
+      "Bash(mountpoint:*)",
+      "WebFetch(domain:nix-community.github.io)",
+      "WebFetch(domain:flake.parts)",
+      "WebFetch(domain:nixos.asia)",
+      "WebFetch(domain:bmcgee.ie)",
+      "Bash(nix path-info:*)",
+      "Bash(curl:*)",
+      "Bash(gh:*)",
+      "Bash(while read sha date)",
+      "Bash(do echo -n \"$sha $date \")",
+      "Bash(done)",
+      "Bash(for sha in ab815ddf2e76 76f7c893e4ce 7df0632ec8b1 9f1a757b69b6 3e55412c46ca a4419e2203a7 3ebf7eabab3e 8bc202f51e78 220dce3edcb8 61a10ef8b4b6 6d28de311a89 0ebc34bb07ad 856b12c3db3c 03f574805ffe 9e9058ae652c 0cce43fce4fc 5a69e7afa128 4aa98db78c1d 286f9777b3e8 df9b9eb25f5b)",
+      "Bash(do)",
+      "Bash(echo:*)",
+      "WebFetch(domain:garnix.io)",
+      "WebFetch(domain:hydra.lantian.pub)",
+      "WebFetch(domain:discourse.nixos.org)",
+      "Bash(sudo mkdir:*)",
+      "Bash(sudo cp:*)",
+      "Bash(nix fmt:*)"
     ]
   }
 }

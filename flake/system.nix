@@ -29,6 +29,7 @@ in
       inputs.sops-nix.nixosModules.sops
       inputs.disko.nixosModules.disko
       inputs.impermanence.nixosModules.impermanence
+      inputs.stylix.nixosModules.stylix
       inputs.nix-flatpak.nixosModules.nix-flatpak
       inputs.nix-index-database.nixosModules.nix-index
       (

@@ -7,8 +7,8 @@ $env.config = {
 }
 
 # Editor config
-$env.EDITOR = "zed"
-$env.VISUAL = "zed"
+$env.EDITOR = "nano"
+$env.VISUAL = "nano"
 
 # Custom functions
 source ~/.config/nushell/functions/nix.nu

@@ -6,32 +6,15 @@
 # Run on commit: automatic after install
 
 repos:
-  # === Nix ===
+  # === Nix (via treefmt) ===
   - repo: local
     hooks:
-      - id: nixfmt
-        name: Format Nix files
-        entry: nixfmt --check
-        language: system
-        files: \.nix$
-        exclude: |
-          (?x)^(
-            hardware\.nix|
-            secrets/.*
-          )$
-
-      - id: statix
-        name: Lint Nix (statix)
-        entry: statix check
+      - id: treefmt
+        name: Format and lint Nix (treefmt)
+        entry: nix fmt -- --fail-on-change
         language: system
         files: \.nix$
         pass_filenames: false
-
-      - id: deadnix
-        name: Find dead Nix code
-        entry: deadnix --fail
-        language: system
-        files: \.nix$
 
   # === Secret Detection ===
   - repo: local

@@ -14,11 +14,6 @@ _: {
             nil
             nixd
 
-            # Nix formatters/linters
-            nixfmt
-            statix
-            deadnix
-
             # Secret detection
             gitleaks
 

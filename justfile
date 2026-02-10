@@ -13,7 +13,8 @@ check:
 # Run checks without hook installation
 check-quick:
     @echo "Running quick checks..."
-    nix develop .#nix --no-pure-eval --command sh -c "statix check . && deadnix --fail . && gitleaks detect --source . --redact --verbose"
+    nix fmt -- --fail-on-change
+    nix develop .#nix --no-pure-eval --command gitleaks detect --source . --redact --verbose
 
 # Scan for secrets only
 secrets:
@@ -135,8 +136,8 @@ hooks:
 
 # Format all Nix files
 fmt:
-    nix develop .#nix --no-pure-eval --command nixfmt .
+    nix fmt
 
 # Fix auto-fixable issues
 fix:
-    nix develop .#nix --no-pure-eval --command sh -c "statix fix . && deadnix --edit . && nixfmt ."
+    nix fmt

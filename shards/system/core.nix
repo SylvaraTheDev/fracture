@@ -7,6 +7,13 @@
       enable = true;
       efiSupport = true;
       maxGenerations = 10;
+      # Secure Boot via Limine — requires manual key enrollment:
+      #   1. sbctl create-keys
+      #   2. BIOS: reset Secure Boot to Setup Mode
+      #   3. sbctl enroll-keys -m -f
+      #   4. BIOS: enable Secure Boot
+      #   5. Rebuild
+      secureBoot.enable = !config.fracture.vm.enable;
     };
     timeout = 1;
     efi.canTouchEfiVariables = true;
@@ -80,6 +87,9 @@
       inotify-tools
       jq
 
+      # Secure Boot
+      sbctl
+
       # System
       upower
       xwayland
@@ -97,4 +107,9 @@
     dbus.enable = true;
     upower.enable = true;
   };
+
+  # Persist Secure Boot signing keys across reboots
+  environment.persistence."/persist".directories = [
+    "/var/lib/sbctl"
+  ];
 }

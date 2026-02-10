@@ -51,6 +51,12 @@
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
+    # === Theming ===
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # === System ===
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -69,6 +75,10 @@
 
     # === Development ===
     devenv.url = "github:cachix/devenv";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
