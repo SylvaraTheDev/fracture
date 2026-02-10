@@ -35,7 +35,7 @@
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
-    persistenced = true;
+    nvidiaPersistenced = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
