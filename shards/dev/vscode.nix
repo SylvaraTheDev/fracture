@@ -40,6 +40,7 @@ in
         "explorer.confirmDragAndDrop" = false;
         "chat.mcp.gallery.enabled" = true;
         "workbench.iconTheme" = "material-icon-theme";
+        "workbench.startupEditor" = "none";
       };
     };
 
