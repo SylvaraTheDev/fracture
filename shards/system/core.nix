@@ -23,6 +23,7 @@
         "root"
         "@wheel"
       ];
+      accept-flake-config = true;
       warn-dirty = false;
       substituters = [
         "https://cache.nixos.org/"

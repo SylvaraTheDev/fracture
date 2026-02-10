@@ -22,6 +22,7 @@ in
         core.autocrlf = "input";
         safe.directory = "*";
         ghq.root = "/projects/repos";
+        safe.directory = "/projects/repos/github.com/fracture";
       };
     };
 
