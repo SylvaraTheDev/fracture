@@ -63,7 +63,9 @@
       "Bash(just build:*)",
       "Bash(cat:*)",
       "Bash(nix develop:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(xargs -I{} sh -c 'test -f \"\"{}/sine.sys.mjs\"\" && echo \"\"{}\"\"')",
+      "WebFetch(domain:deltahub.io)"
     ]
   }
 }

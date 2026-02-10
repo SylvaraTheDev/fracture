@@ -1,7 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
-  programs.steam.extraCompatPackages = [ pkgs.proton-ge-bin ];
+  programs.steam.extraCompatPackages = [
+    pkgs.proton-ge-bin
+    inputs.nix-proton-cachyos.packages.${pkgs.system}.proton-cachyos
+  ];
 
   # Proton / Wine / DXVK / VKD3D environment variables
   environment.variables = {
@@ -36,8 +39,4 @@
     MESA_SHADER_CACHE_MAX_SIZE = "10G";
   };
 
-  # To use CachyOS-optimized Proton (x86-64-v3), add to flake.nix inputs:
-  #   nix-proton-cachyos.url = "github:kimjongbing/nix-proton-cachyos";
-  # Then add to extraCompatPackages:
-  #   inputs.nix-proton-cachyos.packages.${pkgs.system}.proton-cachyos
 }

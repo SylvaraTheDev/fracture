@@ -19,12 +19,24 @@ let
     hash = "sha256-xiCikg8c855w+PCy7Wmc3kPwIHr80pMkkK7mFQbPCs4=";
   };
 
-  sine-src = pkgs.fetchFromGitHub {
-    owner = "CosmoCreeper";
-    repo = "Sine";
-    rev = "1444c962a871d44c6f8d44317656430827951194";
-    hash = "sha256-E/2gS2oiFUHe85qW1IE2A6zPDr5Ow+lMu3Y0jMPv9+o=";
-  };
+  sine-src =
+    let
+      raw = pkgs.fetchFromGitHub {
+        owner = "CosmoCreeper";
+        repo = "Sine";
+        rev = "1444c962a871d44c6f8d44317656430827951194";
+        hash = "sha256-E/2gS2oiFUHe85qW1IE2A6zPDr5Ow+lMu3Y0jMPv9+o=";
+      };
+    in
+    pkgs.runCommand "sine-src-patched" { } ''
+      cp -r ${raw} $out
+      chmod -R +w $out
+      # Fix Sine store install: ucAPI.fetch() returns a Promise, so [repo] was
+      # indexing the Promise (→ undefined) instead of the resolved JSON object.
+      # Chaining .then() correctly defers the index until after resolution.
+      sed -i '/marketplace\.json/s/)\[repo\];/).then(data => data[repo]);/' \
+        $out/engine/core/manager.mjs
+    '';
 
   # fx-autoconfig bootstrap — gets injected into mozilla.cfg via wrapFirefox's extraPrefs.
   # Registers the chrome manifest and loads the boot module, which then scans
