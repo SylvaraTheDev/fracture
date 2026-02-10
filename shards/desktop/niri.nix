@@ -13,6 +13,9 @@ in
   # Import niri-flake NixOS module
   imports = [ inputs.niri.nixosModules.niri ];
 
+  # XWayland support via xwayland-satellite (Niri has no built-in XWayland)
+  environment.systemPackages = [ pkgs.xwayland-satellite ];
+
   programs.niri.enable = true;
   programs.niri.package =
     inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-stable.overrideAttrs

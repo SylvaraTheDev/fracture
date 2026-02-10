@@ -68,6 +68,12 @@ workspace "right-5" {
   open-on-output "DP-2"
 }
 
+// XWayland support (Niri has no built-in XWayland)
+environment {
+  DISPLAY ":0"
+}
+spawn-at-startup "xwayland-satellite"
+
 // Startup applications
 spawn-at-startup "/run/current-system/sw/libexec/polkit-gnome-authentication-agent-1"
 spawn-at-startup "mako"

@@ -21,6 +21,7 @@ in
 
     home.persistence."/persist" = {
       directories = [
+        ".claude"
         ".config/claude-code"
       ];
       files = [
