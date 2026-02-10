@@ -1,17 +1,16 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
 let
   inherit (config.fracture.user) login;
 in
 {
-  home-manager.users.${login} = _: {
-    home.packages = with pkgs; [
-      tonearm
-    ];
+  services.flatpak.packages = [
+    "dev.dergs.Tonearm"
+  ];
 
+  home-manager.users.${login} = _: {
     home.persistence."/persist".directories = [
-      ".config/tonearm"
-      ".local/share/tonearm"
+      ".var/app/dev.dergs.Tonearm"
     ];
   };
 }
