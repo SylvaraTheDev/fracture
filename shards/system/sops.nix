@@ -25,7 +25,6 @@ in
       key = "ssh/github-ssh-key";
       owner = login;
       group = "users";
-      path = "/home/${login}/.ssh/id_ed25519_github";
     };
 
     templates."nix-access-tokens" = {

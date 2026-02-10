@@ -28,7 +28,7 @@ in
       enable = true;
       enableDefaultConfig = false;
       matchBlocks."github.com" = {
-        identityFile = "~/.ssh/id_ed25519_github";
+        identityFile = config.sops.secrets.github-ssh-key.path;
         identitiesOnly = true;
       };
     };
