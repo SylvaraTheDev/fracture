@@ -25,6 +25,7 @@ in
 
     home.persistence."/persist".directories = [
       ".local/share/nushell"
+      ".config/nushell/history"
     ];
   };
 }
