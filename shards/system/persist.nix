@@ -7,6 +7,8 @@ _:
       directories = [
         "/var/lib/nixos"
         "/var/lib/systemd"
+        "/root/.cache/nix"
+        "/root/.local/state/nix"
       ];
       files = [
         "/etc/machine-id"
