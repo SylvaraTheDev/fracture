@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (config.fracture.user) login;
@@ -26,7 +31,7 @@ in
         pkief.material-icon-theme
       ];
       profiles.default.userSettings = {
-        "editor.fontFamily" = "Fira Code Nerd Font, 'Fira Code', monospace";
+        "editor.fontFamily" = lib.mkForce "Fira Code Nerd Font, 'Fira Code', monospace";
         "editor.fontLigatures" = true;
         "window.dialogStyle" = "custom";
         "git.confirmSync" = false;
