@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   inherit (config.fracture) user;
@@ -7,6 +7,8 @@ in
   environment.persistence."/persist-projects".directories = [
     "/projects/repos"
   ];
+
+  environment.systemPackages = [ pkgs.gitleaks ];
 
   home-manager.users.${user.login} = _: {
     programs.git = {
