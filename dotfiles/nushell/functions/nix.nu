@@ -10,7 +10,7 @@ def --env rebuild [] {
   just check
 
   echo "> Building NixOS configuration"
-  sudo nixos-rebuild switch --flake . |& nom
+  sudo nixos-rebuild switch --flake . o+e>| nom
 }
 
 # Update flake
