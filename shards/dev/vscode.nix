@@ -21,7 +21,7 @@ in
         elixir-lsp.vscode-elixir-ls
         golang.go
         dart-code.dart-code
-        nefrob.vscode-just-syntax
+        skellock.just
         haskell.haskell
         ms-python.python
         ms-toolsai.jupyter
