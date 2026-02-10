@@ -1,10 +1,7 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
-  programs.steam.extraCompatPackages = [
-    pkgs.proton-ge-bin
-    inputs.nix-proton-cachyos.packages.${pkgs.system}.proton-cachyos
-  ];
+  programs.steam.extraCompatPackages = [ pkgs.proton-ge-bin ];
 
   # Proton / Wine / DXVK / VKD3D environment variables
   environment.variables = {

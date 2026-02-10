@@ -74,10 +74,11 @@
     };
 
     # === Gaming ===
-    nix-proton-cachyos = {
-      url = "github:kimjongbing/nix-proton-cachyos";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # CachyOS Proton (x86-64-v3) — mirror currently down, re-enable when available:
+    # nix-proton-cachyos = {
+    #   url = "github:kimjongbing/nix-proton-cachyos";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     # === Development ===
     devenv.url = "github:cachix/devenv";
