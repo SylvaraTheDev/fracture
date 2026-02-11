@@ -23,9 +23,9 @@ in
       force = true;
     };
 
-    home.persistence."/persist".directories = [
-      ".local/share/nushell"
-      ".config/nushell/history"
-    ];
+    home.persistence."/persist" = {
+      directories = [ ".local/share/nushell" ];
+      files = [ ".config/nushell/history.sqlite3" ];
+    };
   };
 }
