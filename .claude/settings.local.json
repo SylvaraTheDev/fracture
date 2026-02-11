@@ -68,7 +68,12 @@
       "WebFetch(domain:deltahub.io)",
       "Bash(niri validate:*)",
       "Bash(scx_lavd:*)",
-      "Bash(sysctl:*)"
+      "Bash(sysctl:*)",
+      "Bash(lspci:*)",
+      "Bash(nvidia-smi:*)",
+      "Bash(niri msg:*)",
+      "Bash(nvidia-settings:*)",
+      "Bash(busctl:*)"
     ]
   }
 }
