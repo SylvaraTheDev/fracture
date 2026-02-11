@@ -23,11 +23,6 @@ _:
           LIBVA_DRIVER_NAME = "mesa";
         };
       };
-      "dev.dergs.Tonearm" = {
-        "Session Bus Policy" = {
-          "org.freedesktop.secrets" = "talk";
-        };
-      };
     };
   };
 
