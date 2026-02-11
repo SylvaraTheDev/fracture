@@ -26,6 +26,9 @@ in
         ms-python.python
         ms-toolsai.jupyter
         ms-vscode.cpptools
+        ms-vscode.cmake-tools
+        mesonbuild.mesonbuild
+        donjayamanne.githistory
         esbenp.prettier-vscode
         redhat.vscode-yaml
         danielgavin.ols
