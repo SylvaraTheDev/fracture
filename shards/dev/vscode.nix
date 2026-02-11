@@ -59,6 +59,7 @@ in
         "screencastMode.fontSize" = 64.0;
         "terminal.integrated.fontSize" = 16.0;
         "window.dialogStyle" = "custom";
+        "workbench.colorTheme" = "Stylix";
         "workbench.iconTheme" = "material-icon-theme";
         "workbench.startupEditor" = "none";
       };
