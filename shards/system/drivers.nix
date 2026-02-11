@@ -59,8 +59,10 @@
     # Wayland / Desktop
     LIBVA_DRIVER_NAME = "nvidia";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
     NIXOS_OZONE_WL = "1";
+    GBM_BACKEND = "nvidia-drm";
+    NVD_BACKEND = "direct";
 
     # Shader cache — persist on fast storage, never auto-clean
     __GL_SHADER_DISK_CACHE = "1";
