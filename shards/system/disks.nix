@@ -38,7 +38,7 @@ in
       fsType = "tmpfs";
       mountOptions = [
         "defaults"
-        "size=2G"
+        "size=4G"
         "mode=755"
         "noatime"
       ];
