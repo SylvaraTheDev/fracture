@@ -62,6 +62,7 @@ in
         "workbench.colorTheme" = "Stylix";
         "workbench.iconTheme" = "material-icon-theme";
         "workbench.startupEditor" = "none";
+        "explorer.confirmPasteNative" = false;
       };
     };
 
