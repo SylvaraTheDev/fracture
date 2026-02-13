@@ -1,22 +1,18 @@
 _: {
   perSystem =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     let
-      lang = name: import ../shards/dev/shells/${name}.nix { inherit pkgs; };
+      shellsDir = ../shards/dev/shells;
+      entries = builtins.readDir shellsDir;
+      shells = lib.mapAttrs' (name: _: {
+        name = lib.removeSuffix ".nix" name;
+        value = import (shellsDir + "/${name}") {
+          inherit pkgs;
+          __isDevShell = true;
+        };
+      }) (lib.filterAttrs (_: type: type == "regular") entries);
     in
     {
-      devenv.shells = {
-        nix = lang "nix";
-        python = lang "python";
-        go = lang "go";
-        elixir = lang "elixir";
-        dart = lang "dart";
-        c = lang "c";
-        odin = lang "odin";
-        haskell = lang "haskell";
-        qml = lang "qml";
-        packaging = lang "packaging";
-        kubernetes = lang "kubernetes";
-      };
+      devenv.shells = shells;
     };
 }
