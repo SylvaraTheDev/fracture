@@ -1,20 +1,13 @@
+{ pkgs }:
 {
-  pkgs,
-  __isDevShell ? false,
-  ...
-}:
-if __isDevShell then
-  {
-    packages = with pkgs; [
-      kubectl
-      talosctl
-      omnictl
-      helm
-    ];
-    enterShell = ''
-      echo "Kubernetes development shell"
-      kubectl version --client --short 2>/dev/null || echo "kubectl ready"
-    '';
-  }
-else
-  { }
+  packages = with pkgs; [
+    kubectl
+    talosctl
+    omnictl
+    helm
+  ];
+  enterShell = ''
+    echo "Kubernetes development shell"
+    kubectl version --client --short 2>/dev/null || echo "kubectl ready"
+  '';
+}

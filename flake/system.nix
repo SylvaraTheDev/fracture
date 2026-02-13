@@ -10,7 +10,7 @@ let
         let
           path = dir + "/${name}";
         in
-        if type == "directory" then
+        if type == "directory" && name != "shells" then
           findModules path
         else if type == "regular" && inputs.nixpkgs.lib.strings.hasSuffix ".nix" name then
           [ path ]
@@ -32,7 +32,6 @@ in
       inputs.stylix.nixosModules.stylix
       inputs.nix-flatpak.nixosModules.nix-flatpak
       inputs.nix-index-database.nixosModules.nix-index
-      { _module.args.__isDevShell = false; }
       (
         { config, ... }:
         {
