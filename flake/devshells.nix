@@ -2,7 +2,7 @@ _: {
   perSystem =
     { pkgs, ... }:
     let
-      lang = name: import ../shards/dev/languages/${name}.nix { inherit pkgs; };
+      lang = name: import ../shards/dev/shells/${name}.nix { inherit pkgs; };
     in
     {
       devenv.shells = {
