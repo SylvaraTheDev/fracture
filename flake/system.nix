@@ -32,6 +32,7 @@ in
       inputs.stylix.nixosModules.stylix
       inputs.nix-flatpak.nixosModules.nix-flatpak
       inputs.nix-index-database.nixosModules.nix-index
+      { _module.args.__isDevShell = false; }
       (
         { config, ... }:
         {
