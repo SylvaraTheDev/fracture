@@ -9,35 +9,6 @@ let
   inherit (config.fracture.user) login;
   dotfiles = config.fracture.dotfilesDir;
 
-  # MCP server definitions (merged into ~/.claude.json on activation)
-  mcpServers = {
-    github = {
-      type = "http";
-      url = "https://api.githubcopilot.com/mcp/";
-    };
-    context7 = {
-      type = "http";
-      url = "https://mcp.context7.com/mcp";
-    };
-    nixos = {
-      type = "stdio";
-      command = "nix";
-      args = [
-        "run"
-        "github:utensils/mcp-nixos"
-        "--"
-      ];
-    };
-    "sequential-thinking" = {
-      type = "stdio";
-      command = "${pkgs.nodejs_22}/bin/npx";
-      args = [
-        "-y"
-        "@modelcontextprotocol/server-sequential-thinking"
-      ];
-    };
-  };
-
   # Hook scripts (full nix store paths avoid PATH issues)
   nixfmtHook = pkgs.writeShellScript "claude-nixfmt-hook" ''
     fp=$(${lib.getExe pkgs.jq} -r '.tool_input.file_path // empty')
@@ -56,10 +27,45 @@ let
 in
 {
   home-manager.users.${login} =
-    { lib, ... }:
+    _:
     {
       programs.claude-code = {
         enable = true;
+
+        # MCP servers (wraps claude binary with --mcp-config)
+        mcpServers = {
+          github = {
+            type = "http";
+            url = "https://api.githubcopilot.com/mcp/";
+          };
+          context7 = {
+            type = "http";
+            url = "https://mcp.context7.com/mcp";
+          };
+          nixos = {
+            type = "stdio";
+            command = "nix";
+            args = [
+              "run"
+              "github:utensils/mcp-nixos"
+              "--"
+            ];
+          };
+          "sequential-thinking" = {
+            type = "stdio";
+            command = "${pkgs.nodejs_22}/bin/npx";
+            args = [
+              "-y"
+              "@modelcontextprotocol/server-sequential-thinking"
+            ];
+          };
+        };
+
+        # Global instructions
+        memory.source = dotfiles + "/claude/CLAUDE.md";
+        agentsDir = dotfiles + "/claude/agents";
+        rulesDir = dotfiles + "/claude/rules";
+
         settings = {
           env = {
             ANTHROPIC_MODEL = "claude-opus-4-6";
@@ -107,29 +113,6 @@ in
           };
         };
       };
-
-      # Global instructions, agents, and rules
-      home.file.".claude/CLAUDE.md".source = dotfiles + "/claude/CLAUDE.md";
-      home.file.".claude/agents" = {
-        source = dotfiles + "/claude/agents";
-        recursive = true;
-      };
-      home.file.".claude/rules" = {
-        source = dotfiles + "/claude/rules";
-        recursive = true;
-      };
-
-      # Merge MCP servers into ~/.claude.json (preserves runtime state)
-      home.activation.claudeMcpServers = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        CLAUDE_JSON="$HOME/.claude.json"
-        DESIRED_MCP='${builtins.toJSON mcpServers}'
-        if [ -f "$CLAUDE_JSON" ]; then
-          ${lib.getExe pkgs.jq} --argjson mcp "$DESIRED_MCP" '.mcpServers = $mcp' \
-            "$CLAUDE_JSON" > "$CLAUDE_JSON.tmp" && mv "$CLAUDE_JSON.tmp" "$CLAUDE_JSON"
-        else
-          echo '{"mcpServers":'"$DESIRED_MCP"'}' > "$CLAUDE_JSON"
-        fi
-      '';
 
       home.persistence."/persist" = {
         directories = [
