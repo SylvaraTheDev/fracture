@@ -27,6 +27,12 @@ let
   compactHook = pkgs.writeShellScript "claude-compact-hook" ''
     echo "Build: just check | Format: nix fmt | Validate: nix flake check"
   '';
+
+  # Wrapper reads sops-rendered token at invocation time, execs github-mcp-server
+  githubMcpWrapper = pkgs.writeShellScript "github-mcp" ''
+    export GITHUB_PERSONAL_ACCESS_TOKEN="$(cat "${githubAuthPath}")"
+    exec ${lib.getExe pkgs.github-mcp-server} stdio
+  '';
 in
 {
   # Render GitHub PAT into a user-readable file for Claude MCP auth
@@ -38,7 +44,7 @@ in
   };
 
   home-manager.users.${login} =
-    { lib, ... }:
+    _:
     {
       programs.claude-code = {
         enable = true;
@@ -65,6 +71,10 @@ in
               "-y"
               "@modelcontextprotocol/server-sequential-thinking"
             ];
+          };
+          github = {
+            type = "stdio";
+            command = toString githubMcpWrapper;
           };
         };
 
@@ -120,17 +130,6 @@ in
           };
         };
       };
-
-      home.activation.injectGithubMcpAuth = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        if [ -f "${githubAuthPath}" ] && [ -f "$HOME/.claude.json" ]; then
-          token=$(cat "${githubAuthPath}")
-          ${lib.getExe pkgs.jq} \
-            --arg token "Bearer $token" \
-            '.mcpServers.github = {"type":"http","url":"https://api.githubcopilot.com/mcp/","headers":{"Authorization":$token}}' \
-            "$HOME/.claude.json" > "$HOME/.claude.json.tmp" \
-            && mv "$HOME/.claude.json.tmp" "$HOME/.claude.json"
-        fi
-      '';
 
       home.persistence."/persist" = {
         directories = [

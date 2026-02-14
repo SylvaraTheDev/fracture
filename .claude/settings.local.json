@@ -70,7 +70,8 @@
       "Bash(niri msg:*)",
       "Bash(nvidia-settings:*)",
       "Bash(busctl:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "mcp__nixos__nix"
     ]
   }
 }
