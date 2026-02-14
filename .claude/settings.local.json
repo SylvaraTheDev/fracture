@@ -80,7 +80,13 @@
       "Bash(bash:*)",
       "Bash(xargs rm -rf:*)",
       "mcp__github__get_file_contents",
-      "mcp__github__create_or_update_file"
+      "mcp__github__create_or_update_file",
+      "Bash(ghq list:*)",
+      "Bash(ghq root:*)",
+      "Bash(ghq get:*)",
+      "Bash(for repo in agents factorio filigree fracture oracle tasker nix-fluxer)",
+      "Bash(do echo -n \"$repo: \")",
+      "mcp__github__search_repositories"
     ]
   }
 }
