@@ -57,7 +57,8 @@ in
 
       # Native game data (lives outside Steam)
       ".factorio" # Factorio — saves, mods, config
-      ".local/share/Paradox Interactive" # Stellaris — saves, mods, launcher
+      ".local/share/Paradox Interactive" # Stellaris — saves, mods, settings
+      ".paradoxlauncher" # Paradox Launcher v2 — login state, settings
 
       # External mod managers
       ".config/r2modmanPlus-local" # R2ModMan — Risk of Rain 2 mod profiles
