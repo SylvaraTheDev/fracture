@@ -54,10 +54,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-    # fluxer = {
-    #   url = "github:SylvaraTheDev/nix-fluxer";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    fluxer = {
+      url = "git+ssh://git@github.com/SylvaraTheDev/nix-fluxer";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # === Theming ===
     stylix = {
