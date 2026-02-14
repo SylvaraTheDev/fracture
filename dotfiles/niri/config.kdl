@@ -89,6 +89,7 @@ spawn-sh-at-startup "pkill -x swaybg 2>/dev/null; exec swaybg -m fill -o DP-1 -i
 layout {
   // Window gaps and border styling
   gaps 10
+  corner-radius 12
 
   // Border settings
   border {
