@@ -2,7 +2,7 @@
 name: researcher
 description: Deep research into documentation, APIs, and technical solutions. Use when you need knowledge before designing or implementing.
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
-model: haiku
+model: sonnet
 permissionMode: default
 memory: user
 ---
