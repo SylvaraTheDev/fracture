@@ -16,6 +16,7 @@ in
       elixir
       erlang
       flutter
+      nodejs_22
 
       # Nix tools
       nil

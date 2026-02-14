@@ -69,7 +69,8 @@
       "Bash(nvidia-smi:*)",
       "Bash(niri msg:*)",
       "Bash(nvidia-settings:*)",
-      "Bash(busctl:*)"
+      "Bash(busctl:*)",
+      "Bash(python3:*)"
     ]
   }
 }

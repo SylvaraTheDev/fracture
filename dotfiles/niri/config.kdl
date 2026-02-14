@@ -194,6 +194,10 @@ binds {
   Ctrl+Alt+Shift+9 { move-window-to-workspace "right-4"; }
   Ctrl+Alt+Shift+0 { move-window-to-workspace "right-5"; }
 
+  // Screenshots
+  Super+X { spawn-sh "grim -g \"$(slurp)\" - | wl-copy"; }
+  Super+Alt+X { spawn-sh "mkdir -p ~/Screenshots && grim -g \"$(slurp)\" ~/Screenshots/\"Screenshot $(date +%Y-%m-%d_%H-%M-%S).png\""; }
+
   // Overview
   Super+Tab { toggle-overview; }
 }

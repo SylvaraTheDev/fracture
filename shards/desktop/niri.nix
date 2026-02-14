@@ -14,7 +14,13 @@ in
   imports = [ inputs.niri.nixosModules.niri ];
 
   # XWayland support via xwayland-satellite (Niri has no built-in XWayland)
-  environment.systemPackages = [ pkgs.xwayland-satellite ];
+  # Screenshot tools: grim (capture) + slurp (region select) + wl-clipboard (clipboard)
+  environment.systemPackages = [
+    pkgs.xwayland-satellite
+    pkgs.grim
+    pkgs.slurp
+    pkgs.wl-clipboard
+  ];
 
   programs.niri.enable = true;
   programs.niri.package =
