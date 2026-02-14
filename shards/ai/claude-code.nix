@@ -45,10 +45,6 @@ in
 
         # MCP servers (wraps claude binary with --mcp-config)
         mcpServers = {
-          github = {
-            type = "http";
-            url = "https://api.githubcopilot.com/mcp/";
-          };
           context7 = {
             type = "http";
             url = "https://mcp.context7.com/mcp";
@@ -125,13 +121,12 @@ in
         };
       };
 
-      # Inject GitHub PAT into MCP config after programs.claude-code writes .claude.json
       home.activation.injectGithubMcpAuth = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         if [ -f "${githubAuthPath}" ] && [ -f "$HOME/.claude.json" ]; then
           token=$(cat "${githubAuthPath}")
           ${lib.getExe pkgs.jq} \
-            --arg auth "Bearer $token" \
-            '.mcpServers.github.headers.Authorization = $auth' \
+            --arg token "Bearer $token" \
+            '.mcpServers.github = {"type":"http","url":"https://api.githubcopilot.com/mcp/","headers":{"Authorization":$token}}' \
             "$HOME/.claude.json" > "$HOME/.claude.json.tmp" \
             && mv "$HOME/.claude.json.tmp" "$HOME/.claude.json"
         fi
