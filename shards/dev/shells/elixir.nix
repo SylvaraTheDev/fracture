@@ -1,5 +1,4 @@
-_:
-{
+_: {
   languages.elixir.enable = true;
   languages.erlang.enable = true;
   enterShell = ''
