@@ -37,112 +37,114 @@ in
     mode = "0400";
   };
 
-  home-manager.users.${login} = _: {
-    programs.claude-code = {
-      enable = true;
+  home-manager.users.${login} =
+    { lib, ... }:
+    {
+      programs.claude-code = {
+        enable = true;
 
-      # MCP servers (wraps claude binary with --mcp-config)
-      mcpServers = {
-        github = {
-          type = "http";
-          url = "https://api.githubcopilot.com/mcp/";
-        };
-        context7 = {
-          type = "http";
-          url = "https://mcp.context7.com/mcp";
-        };
-        nixos = {
-          type = "stdio";
-          command = "nix";
-          args = [
-            "run"
-            "github:utensils/mcp-nixos"
-            "--"
-          ];
-        };
-        "sequential-thinking" = {
-          type = "stdio";
-          command = "${pkgs.nodejs_22}/bin/npx";
-          args = [
-            "-y"
-            "@modelcontextprotocol/server-sequential-thinking"
-          ];
-        };
-      };
-
-      # Global instructions
-      memory.source = dotfiles + "/claude/CLAUDE.md";
-      agentsDir = dotfiles + "/claude/agents";
-      rulesDir = dotfiles + "/claude/rules";
-
-      settings = {
-        env = {
-          ANTHROPIC_MODEL = "claude-opus-4-6";
-          CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
-        };
-        projects = {
-          "/projects/repos" = {
-            hasTrustDialogAccepted = true;
+        # MCP servers (wraps claude binary with --mcp-config)
+        mcpServers = {
+          github = {
+            type = "http";
+            url = "https://api.githubcopilot.com/mcp/";
+          };
+          context7 = {
+            type = "http";
+            url = "https://mcp.context7.com/mcp";
+          };
+          nixos = {
+            type = "stdio";
+            command = "nix";
+            args = [
+              "run"
+              "github:utensils/mcp-nixos"
+              "--"
+            ];
+          };
+          "sequential-thinking" = {
+            type = "stdio";
+            command = "${pkgs.nodejs_22}/bin/npx";
+            args = [
+              "-y"
+              "@modelcontextprotocol/server-sequential-thinking"
+            ];
           };
         };
-        hooks = {
-          PostToolUse = [
-            {
-              matcher = "Edit|Write";
-              hooks = [
-                {
-                  type = "command";
-                  command = toString nixfmtHook;
-                }
-              ];
-            }
-          ];
-          Notification = [
-            {
-              matcher = "";
-              hooks = [
-                {
-                  type = "command";
-                  command = toString notifyHook;
-                }
-              ];
-            }
-          ];
-          SessionStart = [
-            {
-              matcher = "compact";
-              hooks = [
-                {
-                  type = "command";
-                  command = toString compactHook;
-                }
-              ];
-            }
-          ];
+
+        # Global instructions
+        memory.source = dotfiles + "/claude/CLAUDE.md";
+        agentsDir = dotfiles + "/claude/agents";
+        rulesDir = dotfiles + "/claude/rules";
+
+        settings = {
+          env = {
+            ANTHROPIC_MODEL = "claude-opus-4-6";
+            CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
+          };
+          projects = {
+            "/projects/repos" = {
+              hasTrustDialogAccepted = true;
+            };
+          };
+          hooks = {
+            PostToolUse = [
+              {
+                matcher = "Edit|Write";
+                hooks = [
+                  {
+                    type = "command";
+                    command = toString nixfmtHook;
+                  }
+                ];
+              }
+            ];
+            Notification = [
+              {
+                matcher = "";
+                hooks = [
+                  {
+                    type = "command";
+                    command = toString notifyHook;
+                  }
+                ];
+              }
+            ];
+            SessionStart = [
+              {
+                matcher = "compact";
+                hooks = [
+                  {
+                    type = "command";
+                    command = toString compactHook;
+                  }
+                ];
+              }
+            ];
+          };
         };
       };
-    };
 
-    # Inject GitHub PAT into MCP config after programs.claude-code writes .claude.json
-    home.activation.injectGithubMcpAuth = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      if [ -f "${githubAuthPath}" ] && [ -f "$HOME/.claude.json" ]; then
-        token=$(cat "${githubAuthPath}")
-        ${lib.getExe pkgs.jq} \
-          --arg auth "Bearer $token" \
-          '.mcpServers.github.headers.Authorization = $auth' \
-          "$HOME/.claude.json" > "$HOME/.claude.json.tmp" \
-          && mv "$HOME/.claude.json.tmp" "$HOME/.claude.json"
-      fi
-    '';
+      # Inject GitHub PAT into MCP config after programs.claude-code writes .claude.json
+      home.activation.injectGithubMcpAuth = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        if [ -f "${githubAuthPath}" ] && [ -f "$HOME/.claude.json" ]; then
+          token=$(cat "${githubAuthPath}")
+          ${lib.getExe pkgs.jq} \
+            --arg auth "Bearer $token" \
+            '.mcpServers.github.headers.Authorization = $auth' \
+            "$HOME/.claude.json" > "$HOME/.claude.json.tmp" \
+            && mv "$HOME/.claude.json.tmp" "$HOME/.claude.json"
+        fi
+      '';
 
-    home.persistence."/persist" = {
-      directories = [
-        ".claude"
-        ".config/claude-code"
-      ];
-      files = [
-        ".claude.json"
-      ];
+      home.persistence."/persist" = {
+        directories = [
+          ".claude"
+          ".config/claude-code"
+        ];
+        files = [
+          ".claude.json"
+        ];
+      };
     };
-  };
 }
