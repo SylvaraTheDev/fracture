@@ -318,6 +318,23 @@
         "type": "github"
       }
     },
+    "fluxer": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1771097754,
+        "narHash": "sha256-8EBC0Uh/shM8Q+ieDoIkKJThsqbAvIntc/sikgEB3dg=",
+        "path": "/projects/repos/github.com/SylvaraTheDev/nix-fluxer",
+        "type": "path"
+      },
+      "original": {
+        "path": "/projects/repos/github.com/SylvaraTheDev/nix-fluxer",
+        "type": "path"
+      }
+    },
     "fromYaml": {
       "flake": false,
       "locked": {
@@ -838,6 +855,7 @@
         "devenv": "devenv",
         "disko": "disko",
         "flake-parts": "flake-parts_2",
+        "fluxer": "fluxer",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "infuse": "infuse",

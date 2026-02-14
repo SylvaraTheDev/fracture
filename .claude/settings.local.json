@@ -71,7 +71,12 @@
       "Bash(nvidia-settings:*)",
       "Bash(busctl:*)",
       "Bash(python3:*)",
-      "mcp__nixos__nix"
+      "mcp__nixos__nix",
+      "mcp__github__get_me",
+      "mcp__context7__resolve-library-id",
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(tar:*)",
+      "Bash(nix-hash:*)"
     ]
   }
 }
