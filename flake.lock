@@ -325,11 +325,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771098634,
-        "narHash": "sha256-+fXCpnN8AoMwSY9cupYFHUd1Le9PvFqcqGB6UDh7gNo=",
+        "lastModified": 1771109116,
+        "narHash": "sha256-VR41rDLxAkt9DfEZ0q418rR06nh84DZNrUTW/88R2/Y=",
         "ref": "refs/heads/main",
-        "rev": "4794329e413dd85ce4eb02de6e761ef68e66bbec",
-        "revCount": 1,
+        "rev": "1c6a18cfc7d5027c4e2f1b84b303ddb294944086",
+        "revCount": 2,
         "type": "git",
         "url": "ssh://git@github.com/SylvaraTheDev/nix-fluxer"
       },
