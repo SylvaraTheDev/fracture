@@ -54,7 +54,19 @@ in
   home-manager.users.${login} = _: {
     home.persistence."/persist".directories = [
       ".local/share/Steam"
-      # Persist shader caches across reboots (critical for impermanence systems)
+
+      # Native game data (lives outside Steam)
+      ".factorio" # Factorio — saves, mods, config
+      ".local/share/Paradox Interactive" # Stellaris — saves, mods, launcher
+
+      # External mod managers
+      ".config/r2modmanPlus-local" # R2ModMan — Risk of Rain 2 mod profiles
+
+      # Proton titles (saves live in compatdata inside .local/share/Steam):
+      # Helldivers 2, The Finals, Risk of Rain 2, Runescape,
+      # Metal Hellsinger, GTFO, Elite Dangerous, Dune Awakening, Arc Raiders
+
+      # Shader caches (critical for impermanence systems)
       ".cache/nvidia"
       ".cache/nv"
       ".cache/mesa_shader_cache"

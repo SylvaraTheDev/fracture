@@ -89,7 +89,6 @@ spawn-sh-at-startup "pkill -x swaybg 2>/dev/null; exec swaybg -m fill -o DP-1 -i
 layout {
   // Window gaps and border styling
   gaps 10
-  corner-radius 12
 
   // Border settings
   border {
@@ -115,6 +114,12 @@ layout {
     // Colors inherit from border/focus by default[10]
   }
 
+}
+
+// Round all window corners and clip client-side shadows
+window-rule {
+  geometry-corner-radius 12
+  clip-to-geometry true
 }
 
 // Binds — adapt your Super-based shortcuts
