@@ -17,3 +17,6 @@ alias o = omnictl
 
 # Deckmaster
 alias deck = deckmaster -deck ~/.config/deckmaster/main.deck
+
+# Reload shell config
+alias reload = source ~/.config/nushell/config.nu
