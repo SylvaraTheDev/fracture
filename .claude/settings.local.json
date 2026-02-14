@@ -77,7 +77,8 @@
       "mcp__sequential-thinking__sequentialthinking",
       "Bash(tar:*)",
       "Bash(nix-hash:*)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(xargs rm -rf:*)"
     ]
   }
 }
