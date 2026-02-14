@@ -55,17 +55,14 @@ in
     home.persistence."/persist".directories = [
       ".local/share/Steam"
 
-      # Native game data (lives outside Steam)
-      ".factorio" # Factorio — saves, mods, config
-      ".local/share/Paradox Interactive" # Stellaris — saves, mods, settings
+      # Stellaris (native Linux — saves, mods, settings)
+      ".local/share/Paradox Interactive"
       ".paradoxlauncher" # Paradox Launcher v2 — login state, settings
-
-      # External mod managers
-      ".config/r2modmanPlus-local" # R2ModMan — Risk of Rain 2 mod profiles
 
       # Proton titles (saves live in compatdata inside .local/share/Steam):
       # Helldivers 2, The Finals, Risk of Rain 2, Runescape,
       # Metal Hellsinger, GTFO, Elite Dangerous, Dune Awakening, Arc Raiders
+      # Factorio and R2ModMan persisted in their own shards
 
       # Shader caches (critical for impermanence systems)
       ".cache/nvidia"

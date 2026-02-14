@@ -43,7 +43,7 @@ let
     root="$(${pkgs.git}/bin/git rev-parse --show-toplevel 2>/dev/null)" || exit 0
     [[ "$root" == */fracture ]] || exit 0
     cd "$root"
-    ${pkgs.nix}/bin/nix eval .#nixosConfigurations.fracture.config.system.build.toplevel --apply '_: "ok"' 2>&1
+    ${pkgs.nix}/bin/nix eval .#nixosConfigurations.fracture.config.system.build.toplevel --apply '_: "ok"' 1>&2
   '';
 
   # PreCompact: inject critical context before summarisation
