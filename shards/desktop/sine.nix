@@ -93,36 +93,56 @@ let
       });
 in
 {
-  home-manager.users.${login} = _: {
-    # Override browser package to include fx-autoconfig bootstrap in mozilla.cfg
-    # and disable the autoconfig sandbox so the bootstrap can access XPCOM.
-    # This only rebuilds the thin wrapFirefox wrapper (symlinks + config), not the engine.
-    programs.zen-browser.package = zenPackage;
+  home-manager.users.${login} =
+    { config, ... }:
+    {
+      # Override browser package to include fx-autoconfig bootstrap in mozilla.cfg
+      # and disable the autoconfig sandbox so the bootstrap can access XPCOM.
+      # This only rebuilds the thin wrapFirefox wrapper (symlinks + config), not the engine.
+      programs.zen-browser.package = zenPackage;
 
-    # Deterministic profile path at ~/.zen/default/
-    programs.zen-browser.profiles.${profileName} = {
-      isDefault = true;
-    };
+      # Create a writable profiles.ini so Zen can update install hashes/timestamps.
+      # The HM zen-browser module generates a read-only nix store symlink for profiles.ini
+      # whenever profiles are defined, which Zen can't write to — causing it to fall back
+      # to creating nested .zen/ dirs with random profile names on every boot.
+      home.activation.zenProfilesIni = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+        zen_dir="$HOME/.config/zen"
+        ini="$zen_dir/profiles.ini"
+        mkdir -p "$zen_dir"
+        if [ -L "$ini" ] || [ ! -e "$ini" ]; then
+          rm -f "$ini"
+          cat > "$ini" << 'INIEOF'
+        [Profile0]
+        Name=${profileName}
+        IsRelative=1
+        Path=${profileName}
+        Default=1
 
-    # fx-autoconfig loader infrastructure (with Sine locale registration patched in)
-    home.file."${profilePath}/chrome/utils" = {
-      source = "${fxAutoconfigUtils}";
-      recursive = true;
-    };
+        [General]
+        StartWithLastProfile=1
+        INIEOF
+        fi
+      '';
 
-    # Sine engine + bootloader
-    home.file."${profilePath}/chrome/JS/engine" = {
-      source = "${sine-src}/engine";
-      recursive = true;
-    };
-    home.file."${profilePath}/chrome/JS/sine.sys.mjs" = {
-      source = "${sine-src}/sine.sys.mjs";
-    };
+      # fx-autoconfig loader infrastructure (with Sine locale registration patched in)
+      home.file."${profilePath}/chrome/utils" = {
+        source = "${fxAutoconfigUtils}";
+        recursive = true;
+      };
 
-    # Sine locales
-    home.file."${profilePath}/chrome/locales" = {
-      source = "${sine-src}/locales";
-      recursive = true;
+      # Sine engine + bootloader
+      home.file."${profilePath}/chrome/JS/engine" = {
+        source = "${sine-src}/engine";
+        recursive = true;
+      };
+      home.file."${profilePath}/chrome/JS/sine.sys.mjs" = {
+        source = "${sine-src}/sine.sys.mjs";
+      };
+
+      # Sine locales
+      home.file."${profilePath}/chrome/locales" = {
+        source = "${sine-src}/locales";
+        recursive = true;
+      };
     };
-  };
 }

@@ -87,7 +87,8 @@
       "Bash(for repo in agents factorio filigree fracture oracle tasker nix-fluxer)",
       "Bash(do echo -n \"$repo: \")",
       "mcp__github__search_repositories",
-      "Bash(vulkaninfo:*)"
+      "Bash(vulkaninfo:*)",
+      "Bash(just check:*)"
     ]
   }
 }
