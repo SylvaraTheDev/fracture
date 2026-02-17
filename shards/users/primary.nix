@@ -44,35 +44,6 @@ in
     xdg = {
       enable = true;
 
-      desktopEntries.emacs = {
-        name = "Emacs";
-        genericName = "Text Editor";
-        comment = "Edit text";
-        exec = "emacs %F";
-        icon = "emacs";
-        type = "Application";
-        terminal = false;
-        categories = [
-          "Development"
-          "TextEditor"
-          "Utility"
-        ];
-        mimeType = [
-          "text/english"
-          "text/plain"
-          "text/x-makefile"
-          "text/x-c++hdr"
-          "text/x-c++src"
-          "text/x-chdr"
-          "text/x-csrc"
-          "text/x-java"
-          "text/x-python"
-          "application/x-shellscript"
-          "text/x-c"
-          "text/x-c++"
-        ];
-      };
-
       mimeApps = {
         enable = true;
         defaultApplications = {
