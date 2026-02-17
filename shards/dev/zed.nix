@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   ...
 }:
 
@@ -30,8 +29,6 @@ in
         "git-firefly"
       ];
       userSettings = {
-        # Stylix handles theme/fonts/sizes — override theme to pick our own
-        theme = lib.mkForce "One Dark Pro";
         buffer_font_features = {
           calt = true;
           liga = true;
