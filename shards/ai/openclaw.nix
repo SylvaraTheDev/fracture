@@ -73,7 +73,7 @@ in
         "${vaultPath}:${vaultPath}:rw"
         "/projects/openclaw/obsidian-cli-bin:/opt/obsidian-cli:ro"
         "/home/${user.login}/.config/obsidian:/home/node/.config/obsidian:rw"
-        "/projects/repos/github.com/sylvara/fracture:/git/fracture:ro"
+        "/projects/repos/github.com/SylvaraTheDev/fracture:/git/fracture:ro"
       ];
       extraOptions = [ "--network=host" ];
     };

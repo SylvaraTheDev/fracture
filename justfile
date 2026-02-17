@@ -138,6 +138,21 @@ hooks:
 fmt:
     nix fmt
 
-# Fix auto-fixable issues
+# Fix auto-fixable issues (format + statix auto-fixes)
 fix:
     nix fmt
+    nix develop .#nix --no-pure-eval --command statix fix .
+
+# Audit all persisted paths across shards
+persist-audit:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "=== Persistence Audit ==="
+    echo "Paths that survive reboot, by shard."
+    echo ""
+    for file in $(grep -rl '\.persistence\.' shards/ --include='*.nix' | sort); do
+        shard=$(echo "$file" | sed 's|^shards/||; s|\.nix$||')
+        echo "[$shard]"
+        grep -A 15 '\.persistence\.' "$file" | sed 's/^--$//' | sed '/^$/d' | sed 's/^/  /'
+        echo ""
+    done

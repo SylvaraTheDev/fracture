@@ -17,6 +17,9 @@ let
     fp=$(${lib.getExe pkgs.jq} -r '.tool_input.file_path // empty')
     if [[ "$fp" == *.nix ]]; then
       ${lib.getExe pkgs.nixfmt} "$fp" 2>/dev/null || true
+      if ! ${pkgs.nix}/bin/nix-instantiate --parse "$fp" >/dev/null 2>&1; then
+        echo "WARNING: $fp has Nix syntax errors" >&2
+      fi
     fi
   '';
 
@@ -38,11 +41,17 @@ let
     fi
   '';
 
-  # Stop: evaluate NixOS config before Claude finishes (fracture repo only)
+  # Stop: evaluate NixOS config before Claude finishes (fracture repo only, gated on .nix changes)
   stopCheckHook = pkgs.writeShellScript "claude-stop-check" ''
     root="$(${pkgs.git}/bin/git rev-parse --show-toplevel 2>/dev/null)" || exit 0
     [[ "$root" == */fracture ]] || exit 0
     cd "$root"
+    # Only run expensive eval if .nix files were actually modified
+    nix_changed=$(${pkgs.git}/bin/git diff --name-only HEAD -- '*.nix' 2>/dev/null)
+    nix_staged=$(${pkgs.git}/bin/git diff --name-only --staged -- '*.nix' 2>/dev/null)
+    if [[ -z "$nix_changed" && -z "$nix_staged" ]]; then
+      exit 0
+    fi
     ${pkgs.nix}/bin/nix eval .#nixosConfigurations.fracture.config.system.build.toplevel --apply '_: "ok"' 1>&2
   '';
 
@@ -110,6 +119,7 @@ in
       # Global instructions
       memory.source = dotfiles + "/claude/CLAUDE.md";
       agentsDir = dotfiles + "/claude/agents";
+      commandsDir = dotfiles + "/claude/commands";
       rulesDir = dotfiles + "/claude/rules";
 
       settings = {

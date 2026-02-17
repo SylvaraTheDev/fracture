@@ -47,7 +47,7 @@
     };
 
     vm = {
-      enable = true;
+      enable = false;
       waylandDisplay = "wayland-1";
     };
   };

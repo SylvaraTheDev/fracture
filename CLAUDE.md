@@ -10,7 +10,7 @@
 ## Shard Conventions
 - Each shard is a standalone NixOS module: `{ config, lib, pkgs, ... }: { ... }`
 - Home-manager config uses: `home-manager.users.${config.fracture.user.login} = ...`
-- Categories: `system/`, `desktop/`, `dev/`, `ai/`, `gaming/`, `media/`, `shell/`, `communication/`, `containers/`
+- Categories: `system/`, `desktop/`, `dev/`, `ai/`, `gaming/`, `media/`, `shell/`, `communication/`, `containers/`, `users/`
 - The `shells/` subdirectory under `dev/` is excluded from auto-discovery (devshells loaded separately)
 - Reference `config.fracture.dotfilesDir` for dotfile paths, never hardcode
 
@@ -33,6 +33,16 @@
 - **treefmt** with: nixfmt (formatting), statix (static analysis), deadnix (dead code detection)
 - Pre-commit via prek (Rust-based runner)
 - Secret scanning via gitleaks
+
+## Available Options (`fracture.*`)
+- `hostname` (str), `stateVersion` (str)
+- `user.login`, `user.name`, `user.git.name`, `user.git.email`, `user.groups` (listOf str)
+- `timezone` (str), `locale` (str)
+- `gpu` (enum: nvidia | amd | intel | none)
+- `disks.boot`, `disks.projects`, `disks.games` (str), `disks.swapSize` (str)
+- `secretsDir` (path), `dotfilesDir` (path)
+- `vm.enable` (bool), `vm.waylandDisplay` (str)
+- Per-shard options: `obsidian.basePath`, `obsidian.vaults`, `rclone.b2.jobs`
 
 ## Key Files
 - `shards/options.nix` — all `fracture.*` option definitions
