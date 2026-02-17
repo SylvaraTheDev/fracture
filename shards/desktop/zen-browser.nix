@@ -8,7 +8,7 @@ let
 in
 {
   home-manager.users.${login} =
-    { ... }:
+    { config, ... }:
     {
       imports = [ inputs.zen-browser.homeModules.twilight ];
       programs.zen-browser = {
@@ -86,6 +86,29 @@ in
 
       # Zen Browser manages its own theming
       stylix.targets.zen-browser.enable = false;
+
+      # Create a writable profiles.ini so Zen can update install hashes/timestamps.
+      # The HM module generates a read-only nix store symlink for profiles.ini when
+      # profiles are defined, which Zen can't write to — causing it to create nested
+      # dirs with random profile names on every boot.
+      home.activation.zenProfilesIni = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+        zen_dir="$HOME/.config/zen"
+        ini="$zen_dir/profiles.ini"
+        mkdir -p "$zen_dir"
+        if [ -L "$ini" ] || [ ! -e "$ini" ]; then
+          rm -f "$ini"
+          cat > "$ini" << 'INIEOF'
+        [Profile0]
+        Name=default
+        IsRelative=1
+        Path=default
+        Default=1
+
+        [General]
+        StartWithLastProfile=1
+        INIEOF
+        fi
+      '';
 
       home.persistence."/persist".directories = [
         ".config/zen"
