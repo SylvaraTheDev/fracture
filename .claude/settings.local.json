@@ -89,7 +89,8 @@
       "mcp__github__search_repositories",
       "Bash(vulkaninfo:*)",
       "Bash(just check:*)",
-      "Bash(du:*)"
+      "Bash(du:*)",
+      "mcp__acp__Bash"
     ]
   }
 }
