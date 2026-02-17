@@ -9,9 +9,10 @@ let
   inherit (config.fracture.user) login;
   githubTokenPath = config.sops.secrets.github-token.path;
 
-  # Wrapper that injects GITHUB_TOKEN from sops before launching Zed
+  # Wrapper that injects GITHUB_TOKEN from sops and forces NVIDIA Vulkan ICD
   zedWrapped = pkgs.writeShellScriptBin "zeditor" ''
     export GITHUB_TOKEN="$(cat "${githubTokenPath}")"
+    export VK_ICD_FILENAMES=/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json
     exec ${lib.getExe pkgs.zed-editor} "$@"
   '';
 in
