@@ -47,6 +47,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     vicinae.url = "github:vicinaehq/vicinae";
+    filigree = {
+      url = "git+ssh://git@github.com/SylvaraTheDev/filigree";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.quickshell.follows = "quickshell";
+    };
 
     # === Apps ===
     zen-browser = {

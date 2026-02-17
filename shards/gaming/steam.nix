@@ -58,6 +58,7 @@ in
       # Stellaris (native Linux — saves, mods, settings)
       ".local/share/Paradox Interactive"
       ".paradoxlauncher" # Paradox Launcher v2 — login state, settings
+      ".config/paradox-launcher-v2" # Paradox Launcher v2 — playsets, mod load order
 
       # Proton titles (saves live in compatdata inside .local/share/Steam):
       # Helldivers 2, The Finals, Risk of Rain 2, Runescape,
