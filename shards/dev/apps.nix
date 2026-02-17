@@ -2,13 +2,10 @@
 
 let
   inherit (config.fracture.user) login;
-  dotfiles = config.fracture.dotfilesDir;
 in
 {
   home-manager.users.${login} = _: {
     home.packages = with pkgs; [
-      # Editors
-      zed-editor
       adoptopenjdk-icedtea-web
 
       # Languages
@@ -47,10 +44,5 @@ in
       gource
     ];
 
-    home.file.".config/zed" = {
-      source = dotfiles + "/zed";
-      recursive = true;
-      force = true;
-    };
   };
 }
