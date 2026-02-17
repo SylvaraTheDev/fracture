@@ -68,7 +68,7 @@ let
   '';
 
   profileName = "default";
-  profilePath = ".zen/${profileName}";
+  profilePath = ".config/zen/${profileName}";
 
   zenPackage =
     (inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight.override {
