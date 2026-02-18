@@ -51,7 +51,7 @@ def dev [shell?: string] {
 
 # Show outdated packages vs upstream
 def outdated [] {
-  nix run github:trofi/nix-olde
+  nix run github:trofi/nix-olde -- -f /projects/repos/github.com/SylvaraTheDev/fracture
 }
 
 export def --env clean [arg?: string] {
