@@ -5,7 +5,12 @@ let
 in
 {
   environment.persistence."/persist-games".directories = [
-    "/games/itch"
+    {
+      directory = "/games/itch";
+      user = login;
+      group = "users";
+      mode = "0755";
+    }
   ];
 
   home-manager.users.${login} = _: {
