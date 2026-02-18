@@ -49,6 +49,11 @@ def dev [shell?: string] {
   nix develop $"($flake)#($shell)" --no-pure-eval
 }
 
+# Show outdated packages vs upstream
+def outdated [] {
+  nix run github:trofi/nix-olde
+}
+
 export def --env clean [arg?: string] {
   let help = [
     "Usage:"
