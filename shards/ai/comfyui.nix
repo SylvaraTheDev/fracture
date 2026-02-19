@@ -13,9 +13,10 @@ let
 
   # Declarative model manifest — download checked/skipped per file on each boot
   models = {
-    # Flux.1-dev pre-quantised NF4 (~12GB file, ~6GB VRAM — no bf16 RAM spike)
-    "diffusion_models/flux1-dev-bnb-nf4-v2.safetensors" = {
-      url = "https://huggingface.co/lllyasviel/flux1-dev-bnb-nf4/resolve/main/flux1-dev-bnb-nf4-v2.safetensors";
+    # Flux.1-dev bf16 (24GB — one-time NF4 conversion via ComfyUI, then use baked file)
+    "checkpoints/flux1-dev.safetensors" = {
+      url = "https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/flux1-dev.safetensors";
+      gated = true;
     };
 
     # Text encoders
@@ -152,11 +153,12 @@ in
     };
   };
 
-  # Prevent ComfyUI from swapping the system to death
+  # Contain ComfyUI memory: 20G RAM + 20G swap = 40G budget
+  # Normal ops use ~12G, conversion workflow peaks ~28G (spills to swap)
   systemd.services.comfyui.serviceConfig = {
-    MemoryHigh = "20G";
-    MemoryMax = "24G";
-    MemorySwapMax = "0";
+    MemoryHigh = "16G";
+    MemoryMax = "20G";
+    MemorySwapMax = "20G";
     OOMScoreAdjust = 500;
   };
 
