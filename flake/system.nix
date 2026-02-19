@@ -32,9 +32,11 @@ in
       inputs.stylix.nixosModules.stylix
       inputs.nix-flatpak.nixosModules.nix-flatpak
       inputs.nix-index-database.nixosModules.nix-index
+      inputs.comfyui-nix.nixosModules.default
       (
         { config, ... }:
         {
+          nixpkgs.overlays = [ inputs.comfyui-nix.overlays.default ];
           networking.hostName = config.fracture.hostname;
           system.stateVersion = config.fracture.stateVersion;
           home-manager.useGlobalPkgs = true;

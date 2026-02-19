@@ -11,6 +11,7 @@
       "https://attic.xuyh0120.win/lantian"
       "https://cache.garnix.io"
       "https://nix-gaming.cachix.org"
+      "https://comfyui.cachix.org"
     ];
     extra-trusted-public-keys = [
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
@@ -21,6 +22,7 @@
       "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      "comfyui.cachix.org-1:33mf9VzoIjzVbp0zwj+fT51HG0y31ZTK3nzYZAX0rec="
     ];
   };
 
@@ -84,6 +86,12 @@
     infuse = {
       url = "git+https://codeberg.org/amjoseph/infuse.nix";
       flake = false;
+    };
+
+    # === AI ===
+    comfyui-nix = {
+      url = "github:utensils/comfyui-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # === Gaming ===

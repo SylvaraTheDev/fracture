@@ -78,7 +78,9 @@
       "mcp__sequential-thinking__sequentialthinking",
       "mcp__acp__Bash",
       "Bash(find:*)",
-      "mcp__context7__query-docs"
+      "mcp__context7__query-docs",
+      "Bash(wc:*)",
+      "Bash(git -C /projects/repos/github.com/SylvaraTheDev/fracture log --oneline -10)"
     ]
   }
 }
