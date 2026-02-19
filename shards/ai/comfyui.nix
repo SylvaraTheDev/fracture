@@ -47,6 +47,8 @@ let
     };
   };
 
+  aria2 = lib.getExe pkgs.aria2;
+
   downloadScript = pkgs.writeShellScript "comfyui-model-download" ''
     set -uo pipefail
 
@@ -76,12 +78,14 @@ let
       mkdir -p "$(dirname "$full_path")"
       echo "Downloading: $dest"
 
-      local curl_args=(-L --fail --retry 3 --connect-timeout 30 -o "$full_path.tmp")
+      local aria2_args=(--split=8 --max-connection-per-server=8 --min-split-size=10M)
+      aria2_args+=(--retry-wait=5 --max-tries=3 --connect-timeout=30)
+      aria2_args+=(--dir="$(dirname "$full_path")" --out="$(basename "$full_path").tmp")
       if [ "$gated" = "true" ]; then
-        curl_args+=(--header "Authorization: Bearer $HF_TOKEN")
+        aria2_args+=(--header="Authorization: Bearer $HF_TOKEN")
       fi
 
-      if ${lib.getExe pkgs.curl} "''${curl_args[@]}" "$url"; then
+      if ${aria2} "''${aria2_args[@]}" "$url"; then
         mv "$full_path.tmp" "$full_path"
         echo "Complete: $dest"
       else
