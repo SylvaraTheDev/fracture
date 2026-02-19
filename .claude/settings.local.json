@@ -80,7 +80,10 @@
       "Bash(find:*)",
       "mcp__context7__query-docs",
       "Bash(wc:*)",
-      "Bash(git -C /projects/repos/github.com/SylvaraTheDev/fracture log --oneline -10)"
+      "Bash(git -C /projects/repos/github.com/SylvaraTheDev/fracture log --oneline -10)",
+      "mcp__comfyui__generate_image",
+      "Bash(uvx:*)",
+      "Bash(pip show:*)"
     ]
   }
 }

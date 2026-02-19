@@ -116,8 +116,8 @@ in
         };
         comfyui = {
           type = "stdio";
-          command = "${pkgs.uv}/bin/uvx";
-          args = [ "comfy-ui-mcp-server" ];
+          command = "${lib.getExe pkgs.python3}";
+          args = [ "/projects/comfyui/custom_nodes/comfy-pilot/mcp_server.py" ];
         };
       };
 
