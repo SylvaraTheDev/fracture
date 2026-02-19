@@ -113,6 +113,7 @@ in
       directory = "/projects/comfyui";
       user = login;
       group = "users";
+      mode = "0755";
     }
   ];
 
