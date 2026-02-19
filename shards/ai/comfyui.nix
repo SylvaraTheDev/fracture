@@ -13,9 +13,10 @@ let
 
   # Declarative model manifest — download checked/skipped per file on each boot
   models = {
-    # Flux.1-dev GGUF (Q5_K_S quantised — fits 16GB VRAM)
-    "diffusion_models/flux1-dev-Q5_K_S.gguf" = {
-      url = "https://huggingface.co/city96/FLUX.1-dev-gguf/resolve/main/flux1-dev-Q5_K_S.gguf";
+    # Flux.1-dev safetensors (NF4 quantised on load — ~6GB VRAM)
+    "checkpoints/flux1-dev.safetensors" = {
+      url = "https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/flux1-dev.safetensors";
+      gated = true;
     };
 
     # Text encoders
