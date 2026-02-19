@@ -95,7 +95,8 @@
       "mcp__comfyui__run",
       "mcp__comfyui__install_custom_node",
       "mcp__comfyui__search_custom_nodes",
-      "Bash(ps:*)"
+      "Bash(ps:*)",
+      "Bash(swapon:*)"
     ]
   }
 }

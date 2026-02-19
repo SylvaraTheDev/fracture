@@ -13,10 +13,9 @@ let
 
   # Declarative model manifest — download checked/skipped per file on each boot
   models = {
-    # Flux.1-dev safetensors (NF4 quantised on load — ~6GB VRAM)
-    "checkpoints/flux1-dev.safetensors" = {
-      url = "https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/flux1-dev.safetensors";
-      gated = true;
+    # Flux.1-dev pre-quantised NF4 (~12GB file, ~6GB VRAM — no bf16 RAM spike)
+    "checkpoints/flux1-dev-bnb-nf4-v2.safetensors" = {
+      url = "https://huggingface.co/lllyasviel/flux1-dev-bnb-nf4/resolve/main/flux1-dev-bnb-nf4-v2.safetensors";
     };
 
     # Text encoders
@@ -144,6 +143,14 @@ in
         hash = "sha256-l7sU0LUK+kzb4sBBh+YpKRQMjnKGDWtoxBG48mI9KCw=";
       };
     };
+  };
+
+  # Prevent ComfyUI from swapping the system to death
+  systemd.services.comfyui.serviceConfig = {
+    MemoryHigh = "20G";
+    MemoryMax = "24G";
+    MemorySwapMax = "0";
+    OOMScoreAdjust = 500;
   };
 
   systemd.services.comfyui-models = {
