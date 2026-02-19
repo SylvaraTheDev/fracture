@@ -14,7 +14,7 @@ let
   # Declarative model manifest — download checked/skipped per file on each boot
   models = {
     # Flux.1-dev pre-quantised NF4 (~12GB file, ~6GB VRAM — no bf16 RAM spike)
-    "checkpoints/flux1-dev-bnb-nf4-v2.safetensors" = {
+    "diffusion_models/flux1-dev-bnb-nf4-v2.safetensors" = {
       url = "https://huggingface.co/lllyasviel/flux1-dev-bnb-nf4/resolve/main/flux1-dev-bnb-nf4-v2.safetensors";
     };
 
