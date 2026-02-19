@@ -42,7 +42,7 @@
     "kernel.split_lock_mitigate" = 0;
 
     # Memory — reduce stutter from allocation pressure and writeback
-    "vm.swappiness" = 10;
+    "vm.swappiness" = 150;
     "vm.vfs_cache_pressure" = 50;
     "vm.dirty_ratio" = 40;
     "vm.dirty_background_ratio" = 10;
@@ -101,7 +101,7 @@
   zramSwap = {
     enable = true;
     algorithm = "zstd";
-    memoryPercent = 25;
+    memoryPercent = 50;
     priority = 100;
   };
 
