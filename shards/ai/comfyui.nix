@@ -142,6 +142,13 @@ in
         rev = "v1.0.24";
         hash = "sha256-l7sU0LUK+kzb4sBBh+YpKRQMjnKGDWtoxBG48mI9KCw=";
       };
+      # Override bundled NF4 plugin with silveroxides fork (adds UNETLoaderNF4)
+      ComfyUI_bitsandbytes_NF4 = pkgs.fetchFromGitHub {
+        owner = "silveroxides";
+        repo = "ComfyUI_bitsandbytes_NF4";
+        rev = "dd2f774a2d3930de06fddc995901c830fc936715";
+        hash = "sha256-f0PAK2J/qa3cSU+hCIbyhQvH01aAAcpeIlpmJ8iSOw4=";
+      };
     };
   };
 
