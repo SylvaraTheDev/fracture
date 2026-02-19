@@ -109,7 +109,11 @@ in
   sops.secrets.huggingface-read-only-key.sopsFile = secretsFile;
 
   environment.persistence."/persist-projects".directories = [
-    "/projects/comfyui"
+    {
+      directory = "/projects/comfyui";
+      user = login;
+      group = "users";
+    }
   ];
 
   systemd.tmpfiles.rules = [
