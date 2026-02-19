@@ -114,6 +114,11 @@ in
           type = "stdio";
           command = toString githubMcpWrapper;
         };
+        comfyui = {
+          type = "stdio";
+          command = "${pkgs.uv}/bin/uvx";
+          args = [ "comfy-ui-mcp-server" ];
+        };
       };
 
       # Global instructions
