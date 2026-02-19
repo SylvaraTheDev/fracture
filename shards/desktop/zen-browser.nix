@@ -13,6 +13,7 @@ in
       imports = [ inputs.zen-browser.homeModules.twilight ];
       programs.zen-browser = {
         enable = true;
+        suppressXdgMigrationWarning = true;
         policies = {
           ExtensionSettings = {
             # Ghostery
@@ -88,7 +89,7 @@ in
       stylix.targets.zen-browser.enable = false;
 
       home.persistence."/persist".directories = [
-        ".zen"
+        ".config/zen"
       ];
     };
 }
