@@ -9,7 +9,7 @@ let
   inherit (config.fracture.user) login;
   dataDir = "/projects/comfyui";
   modelsDir = "${dataDir}/models";
-  tokenFile = "${dataDir}/.hf_token";
+  secretsFile = config.fracture.secretsDir + "/api/huggingface.yaml";
 
   # Declarative model manifest — download checked/skipped per file on each boot
   models = {
@@ -26,7 +26,7 @@ let
       url = "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors";
     };
 
-    # VAE (gated — requires HF token in /projects/comfyui/.hf_token)
+    # VAE (gated — requires HF token via sops)
     "vae/ae.safetensors" = {
       url = "https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/ae.safetensors";
       gated = true;
@@ -50,12 +50,11 @@ let
     set -uo pipefail
 
     MODELS_DIR="${modelsDir}"
-    TOKEN_FILE="${tokenFile}"
     HF_TOKEN=""
     FAILED=0
 
-    if [ -f "$TOKEN_FILE" ]; then
-      HF_TOKEN=$(< "$TOKEN_FILE")
+    if [ -n "''${CREDENTIALS_DIRECTORY:-}" ] && [ -f "$CREDENTIALS_DIRECTORY/hf_token" ]; then
+      HF_TOKEN=$(< "$CREDENTIALS_DIRECTORY/hf_token")
     fi
 
     download_model() {
@@ -69,7 +68,7 @@ let
       fi
 
       if [ "$gated" = "true" ] && [ -z "$HF_TOKEN" ]; then
-        echo "Skipping gated model (create $TOKEN_FILE to enable): $dest"
+        echo "Skipping gated model (no HF token in sops): $dest"
         return 0
       fi
 
@@ -107,6 +106,8 @@ let
   '';
 in
 {
+  sops.secrets.huggingface-read-only-key.sopsFile = secretsFile;
+
   environment.persistence."/persist-projects".directories = [
     "/projects/comfyui"
   ];
@@ -139,6 +140,9 @@ in
       Type = "oneshot";
       User = login;
       Group = "users";
+      LoadCredential = [
+        "hf_token:${config.sops.secrets.huggingface-read-only-key.path}"
+      ];
       ExecStart = downloadScript;
     };
   };
