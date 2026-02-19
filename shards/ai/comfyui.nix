@@ -136,6 +136,7 @@ in
     ];
     wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.coreutils ];
     serviceConfig = {
       Type = "oneshot";
       User = login;
