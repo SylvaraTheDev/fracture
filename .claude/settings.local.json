@@ -83,7 +83,9 @@
       "Bash(git -C /projects/repos/github.com/SylvaraTheDev/fracture log --oneline -10)",
       "mcp__comfyui__generate_image",
       "Bash(uvx:*)",
-      "Bash(pip show:*)"
+      "Bash(pip show:*)",
+      "Bash(nix-prefetch-github:*)",
+      "Bash(nix store prefetch-file:*)"
     ]
   }
 }

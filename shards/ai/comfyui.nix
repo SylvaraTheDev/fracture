@@ -131,6 +131,14 @@ in
     createUser = false;
     port = 8188;
     listenAddress = "127.0.0.1";
+    customNodes = {
+      comfy-pilot = pkgs.fetchFromGitHub {
+        owner = "ConstantineB6";
+        repo = "comfy-pilot";
+        rev = "v1.0.24";
+        hash = "sha256-l7sU0LUK+kzb4sBBh+YpKRQMjnKGDWtoxBG48mI9KCw=";
+      };
+    };
   };
 
   systemd.services.comfyui-models = {
