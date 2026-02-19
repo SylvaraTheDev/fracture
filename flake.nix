@@ -89,10 +89,8 @@
     };
 
     # === AI ===
-    comfyui-nix = {
-      url = "github:utensils/comfyui-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
+    comfyui-nix.url = "github:utensils/comfyui-nix";
 
     # === Gaming ===
     # CachyOS Proton (x86-64-v3) — mirror currently down, re-enable when available:
