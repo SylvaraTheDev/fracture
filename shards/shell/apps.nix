@@ -18,7 +18,12 @@ in
 
     programs = {
       bat.enable = true;
-      btop.enable = true;
+      btop = {
+        enable = true;
+        package = pkgs.btop.override {
+          cudaSupport = config.fracture.gpu == "nvidia";
+        };
+      };
       eza.enable = true;
       fzf.enable = true;
       ripgrep.enable = true;
