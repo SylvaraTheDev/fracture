@@ -100,7 +100,9 @@
       "Bash(nix-store:*)",
       "mcp__comfyui__view_image",
       "Bash(nix-instantiate:*)",
-      "Bash(nix repl:*)"
+      "Bash(nix repl:*)",
+      "Bash(nix-build:*)",
+      "Bash(nixos-option:*)"
     ]
   }
 }
