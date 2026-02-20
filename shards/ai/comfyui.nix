@@ -9,7 +9,8 @@ let
   inherit (config.fracture.user) login;
   dataDir = "/projects/comfyui";
   modelsDir = "${dataDir}/models";
-  secretsFile = config.fracture.secretsDir + "/api/huggingface.yaml";
+  hfSecretsFile = config.fracture.secretsDir + "/api/huggingface.yaml";
+  civitaiSecretsFile = config.fracture.secretsDir + "/api/civitai.yaml";
 
   # Declarative model manifest — download checked/skipped per file on each boot
   models = {
@@ -45,6 +46,16 @@ let
     "upscale_models/RealESRGAN_x4plus.pth" = {
       url = "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth";
     };
+
+    # LoRAs — anime style
+    "loras/madbear-anime-flux.safetensors" = {
+      url = "https://civitai.com/api/download/models/761857";
+      civitai = true;
+    };
+    "loras/flat-colour-anime-v3.4.safetensors" = {
+      url = "https://civitai.com/api/download/models/838667";
+      civitai = true;
+    };
   };
 
   aria2 = lib.getExe pkgs.aria2;
@@ -54,16 +65,19 @@ let
 
     MODELS_DIR="${modelsDir}"
     HF_TOKEN=""
+    CIVITAI_TOKEN=""
     FAILED=0
 
-    if [ -n "''${CREDENTIALS_DIRECTORY:-}" ] && [ -f "$CREDENTIALS_DIRECTORY/hf_token" ]; then
-      HF_TOKEN=$(< "$CREDENTIALS_DIRECTORY/hf_token")
+    if [ -n "''${CREDENTIALS_DIRECTORY:-}" ]; then
+      [ -f "$CREDENTIALS_DIRECTORY/hf_token" ] && HF_TOKEN=$(< "$CREDENTIALS_DIRECTORY/hf_token")
+      [ -f "$CREDENTIALS_DIRECTORY/civitai_token" ] && CIVITAI_TOKEN=$(< "$CREDENTIALS_DIRECTORY/civitai_token")
     fi
 
     download_model() {
       local dest="$1"
       local url="$2"
       local gated="''${3:-false}"
+      local civitai="''${4:-false}"
       local full_path="$MODELS_DIR/$dest"
 
       if [ -f "$full_path" ]; then
@@ -72,6 +86,10 @@ let
 
       if [ "$gated" = "true" ] && [ -z "$HF_TOKEN" ]; then
         echo "Skipping gated model (no HF token in sops): $dest"
+        return 0
+      fi
+      if [ "$civitai" = "true" ] && [ -z "$CIVITAI_TOKEN" ]; then
+        echo "Skipping CivitAI model (no API key in sops): $dest"
         return 0
       fi
 
@@ -83,6 +101,9 @@ let
       aria2_args+=(--dir="$(dirname "$full_path")" --out="$(basename "$full_path").tmp")
       if [ "$gated" = "true" ]; then
         aria2_args+=(--header="Authorization: Bearer $HF_TOKEN")
+      fi
+      if [ "$civitai" = "true" ]; then
+        url="$url?token=$CIVITAI_TOKEN"
       fi
 
       if ${aria2} "''${aria2_args[@]}" "$url"; then
@@ -100,7 +121,7 @@ let
         dest: spec:
         "download_model ${lib.escapeShellArg dest} ${lib.escapeShellArg spec.url} ${
           lib.escapeShellArg (lib.boolToString (spec.gated or false))
-        }"
+        } ${lib.escapeShellArg (lib.boolToString (spec.civitai or false))}"
       ) models
     )}
 
@@ -111,7 +132,8 @@ let
   '';
 in
 {
-  sops.secrets.huggingface-read-only-key.sopsFile = secretsFile;
+  sops.secrets.huggingface-read-only-key.sopsFile = hfSecretsFile;
+  sops.secrets.civitai-key.sopsFile = civitaiSecretsFile;
 
   environment.persistence."/persist-projects".directories = [
     {
@@ -177,6 +199,7 @@ in
       Group = "users";
       LoadCredential = [
         "hf_token:${config.sops.secrets.huggingface-read-only-key.path}"
+        "civitai_token:${config.sops.secrets.civitai-key.path}"
       ];
       ExecStart = downloadScript;
     };
