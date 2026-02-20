@@ -150,7 +150,13 @@ in
 
   services.comfyui = {
     enable = true;
-    cuda = config.fracture.gpu == "nvidia";
+    gpuSupport =
+      if config.fracture.gpu == "nvidia" then
+        "cuda"
+      else if config.fracture.gpu == "amd" then
+        "rocm"
+      else
+        "none";
     enableManager = true;
     inherit dataDir;
     user = login;
