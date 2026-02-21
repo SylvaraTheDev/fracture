@@ -103,7 +103,8 @@
       "Bash(nix repl:*)",
       "Bash(nix-build:*)",
       "Bash(nixos-option:*)",
-      "Bash(git clone:*)"
+      "Bash(git clone:*)",
+      "Bash(nix search:*)"
     ]
   }
 }
