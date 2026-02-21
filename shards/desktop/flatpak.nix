@@ -1,5 +1,8 @@
-_:
+{ config, ... }:
 
+let
+  inherit (config.fracture.user) login;
+in
 {
   # Ensure flatpak service starts after impermanence bind-mounts /var/lib/flatpak,
   # otherwise it writes ~1.6GB to the tmpfs root before the mount covers it.
@@ -13,6 +16,7 @@ _:
     packages = [
       "com.adamcake.Bolt"
       "com.github.tchx84.Flatseal"
+      "io.github.brunofin.Cohesion"
     ];
     overrides = {
       "com.adamcake.Bolt" = {
@@ -29,4 +33,10 @@ _:
   environment.persistence."/persist".directories = [
     "/var/lib/flatpak"
   ];
+
+  home-manager.users.${login} = _: {
+    home.persistence."/persist".directories = [
+      ".var/app/io.github.brunofin.Cohesion"
+    ];
+  };
 }
