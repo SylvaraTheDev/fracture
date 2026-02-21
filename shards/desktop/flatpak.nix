@@ -16,7 +16,6 @@ in
     packages = [
       "com.adamcake.Bolt"
       "com.github.tchx84.Flatseal"
-      "io.github.brunofin.Cohesion"
     ];
     overrides = {
       "com.adamcake.Bolt" = {
@@ -36,7 +35,6 @@ in
 
   home-manager.users.${login} = _: {
     home.persistence."/persist".directories = [
-      ".var/app/io.github.brunofin.Cohesion"
     ];
   };
 }
