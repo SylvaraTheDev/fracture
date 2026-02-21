@@ -47,6 +47,16 @@ let
       url = "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth";
     };
 
+    # SDXL checkpoints
+    "checkpoints/ponyDiffusionV6XL_v6.safetensors" = {
+      url = "https://civitai.com/api/download/models/290640";
+      civitai = true;
+    };
+    "checkpoints/illustriousXL_v01.safetensors" = {
+      url = "https://civitai.com/api/download/models/889818";
+      civitai = true;
+    };
+
     # LoRAs — anime style
     "loras/madbear-anime-flux.safetensors" = {
       url = "https://civitai.com/api/download/models/761857";
