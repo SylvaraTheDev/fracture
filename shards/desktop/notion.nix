@@ -6,11 +6,11 @@ in
 {
   home-manager.users.${login} = _: {
     home.packages = [
-      pkgs.notion-app-enhanced
+      pkgs.notion-app
     ];
 
     home.persistence."/persist".directories = [
-      ".config/notion-app-enhanced"
+      ".config/Notion"
     ];
   };
 }

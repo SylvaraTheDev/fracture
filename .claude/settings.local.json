@@ -104,7 +104,9 @@
       "Bash(nix-build:*)",
       "Bash(nixos-option:*)",
       "Bash(git clone:*)",
-      "Bash(nix search:*)"
+      "Bash(nix search:*)",
+      "Bash(notion-app-enhanced:*)",
+      "Bash(timeout 10 cat:*)"
     ]
   }
 }
