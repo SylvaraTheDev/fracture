@@ -35,7 +35,12 @@ in
 
   config = lib.mkIf (cfg.vaults != { }) {
     environment.persistence."/persist-projects".directories = [
-      "/projects/obsidian"
+      {
+        directory = "/projects/obsidian";
+        user = login;
+        group = "users";
+        mode = "0755";
+      }
     ];
 
     # Create vault directories on activation
