@@ -27,6 +27,9 @@ let
     "clip/t5xxl_fp8_e4m3fn.safetensors" = {
       url = "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors";
     };
+    "text_encoders/qwen_3_4b.safetensors" = {
+      url = "https://huggingface.co/Comfy-Org/z_image/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors";
+    };
 
     # VAE (gated — requires HF token via sops)
     "vae/ae.safetensors" = {
@@ -45,6 +48,14 @@ let
     # Upscaler
     "upscale_models/RealESRGAN_x4plus.pth" = {
       url = "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth";
+    };
+
+    # Diffusion models — Z-Image (GLM-Image)
+    "diffusion_models/z_image_bf16.safetensors" = {
+      url = "https://huggingface.co/Comfy-Org/z_image/resolve/main/split_files/diffusion_models/z_image_bf16.safetensors";
+    };
+    "diffusion_models/z_image_turbo_bf16.safetensors" = {
+      url = "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors";
     };
 
     # SDXL checkpoints
@@ -69,6 +80,14 @@ let
   };
 
   aria2 = lib.getExe pkgs.aria2;
+  hfCli = lib.getExe' pkgs.python3Packages.huggingface-hub "huggingface-cli";
+
+  # Full HuggingFace repos — downloaded via huggingface-cli
+  repos = {
+    "HunyuanImage-3-NF4" = {
+      repo = "EricRollei/HunyuanImage-3-NF4-ComfyUI";
+    };
+  };
 
   downloadScript = pkgs.writeShellScript "comfyui-model-download" ''
     set -uo pipefail
@@ -126,6 +145,32 @@ let
       fi
     }
 
+    download_repo() {
+      local dest="$1"
+      local repo="$2"
+      local full_path="$MODELS_DIR/$dest"
+
+      if [ -f "$full_path/.download-complete" ]; then
+        return 0
+      fi
+
+      mkdir -p "$full_path"
+      echo "Downloading repo: $repo → $dest"
+
+      local hf_args=(download "$repo" --local-dir "$full_path")
+      if [ -n "$HF_TOKEN" ]; then
+        hf_args+=(--token "$HF_TOKEN")
+      fi
+
+      if ${hfCli} "''${hf_args[@]}"; then
+        touch "$full_path/.download-complete"
+        echo "Complete: $dest"
+      else
+        echo "FAILED: $dest"
+        FAILED=$((FAILED + 1))
+      fi
+    }
+
     ${lib.concatStringsSep "\n" (
       lib.mapAttrsToList (
         dest: spec:
@@ -133,6 +178,12 @@ let
           lib.escapeShellArg (lib.boolToString (spec.gated or false))
         } ${lib.escapeShellArg (lib.boolToString (spec.civitai or false))}"
       ) models
+    )}
+
+    ${lib.concatStringsSep "\n" (
+      lib.mapAttrsToList (
+        dest: spec: "download_repo ${lib.escapeShellArg dest} ${lib.escapeShellArg spec.repo}"
+      ) repos
     )}
 
     if [ "$FAILED" -gt 0 ]; then
@@ -180,6 +231,12 @@ in
         repo = "comfy-pilot";
         rev = "v1.0.24";
         hash = "sha256-l7sU0LUK+kzb4sBBh+YpKRQMjnKGDWtoxBG48mI9KCw=";
+      };
+      Comfy_HunyuanImage3 = pkgs.fetchFromGitHub {
+        owner = "EricRollei";
+        repo = "Comfy_HunyuanImage3";
+        rev = "e1caeb72f7dd445286c722e97d6c702d35fe7977";
+        hash = "sha256-k5UCxudwRX31ALZo/b2q5plV6pUTPnBaUXIklpK99rU=";
       };
       # Override bundled NF4 plugin with silveroxides fork (adds UNETLoaderNF4)
       ComfyUI_bitsandbytes_NF4 = pkgs.fetchFromGitHub {
