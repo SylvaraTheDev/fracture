@@ -47,6 +47,15 @@ let
     "controlnet/Z-Image-Turbo-Fun-Controlnet-Union-2.1-2601-8steps.safetensors" = {
       url = "https://huggingface.co/alibaba-pai/Z-Image-Turbo-Fun-Controlnet-Union-2.1/resolve/main/Z-Image-Turbo-Fun-Controlnet-Union-2.1-2601-8steps.safetensors";
     };
+    "model_patches/qwen_image_canny_diffsynth_controlnet.safetensors" = {
+      url = "https://huggingface.co/Comfy-Org/Qwen-Image-DiffSynth-ControlNets/resolve/main/split_files/model_patches/qwen_image_canny_diffsynth_controlnet.safetensors";
+    };
+    "model_patches/qwen_image_depth_diffsynth_controlnet.safetensors" = {
+      url = "https://huggingface.co/Comfy-Org/Qwen-Image-DiffSynth-ControlNets/resolve/main/split_files/model_patches/qwen_image_depth_diffsynth_controlnet.safetensors";
+    };
+    "model_patches/qwen_image_inpaint_diffsynth_controlnet.safetensors" = {
+      url = "https://huggingface.co/Comfy-Org/Qwen-Image-DiffSynth-ControlNets/resolve/main/split_files/model_patches/qwen_image_inpaint_diffsynth_controlnet.safetensors";
+    };
 
     # Upscaler
     "upscale_models/RealESRGAN_x4plus.pth" = {
