@@ -8,6 +8,8 @@ let
     nativeBuildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/vesktop \
+        --add-flags "--use-gl=angle" \
+        --add-flags "--use-angle=opengl" \
         --add-flags "--enable-features=VaapiVideoDecodeLinuxGL,VaapiIgnoreDriverChecks,UseOzonePlatform" \
         --add-flags "--ignore-gpu-blocklist" \
         --add-flags "--enable-gpu-rasterization" \
