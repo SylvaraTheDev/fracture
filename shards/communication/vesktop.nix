@@ -2,11 +2,24 @@
 
 let
   inherit (config.fracture.user) login;
+  vesktop-gpu = pkgs.symlinkJoin {
+    name = "vesktop";
+    paths = [ pkgs.vesktop ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/vesktop \
+        --add-flags "--enable-features=VaapiVideoDecodeLinuxGL,VaapiIgnoreDriverChecks,UseOzonePlatform" \
+        --add-flags "--ignore-gpu-blocklist" \
+        --add-flags "--enable-gpu-rasterization" \
+        --add-flags "--enable-zero-copy" \
+        --add-flags "--disable-gpu-driver-bug-workarounds"
+    '';
+  };
 in
 {
   home-manager.users.${login} = _: {
     home.packages = [
-      pkgs.vesktop
+      vesktop-gpu
     ];
 
     home.persistence."/persist".directories = [
