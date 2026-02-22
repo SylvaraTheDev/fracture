@@ -8,13 +8,11 @@ let
     nativeBuildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/vesktop \
-        --add-flags "--use-gl=angle" \
-        --add-flags "--use-angle=opengl" \
+        --prefix LD_LIBRARY_PATH : "/run/opengl-driver/lib" \
         --add-flags "--enable-features=VaapiVideoDecodeLinuxGL,VaapiIgnoreDriverChecks" \
         --add-flags "--ignore-gpu-blocklist" \
         --add-flags "--enable-gpu-rasterization" \
-        --add-flags "--enable-zero-copy" \
-        --add-flags "--disable-gpu-driver-bug-workarounds"
+        --add-flags "--enable-zero-copy"
     '';
   };
 in
