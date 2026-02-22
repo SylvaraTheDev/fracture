@@ -44,6 +44,9 @@ let
     "controlnet/flux-depth-controlnet-v3.safetensors" = {
       url = "https://huggingface.co/XLabs-AI/flux-controlnet-collections/resolve/main/flux-depth-controlnet-v3.safetensors";
     };
+    "controlnet/Z-Image-Turbo-Fun-Controlnet-Union-2.1-2601-8steps.safetensors" = {
+      url = "https://huggingface.co/alibaba-pai/Z-Image-Turbo-Fun-Controlnet-Union-2.1";
+    };
 
     # Upscaler
     "upscale_models/RealESRGAN_x4plus.pth" = {
