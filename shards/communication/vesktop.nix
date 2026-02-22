@@ -2,14 +2,21 @@
 
 let
   inherit (config.fracture.user) login;
-  vesktop-gpu = pkgs.vesktop.overrideAttrs (prev: {
-    preFixup = (prev.preFixup or "") + ''
-      makeWrapperArgs+=(
-        --set ELECTRON_EXTRA_LAUNCH_FLAGS "--use-gl=angle --use-angle=opengl --ignore-gpu-blocklist --enable-gpu-rasterization --enable-zero-copy --disable-gpu-driver-bug-workarounds"
-        --append-flags "--enable-features=VaapiVideoDecodeLinuxGL,VaapiIgnoreDriverChecks"
-      )
+  vesktop-gpu = pkgs.symlinkJoin {
+    name = "vesktop";
+    paths = [ pkgs.vesktop ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/vesktop \
+        --add-flags "--use-gl=angle" \
+        --add-flags "--use-angle=opengl" \
+        --add-flags "--enable-features=VaapiVideoDecodeLinuxGL,VaapiIgnoreDriverChecks" \
+        --add-flags "--ignore-gpu-blocklist" \
+        --add-flags "--enable-gpu-rasterization" \
+        --add-flags "--enable-zero-copy" \
+        --add-flags "--disable-gpu-driver-bug-workarounds"
     '';
-  });
+  };
 in
 {
   home-manager.users.${login} = _: {
