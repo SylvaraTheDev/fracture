@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }:
@@ -16,27 +15,29 @@ let
   };
 in
 {
-  home-manager.users.${login} = _: {
-    home.packages = with pkgs; [
-      krita
-    ];
+  home-manager.users.${login} =
+    { lib, ... }:
+    {
+      home.packages = with pkgs; [
+        krita
+      ];
 
-    home.activation.linkKritaAiDiffusion = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      mkdir -p ~/.local/share/krita/pykrita
-      ln -sfn "${krita-ai-diffusion}/ai_diffusion" ~/.local/share/krita/pykrita/ai_diffusion
-      ln -sf "${krita-ai-diffusion}/ai_diffusion.desktop" ~/.local/share/krita/pykrita/ai_diffusion.desktop
-    '';
+      home.activation.linkKritaAiDiffusion = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p ~/.local/share/krita/pykrita
+        ln -sfn "${krita-ai-diffusion}/ai_diffusion" ~/.local/share/krita/pykrita/ai_diffusion
+        ln -sf "${krita-ai-diffusion}/ai_diffusion.desktop" ~/.local/share/krita/pykrita/ai_diffusion.desktop
+      '';
 
-    home.persistence."/persist".directories = [
-      ".config/krita-scripter"
-      ".local/share/krita"
-    ];
+      home.persistence."/persist".directories = [
+        ".config/krita-scripter"
+        ".local/share/krita"
+      ];
 
-    home.persistence."/persist".files = [
-      ".config/kritarc"
-      ".config/kritadisplayrc"
-    ];
-  };
+      home.persistence."/persist".files = [
+        ".config/kritarc"
+        ".config/kritadisplayrc"
+      ];
+    };
 
   environment.persistence."/persist-projects".directories = [
     {
