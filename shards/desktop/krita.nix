@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (config.fracture.user) login;
@@ -16,11 +21,11 @@ in
       krita
     ];
 
-    home.file = {
-      ".local/share/krita/pykrita/ai_diffusion".source = "${krita-ai-diffusion}/ai_diffusion";
-      ".local/share/krita/pykrita/ai_diffusion.desktop".source =
-        "${krita-ai-diffusion}/ai_diffusion.desktop";
-    };
+    home.activation.linkKritaAiDiffusion = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      mkdir -p ~/.local/share/krita/pykrita
+      ln -sfn "${krita-ai-diffusion}/ai_diffusion" ~/.local/share/krita/pykrita/ai_diffusion
+      ln -sf "${krita-ai-diffusion}/ai_diffusion.desktop" ~/.local/share/krita/pykrita/ai_diffusion.desktop
+    '';
 
     home.persistence."/persist".directories = [
       ".config/krita-scripter"
