@@ -257,6 +257,32 @@ in
         rev = "dd2f774a2d3930de06fddc995901c830fc936715";
         hash = "sha256-f0PAK2J/qa3cSU+hCIbyhQvH01aAAcpeIlpmJ8iSOw4=";
       };
+
+      # Krita AI Diffusion dependencies
+      comfyui_controlnet_aux = pkgs.fetchFromGitHub {
+        owner = "Fannovel16";
+        repo = "comfyui_controlnet_aux";
+        rev = "95a13e2e5d8f8ae57583fbebb0be1f670889858b";
+        hash = "sha256-5ZyU+mqxNTb/Gl+x5htFeYuI148niW0VIzvt0p60r+4=";
+      };
+      ComfyUI_IPAdapter_plus = pkgs.fetchFromGitHub {
+        owner = "cubiq";
+        repo = "ComfyUI_IPAdapter_plus";
+        rev = "a0f451a5113cf9becb0847b92884cb10cbdec0ef";
+        hash = "sha256-Ft9WJcmjzon2tAMJq5na24iqYTnQWEQFSKUElSVwYgw=";
+      };
+      comfyui-inpaint-nodes = pkgs.fetchFromGitHub {
+        owner = "Acly";
+        repo = "comfyui-inpaint-nodes";
+        rev = "a465fde3459d8ad30ba58d76446e49a6cdfd9b60";
+        hash = "sha256-HP95lFrevq+kqwfEYosvUFDwFDD7PMAhAIzlSSi9GO0=";
+      };
+      comfyui-tooling-nodes = pkgs.fetchFromGitHub {
+        owner = "Acly";
+        repo = "comfyui-tooling-nodes";
+        rev = "7fc3df11749d9c6cbe36cc36eefb652c9ff33099";
+        hash = "sha256-wQARRbt+smOYZq6P7g8G6kZwIKcAS9pu25FNM2P1Gak=";
+      };
     };
   };
 
