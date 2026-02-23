@@ -321,6 +321,9 @@ in
     };
   };
 
+  # Expose libstdc++ for pip-installed native extensions (numpy etc.)
+  systemd.services.comfyui.environment.LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
+
   # Contain ComfyUI memory: 20G RAM + 20G swap = 40G budget
   # Normal ops use ~12G, conversion workflow peaks ~28G (spills to swap)
   systemd.services.comfyui.serviceConfig = {
