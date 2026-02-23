@@ -26,6 +26,16 @@ in
         mkdir -p ~/.local/share/krita/pykrita
         ln -sfn "${krita-ai-diffusion}/ai_diffusion" ~/.local/share/krita/pykrita/ai_diffusion
         ln -sf "${krita-ai-diffusion}/ai_diffusion.desktop" ~/.local/share/krita/pykrita/ai_diffusion.desktop
+
+        # Pre-enable the AI Diffusion plugin if not already configured
+        KRITARC="$HOME/.config/kritarc"
+        if [ ! -f "$KRITARC" ] || ! grep -q "enable_ai_diffusion" "$KRITARC"; then
+          touch "$KRITARC"
+          if ! grep -q '^\[python\]' "$KRITARC"; then
+            printf '\n[python]\n' >> "$KRITARC"
+          fi
+          ${pkgs.gnused}/bin/sed -i '/^\[python\]/a enable_ai_diffusion=true' "$KRITARC"
+        fi
       '';
 
       home.persistence."/persist".directories = [
