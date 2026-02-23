@@ -87,6 +87,16 @@ let
       url = "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors";
     };
 
+    # SUPIR upscaling (v0Q = high quality general-purpose, fp16 pruned by Kijai)
+    "checkpoints/SUPIR-v0Q_fp16.safetensors" = {
+      url = "https://huggingface.co/Kijai/SUPIR_pruned/resolve/main/SUPIR-v0Q_fp16.safetensors";
+    };
+
+    # SDXL base (required by SUPIR)
+    "checkpoints/sd_xl_base_1.0_0.9vae.safetensors" = {
+      url = "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0_0.9vae.safetensors";
+    };
+
     # SDXL checkpoints
     "checkpoints/ponyDiffusionV6XL_v6.safetensors" = {
       url = "https://civitai.com/api/download/models/290640";
@@ -299,6 +309,14 @@ in
         repo = "comfyui-tooling-nodes";
         rev = "7fc3df11749d9c6cbe36cc36eefb652c9ff33099";
         hash = "sha256-wQARRbt+smOYZq6P7g8G6kZwIKcAS9pu25FNM2P1Gak=";
+      };
+
+      # SUPIR upscaling
+      ComfyUI-SUPIR = pkgs.fetchFromGitHub {
+        owner = "kijai";
+        repo = "ComfyUI-SUPIR";
+        rev = "0613a9239f49b062adba6c12072942e1724a7cbd";
+        hash = "sha256-Qs7HpSBpnvT8QEgDKqn4Ky0SSeR9RdnqnFcIIGW/tnk=";
       };
     };
   };
