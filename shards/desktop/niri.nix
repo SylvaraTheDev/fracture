@@ -32,16 +32,11 @@ in
   # XDG Portals (compositor-specific)
   xdg.portal = {
     enable = true;
+    configPackages = [ config.programs.niri.package ];
     extraPortals = [
       pkgs.xdg-desktop-portal-gnome
       pkgs.xdg-desktop-portal-gtk
     ];
-    config.common = {
-      default = [
-        "gnome"
-        "gtk"
-      ];
-    };
   };
 
   # Link niri config from dotfiles
