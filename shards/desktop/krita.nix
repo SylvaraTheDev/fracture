@@ -9,7 +9,7 @@ let
 
   krita-ai-diffusion = pkgs.fetchzip {
     url = "https://github.com/Acly/krita-ai-diffusion/releases/download/v1.48.0/krita_ai_diffusion-1.48.0.zip";
-    hash = "sha256-DMw/CPu7SqDsbb0h8tA2uEirG0DUEAd6YfYSpOnA1Mw=";
+    hash = "sha256-nS4OiIG0mqMMfLFW0pQgjCdKBjYW9LPiomC2IcEWnfQ=";
     stripRoot = false;
   };
 in
