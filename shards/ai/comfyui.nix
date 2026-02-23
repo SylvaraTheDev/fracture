@@ -57,9 +57,26 @@ let
       url = "https://huggingface.co/Comfy-Org/Qwen-Image-DiffSynth-ControlNets/resolve/main/split_files/model_patches/qwen_image_inpaint_diffsynth_controlnet.safetensors";
     };
 
-    # Upscaler
+    # Upscalers
     "upscale_models/RealESRGAN_x4plus.pth" = {
       url = "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth";
+    };
+    "upscale_models/OmniSR_X2_DIV2K.safetensors" = {
+      url = "https://huggingface.co/Acly/Omni-SR/resolve/main/OmniSR_X2_DIV2K.safetensors";
+    };
+    "upscale_models/OmniSR_X3_DIV2K.safetensors" = {
+      url = "https://huggingface.co/Acly/Omni-SR/resolve/main/OmniSR_X3_DIV2K.safetensors";
+    };
+    "upscale_models/OmniSR_X4_DIV2K.safetensors" = {
+      url = "https://huggingface.co/Acly/Omni-SR/resolve/main/OmniSR_X4_DIV2K.safetensors";
+    };
+    "upscale_models/4x_NMKD-Superscale-SP_178000_G.pth" = {
+      url = "https://huggingface.co/gemasai/4x_NMKD-Superscale-SP_178000_G/resolve/main/4x_NMKD-Superscale-SP_178000_G.pth";
+    };
+
+    # Inpainting
+    "inpaint/MAT_Places512_G_fp16.safetensors" = {
+      url = "https://huggingface.co/Acly/MAT/resolve/main/MAT_Places512_G_fp16.safetensors";
     };
 
     # Diffusion models — Z-Image (GLM-Image)
