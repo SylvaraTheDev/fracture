@@ -9,11 +9,10 @@ let
     postBuild = ''
       wrapProgram $out/bin/vesktop \
         --prefix LD_LIBRARY_PATH : "/run/opengl-driver/lib" \
-        --add-flags "--enable-features=VaapiVideoDecodeLinuxGL,VaapiIgnoreDriverChecks" \
+        --add-flags "--enable-features=VaapiVideoDecodeLinuxGL,VaapiIgnoreDriverChecks,WebRTCPipeWireCapturer" \
         --add-flags "--ignore-gpu-blocklist" \
         --add-flags "--enable-gpu-rasterization" \
-        --add-flags "--enable-zero-copy" \
-        --add-flags "--enable-features=WebRTCPipeWireCapturer"
+        --add-flags "--enable-zero-copy"
     '';
   };
 in
