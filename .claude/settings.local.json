@@ -111,7 +111,8 @@
       "Bash(ldd:*)",
       "Bash(LD_LIBRARY_PATH=/nix/store/py6ijmqv97i60in22l0ymnx5g2qf5bm2-electron-unwrapped-40.3.0/libexec/electron ldd:*)",
       "Bash(patchelf:*)",
-      "Bash(unzip:*)"
+      "Bash(unzip:*)",
+      "mcp__comfyui__center_on_node"
     ]
   }
 }

@@ -78,6 +78,38 @@ let
     "inpaint/MAT_Places512_G_fp16.safetensors" = {
       url = "https://huggingface.co/Acly/MAT/resolve/main/MAT_Places512_G_fp16.safetensors";
     };
+    "inpaint/fooocus_inpaint_head.pth" = {
+      url = "https://huggingface.co/lllyasviel/fooocus_inpaint/resolve/main/fooocus_inpaint_head.pth";
+    };
+    "inpaint/inpaint_v26.fooocus.patch" = {
+      url = "https://huggingface.co/lllyasviel/fooocus_inpaint/resolve/main/inpaint_v26.fooocus.patch";
+    };
+
+    # CLIP Vision (shared by SD1.5 + SDXL IP-Adapters)
+    "clip_vision/clip-vision_vit-h.safetensors" = {
+      url = "https://huggingface.co/h94/IP-Adapter/resolve/main/models/image_encoder/model.safetensors";
+    };
+
+    # IP-Adapters
+    "ipadapter/ip-adapter_sd15.safetensors" = {
+      url = "https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter_sd15.safetensors";
+    };
+    "ipadapter/ip-adapter_sdxl_vit-h.safetensors" = {
+      url = "https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter_sdxl_vit-h.safetensors";
+    };
+
+    # SD 1.5 — ControlNets
+    "controlnet/control_v11p_sd15_inpaint_fp16.safetensors" = {
+      url = "https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/resolve/main/control_v11p_sd15_inpaint_fp16.safetensors";
+    };
+    "controlnet/control_lora_rank128_v11f1e_sd15_tile_fp16.safetensors" = {
+      url = "https://huggingface.co/comfyanonymous/ControlNet-v1-1_fp16_safetensors/resolve/main/control_lora_rank128_v11f1e_sd15_tile_fp16.safetensors";
+    };
+
+    # SD 1.5 — checkpoint
+    "checkpoints/dreamshaper_8.safetensors" = {
+      url = "https://huggingface.co/Lykon/DreamShaper/resolve/main/DreamShaper_8_pruned.safetensors";
+    };
 
     # Diffusion models — Z-Image (GLM-Image)
     "diffusion_models/z_image_bf16.safetensors" = {
@@ -105,6 +137,14 @@ let
     "checkpoints/illustriousXL_v01.safetensors" = {
       url = "https://civitai.com/api/download/models/889818";
       civitai = true;
+    };
+
+    # LoRAs — Hyper-SD (fast few-step generation for Live mode)
+    "loras/Hyper-SD15-8steps-CFG-lora.safetensors" = {
+      url = "https://huggingface.co/ByteDance/Hyper-SD/resolve/main/Hyper-SD15-8steps-CFG-lora.safetensors";
+    };
+    "loras/Hyper-SDXL-8steps-CFG-lora.safetensors" = {
+      url = "https://huggingface.co/ByteDance/Hyper-SD/resolve/main/Hyper-SDXL-8steps-CFG-lora.safetensors";
     };
 
     # LoRAs — anime style
