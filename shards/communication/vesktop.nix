@@ -12,7 +12,8 @@ let
         --add-flags "--enable-features=VaapiVideoDecodeLinuxGL,VaapiIgnoreDriverChecks" \
         --add-flags "--ignore-gpu-blocklist" \
         --add-flags "--enable-gpu-rasterization" \
-        --add-flags "--enable-zero-copy"
+        --add-flags "--enable-zero-copy" \
+        --add-flags "--enable-features=WebRTCPipeWireCapturer"
     '';
   };
 in

@@ -36,7 +36,12 @@ in
       pkgs.xdg-desktop-portal-gnome
       pkgs.xdg-desktop-portal-gtk
     ];
-    config.common.default = [ "gtk" ];
+    config.common = {
+      default = [
+        "gnome"
+        "gtk"
+      ];
+    };
   };
 
   # Link niri config from dotfiles
