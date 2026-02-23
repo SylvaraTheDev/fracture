@@ -32,4 +32,17 @@ in
       ".config/kritadisplayrc"
     ];
   };
+
+  environment.persistence."/persist-projects".directories = [
+    {
+      directory = "/projects/krita";
+      user = login;
+      group = "users";
+      mode = "0755";
+    }
+  ];
+
+  systemd.tmpfiles.rules = [
+    "d /projects/krita 0755 ${login} users -"
+  ];
 }
