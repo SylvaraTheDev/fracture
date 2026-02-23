@@ -7,11 +7,10 @@
 let
   inherit (config.fracture.user) login;
 
-  krita-ai-diffusion = pkgs.fetchFromGitHub {
-    owner = "Acly";
-    repo = "krita-ai-diffusion";
-    rev = "v1.48.0";
-    hash = "sha256-YXOmf6rBYPInug4Da010BUhFx//F7od/ebCPovCVZlU=";
+  krita-ai-diffusion = pkgs.fetchzip {
+    url = "https://github.com/Acly/krita-ai-diffusion/releases/download/v1.48.0/krita_ai_diffusion-1.48.0.zip";
+    hash = "sha256-DMw/CPu7SqDsbb0h8tA2uEirG0DUEAd6YfYSpOnA1Mw=";
+    stripRoot = false;
   };
 in
 {
