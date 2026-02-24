@@ -63,17 +63,17 @@ in
       description = "Allowed task DNS namespaces.";
     };
 
-    taskImage = {
-      name = lib.mkOption {
+    images = {
+      orchestrator = lib.mkOption {
         type = lib.types.str;
-        default = "nanoclaw-task";
-        description = "Task container image name.";
+        default = "ghcr.io/sylvarathedev/nanoclaw-orchestrator:latest";
+        description = "GHCR orchestrator image.";
       };
 
-      tag = lib.mkOption {
+      task = lib.mkOption {
         type = lib.types.str;
-        default = "latest";
-        description = "Task container image tag.";
+        default = "ghcr.io/sylvarathedev/nanoclaw-task:latest";
+        description = "GHCR task container image.";
       };
     };
 
@@ -120,21 +120,24 @@ in
       };
     };
 
-    # Image Build Service
-    systemd.services.nanoclaw-build = {
-      description = "Build NanoClaw container images";
+    # Image Pull Service (replaces local build)
+    systemd.services.nanoclaw-pull = {
+      description = "Pull NanoClaw container images from GHCR";
       after = [ "podman.service" ];
       requires = [ "podman.service" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        User = user.login;
-        Group = "users";
-        ExecStart = pkgs.writeShellScript "nanoclaw-build" ''
-          cd ${cfg.sourceDir}
-          ${pkgs.podman}/bin/podman build -t nanoclaw-orchestrator:latest -f container/Dockerfile .
-          ${pkgs.podman}/bin/podman build -t ${cfg.taskImage.name}:${cfg.taskImage.tag} -f container/Dockerfile.task .
+        LoadCredential = [
+          "ghcr_token:${config.sops.secrets.github-token.path}"
+        ];
+        ExecStart = pkgs.writeShellScript "nanoclaw-pull" ''
+          ${pkgs.podman}/bin/podman login ghcr.io \
+            -u SylvaraTheDev \
+            --password-stdin < "$CREDENTIALS_DIRECTORY/ghcr_token"
+          ${pkgs.podman}/bin/podman pull ${cfg.images.orchestrator}
+          ${pkgs.podman}/bin/podman pull ${cfg.images.task}
         '';
       };
     };
@@ -143,7 +146,7 @@ in
     virtualisation.oci-containers = {
       backend = "podman";
       containers.nanoclaw = {
-        image = "nanoclaw-orchestrator:latest";
+        image = cfg.images.orchestrator;
         volumes = [
           "${cfg.dataDir}:/app/data:rw"
           "${cfg.dataDir}/groups:/app/groups:rw"
@@ -165,11 +168,11 @@ in
     systemd.services.podman-nanoclaw = {
       after = [
         "nanoclaw-network.service"
-        "nanoclaw-build.service"
+        "nanoclaw-pull.service"
       ];
       requires = [
         "nanoclaw-network.service"
-        "nanoclaw-build.service"
+        "nanoclaw-pull.service"
       ];
 
       serviceConfig = {
@@ -191,7 +194,7 @@ in
         cat > /run/nanoclaw.env <<EOF
         ANTHROPIC_API_KEY=$ANTHROPIC_KEY
         NANOCLAW_DISCORD_TOKEN=$DISCORD_TOKEN
-        CONTAINER_IMAGE=${cfg.taskImage.name}:${cfg.taskImage.tag}
+        CONTAINER_IMAGE=${cfg.images.task}
         MAX_CONCURRENT_CONTAINERS=${toString cfg.maxConcurrentTasks}
         CONTAINER_TIMEOUT=${toString (cfg.taskTimeout * 1000)}
         NANOCLAW_NETWORK=nanoclaw-net
