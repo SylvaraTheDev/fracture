@@ -6,10 +6,9 @@
 }:
 
 let
-  inherit (config.fracture) user obsidian;
+  inherit (config.fracture) user;
   cfg = config.fracture.nanoclaw;
   secretsFile = config.fracture.secretsDir + "/api/nanoclaw.yaml";
-  vaultPath = "${obsidian.basePath}/${cfg.obsidianVault}";
 in
 {
   options.fracture.nanoclaw = {
@@ -148,10 +147,7 @@ in
         volumes = [
           "${cfg.dataDir}:/app/data:rw"
           "${cfg.dataDir}/groups:/app/groups:rw"
-          "${cfg.dataDir}/workspace:/workspace/global:rw"
-          "${cfg.dataDir}/ipc:/workspace/ipc:rw"
-          "${vaultPath}:${vaultPath}:rw"
-          "/projects/repos:/workspace/repos:ro"
+          "${cfg.dataDir}/store:/app/store:rw"
           "/run/podman/podman.sock:/var/run/docker.sock:rw"
         ];
         extraOptions = [
@@ -185,13 +181,13 @@ in
       };
 
       preStart = ''
-        mkdir -p ${cfg.dataDir}/workspace ${cfg.dataDir}/ipc ${cfg.dataDir}/groups ${cfg.dataDir}/db
+        mkdir -p ${cfg.dataDir}/workspace ${cfg.dataDir}/ipc ${cfg.dataDir}/groups ${cfg.dataDir}/store ${cfg.dataDir}/db
 
         # Read credentials from systemd credentials directory
         ANTHROPIC_KEY=$(cat "$CREDENTIALS_DIRECTORY/anthropic_api_key")
         DISCORD_TOKEN=$(cat "$CREDENTIALS_DIRECTORY/discord_bot_token")
 
-        # Build container environment file from secrets
+        # Build container environment file from secrets + config
         cat > /run/nanoclaw.env <<EOF
         ANTHROPIC_API_KEY=$ANTHROPIC_KEY
         NANOCLAW_DISCORD_TOKEN=$DISCORD_TOKEN
@@ -200,6 +196,9 @@ in
         CONTAINER_TIMEOUT=${toString (cfg.taskTimeout * 1000)}
         NANOCLAW_NETWORK=nanoclaw-net
         NANOCLAW_NAMESPACES=${lib.concatStringsSep "," cfg.namespaces}
+        HOST_DATA_DIR=${cfg.dataDir}
+        HOST_GROUPS_DIR=${cfg.dataDir}/groups
+        HOST_PROJECT_ROOT=${cfg.sourceDir}
         EOF
 
         chmod 600 /run/nanoclaw.env
@@ -222,6 +221,7 @@ in
       "d ${cfg.dataDir}/workspace 0755 ${user.login} users -"
       "d ${cfg.dataDir}/ipc 0755 ${user.login} users -"
       "d ${cfg.dataDir}/groups 0755 ${user.login} users -"
+      "d ${cfg.dataDir}/store 0755 ${user.login} users -"
       "d ${cfg.dataDir}/db 0755 ${user.login} users -"
     ];
   };
