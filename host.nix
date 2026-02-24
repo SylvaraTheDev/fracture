@@ -37,11 +37,13 @@
       };
     };
 
+    nanoclaw.enable = true;
+
     rclone.b2.jobs = {
-      openclaw = {
-        source = "/projects/openclaw/workspace";
+      nanoclaw = {
+        source = "/projects/nanoclaw/workspace";
         bucket = "openclaw-sola";
-        dest = "openclaw/workspace";
+        dest = "nanoclaw/workspace";
         excludes = [ ".git/**" ];
       };
     };
