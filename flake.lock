@@ -636,6 +636,21 @@
         "url": "https://codeberg.org/amjoseph/infuse.nix"
       }
     },
+    "nanoclaw": {
+      "locked": {
+        "lastModified": 1771972300,
+        "narHash": "sha256-WrVycqZgDWeDMv0c+MlaudGCkUsr4zk2fhmZ/mgndGI=",
+        "ref": "refs/heads/main",
+        "rev": "bba5efe0811dc8dfb1eb87f815ed9559ac35d8f6",
+        "revCount": 7,
+        "type": "git",
+        "url": "ssh://git@github.com/SylvaraTheDev/nanoclaw"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/SylvaraTheDev/nanoclaw"
+      }
+    },
     "niri": {
       "inputs": {
         "niri-stable": "niri-stable",
@@ -1111,6 +1126,7 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "infuse": "infuse",
+        "nanoclaw": "nanoclaw",
         "niri": "niri",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nix-flatpak": "nix-flatpak",
