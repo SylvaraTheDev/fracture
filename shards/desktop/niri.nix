@@ -37,6 +37,8 @@ in
       pkgs.xdg-desktop-portal-gnome
       pkgs.xdg-desktop-portal-gtk
     ];
+    # Route FileChooser to gtk — gnome's implementation requires nautilus
+    config.common."org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
   };
 
   # Link niri config from dotfiles
