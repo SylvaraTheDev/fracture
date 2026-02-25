@@ -29,6 +29,7 @@ in
     xdg.configFile."containers/storage.conf".text = ''
       [storage]
       driver = "overlay"
+      runroot = "/home/${login}/.local/share/containers/runroot"
     '';
 
     # Persist rootless container storage (images, layers, build cache)
