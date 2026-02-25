@@ -25,31 +25,33 @@ in
     "/var/lib/containers"
   ];
 
-  home-manager.users.${login} = _: {
-    xdg.configFile."containers/storage.conf".text = ''
-      [storage]
-      driver = "overlay"
-      runroot = "/home/${login}/.local/share/containers/runroot"
-    '';
+  home-manager.users.${login} =
+    { lib, ... }:
+    {
+      xdg.configFile."containers/storage.conf".text = ''
+        [storage]
+        driver = "overlay"
+        runroot = "/home/${login}/.local/share/containers/runroot"
+      '';
 
-    xdg.configFile."containers/containers.conf".text = ''
-      [engine]
-      image_copy_tmp_dir = "/home/${login}/.local/share/containers/tmp"
+      xdg.configFile."containers/containers.conf".text = ''
+        [engine]
+        image_copy_tmp_dir = "/home/${login}/.local/share/containers/tmp"
 
-      [engine.runtimes.crun]
-      runtime_path = ["crun"]
-      runtime_root = "/home/${login}/.local/share/containers/crun"
-    '';
+        [engine.runtimes.crun]
+        runtime_path = ["crun"]
+        runtime_root = "/home/${login}/.local/share/containers/crun"
+      '';
 
-    home.activation.podmanDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      mkdir -p "$HOME/.local/share/containers/tmp"
-      mkdir -p "$HOME/.local/share/containers/runroot"
-      mkdir -p "$HOME/.local/share/containers/crun"
-    '';
+      home.activation.podmanDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p "$HOME/.local/share/containers/tmp"
+        mkdir -p "$HOME/.local/share/containers/runroot"
+        mkdir -p "$HOME/.local/share/containers/crun"
+      '';
 
-    # Persist rootless container storage (images, layers, build cache)
-    home.persistence."/persist".directories = [
-      ".local/share/containers"
-    ];
-  };
+      # Persist rootless container storage (images, layers, build cache)
+      home.persistence."/persist".directories = [
+        ".local/share/containers"
+      ];
+    };
 }
