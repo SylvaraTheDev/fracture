@@ -638,11 +638,11 @@
     },
     "nanoclaw": {
       "locked": {
-        "lastModified": 1771979771,
-        "narHash": "sha256-icBORlzROvgf6Ac24XDRveVuyLcbcujjVcGcC4DjxJI=",
+        "lastModified": 1771980875,
+        "narHash": "sha256-I+JNB1ObW7LlH1Jt0i3UaaYzp+lqSYleEYeNRil6ioA=",
         "ref": "refs/heads/main",
-        "rev": "b9f3cefc4b63e4812ce220c9090dc48c835cd935",
-        "revCount": 13,
+        "rev": "31fc4fdaa4caec3158411634dcbb1153a0c7de01",
+        "revCount": 14,
         "type": "git",
         "url": "ssh://git@github.com/SylvaraTheDev/nanoclaw"
       },
