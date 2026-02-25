@@ -114,7 +114,11 @@
       "Bash(unzip:*)",
       "mcp__comfyui__center_on_node",
       "Bash(done)",
-      "Bash(lsblk:*)"
+      "Bash(lsblk:*)",
+      "Bash(docker info:*)",
+      "Bash(sudo docker info:*)",
+      "Bash(sudo cat:*)",
+      "Bash(systemctl cat:*)"
     ]
   }
 }

@@ -7,6 +7,7 @@ in
   virtualisation.docker = {
     enable = true;
     storageDriver = "overlay2";
+    enableNvidia = lib.mkIf (config.fracture.gpu == "nvidia") true;
   };
 
   hardware.nvidia-container-toolkit.enable = lib.mkIf (config.fracture.gpu == "nvidia") true;
