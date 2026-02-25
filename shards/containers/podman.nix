@@ -38,9 +38,8 @@ in
         [engine]
         image_copy_tmp_dir = "/home/${login}/.local/share/containers/tmp"
 
-        [engine.runtimes.crun]
-        runtime_path = ["crun"]
-        runtime_root = "/home/${login}/.local/share/containers/crun"
+        [engine.runtimes_flags]
+        crun = ["--root=/home/${login}/.local/share/containers/crun"]
       '';
 
       home.activation.podmanDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
