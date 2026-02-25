@@ -18,8 +18,8 @@ in
         systemd.enable = true;
         settings = {
           bar = {
-            status.showPodman = true;
-            podman.url = "unix:///run/podman/podman.sock";
+            status.showDocker = true;
+            docker.url = "unix:///run/docker.sock";
             tray.excludedItems = [
               "nm-applet"
               "blueman"

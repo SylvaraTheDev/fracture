@@ -113,7 +113,8 @@
       "Bash(patchelf:*)",
       "Bash(unzip:*)",
       "mcp__comfyui__center_on_node",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(lsblk:*)"
     ]
   }
 }

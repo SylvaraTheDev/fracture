@@ -15,7 +15,7 @@
         "wheel"
         "video"
         "input"
-        "podman"
+        "docker"
         "kvm"
       ];
     };
