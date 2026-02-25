@@ -24,3 +24,7 @@ creation_rules:
     key_groups:
       - age:
           - *user
+  - path_regex: secrests/misc/.*\.yaml$
+    key_groups:
+      - age:
+          - *user
