@@ -35,11 +35,16 @@ in
     xdg.configFile."containers/containers.conf".text = ''
       [engine]
       image_copy_tmp_dir = "/home/${login}/.local/share/containers/tmp"
+
+      [engine.runtimes.crun]
+      runtime_path = ["crun"]
+      runtime_root = "/home/${login}/.local/share/containers/crun"
     '';
 
     home.activation.podmanDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       mkdir -p "$HOME/.local/share/containers/tmp"
       mkdir -p "$HOME/.local/share/containers/runroot"
+      mkdir -p "$HOME/.local/share/containers/crun"
     '';
 
     # Persist rootless container storage (images, layers, build cache)
