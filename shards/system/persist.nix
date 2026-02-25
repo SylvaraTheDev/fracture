@@ -7,6 +7,7 @@ _:
       directories = [
         "/var/lib/nixos"
         "/var/lib/systemd"
+        "/var/tmp"
         "/root/.cache/nix"
         "/root/.local/state/nix"
       ];
