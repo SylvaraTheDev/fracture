@@ -1,5 +1,8 @@
 { config, lib, ... }:
 
+let
+  inherit (config.fracture.user) login;
+in
 {
   virtualisation.podman = {
     enable = true;
@@ -21,4 +24,16 @@
   environment.persistence."/persist".directories = [
     "/var/lib/containers"
   ];
+
+  home-manager.users.${login} = _: {
+    xdg.configFile."containers/storage.conf".text = ''
+      [storage]
+      driver = "overlay"
+    '';
+
+    # Persist rootless container storage (images, layers, build cache)
+    home.persistence."/persist".directories = [
+      ".local/share/containers"
+    ];
+  };
 }
