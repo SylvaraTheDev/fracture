@@ -37,6 +37,11 @@ in
       image_copy_tmp_dir = "/home/${login}/.local/share/containers/tmp"
     '';
 
+    home.activation.podmanDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      mkdir -p "$HOME/.local/share/containers/tmp"
+      mkdir -p "$HOME/.local/share/containers/runroot"
+    '';
+
     # Persist rootless container storage (images, layers, build cache)
     home.persistence."/persist".directories = [
       ".local/share/containers"
