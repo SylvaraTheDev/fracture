@@ -21,7 +21,7 @@
     models = "/projects/ollama/models";
     loadModels = [ "nomic-embed-text" ];
     syncModels = true;
-    host = "0.0.0.0:11434";
+    host = "0.0.0.0";
     environmentVariables = {
       OLLAMA_KEEP_ALIVE = "5m";
     };
