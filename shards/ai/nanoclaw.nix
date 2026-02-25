@@ -15,6 +15,7 @@ in
   config = lib.mkIf cfg.enable {
     services.nanoclaw = {
       enable = true;
+      assistantName = "Sola";
       dataDir = "/projects/nanoclaw";
       sourceDir = "/projects/repos/github.com/SylvaraTheDev/nanoclaw";
       namespaces = [
