@@ -8,6 +8,11 @@ in
     enable = true;
     storageDriver = "overlay2";
     enableNvidia = lib.mkIf (config.fracture.gpu == "nvidia") true;
+
+    rootless = {
+      enable = true;
+      setSocketVariable = true; # sets DOCKER_HOST for the user
+    };
   };
 
   hardware.nvidia-container-toolkit.enable = lib.mkIf (config.fracture.gpu == "nvidia") true;
@@ -24,6 +29,12 @@ in
   environment.persistence."/persist".directories = [
     "/var/lib/docker"
   ];
+
+  home-manager.users.${login} = _: {
+    home.persistence."/persist".directories = [
+      ".local/share/docker"
+    ];
+  };
 
   users.users.${login}.extraGroups = [ "docker" ];
 }

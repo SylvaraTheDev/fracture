@@ -9,6 +9,7 @@ in
       adoptopenjdk-icedtea-web
 
       # Languages
+      python3
       zig
       elixir
       erlang
