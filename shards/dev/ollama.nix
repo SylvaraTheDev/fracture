@@ -19,7 +19,10 @@
     package = lib.mkIf (config.fracture.gpu == "nvidia") pkgs.ollama-cuda;
     home = "/projects/ollama";
     models = "/projects/ollama/models";
-    loadModels = [ "nomic-embed-text" ];
+    loadModels = [
+      "nomic-embed-text"
+      "qwen2.5:0.5b"
+    ];
     syncModels = true;
     host = "0.0.0.0";
     environmentVariables = {
