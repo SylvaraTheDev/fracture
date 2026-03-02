@@ -33,7 +33,6 @@ in
       inputs.nix-flatpak.nixosModules.nix-flatpak
       inputs.nix-index-database.nixosModules.nix-index
       inputs.comfyui-nix.nixosModules.default
-      inputs.nanoclaw.nixosModules.default
       (
         { config, ... }:
         {

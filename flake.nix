@@ -94,7 +94,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     comfyui-nix.url = "github:utensils/comfyui-nix";
-    nanoclaw.url = "git+ssh://git@github.com/SylvaraTheDev/nanoclaw";
 
     # === Gaming ===
     # CachyOS Proton (x86-64-v3) — mirror currently down, re-enable when available:
