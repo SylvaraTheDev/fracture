@@ -189,6 +189,9 @@ let
     "HunyuanImage-3-NF4" = {
       repo = "EricRollei/HunyuanImage-3-NF4-ComfyUI";
     };
+    "Qwen3-VL-8B-Instruct" = {
+      repo = "Qwen/Qwen3-VL-8B-Instruct";
+    };
   };
 
   downloadScript = pkgs.writeShellScript "comfyui-model-download" ''
