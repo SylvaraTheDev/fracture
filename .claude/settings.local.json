@@ -118,7 +118,9 @@
       "Bash(docker info:*)",
       "Bash(sudo docker info:*)",
       "Bash(sudo cat:*)",
-      "Bash(systemctl cat:*)"
+      "Bash(systemctl cat:*)",
+      "Bash(git checkout:*)",
+      "mcp__comfyui__uninstall_custom_node"
     ]
   }
 }

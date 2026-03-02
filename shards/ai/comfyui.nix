@@ -147,6 +147,11 @@ let
       url = "https://huggingface.co/ByteDance/Hyper-SD/resolve/main/Hyper-SDXL-8steps-CFG-lora.safetensors";
     };
 
+    # LoRAs — pixel art
+    "loras/pixel-art-xl.safetensors" = {
+      url = "https://huggingface.co/nerijs/pixel-art-xl/resolve/main/pixel-art-xl.safetensors";
+    };
+
     # LoRAs — anime style
     "loras/madbear-anime-flux.safetensors" = {
       url = "https://civitai.com/api/download/models/761857";
