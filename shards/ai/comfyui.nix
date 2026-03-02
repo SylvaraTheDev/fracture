@@ -152,6 +152,24 @@ let
       url = "https://huggingface.co/nerijs/pixel-art-xl/resolve/main/pixel-art-xl.safetensors";
     };
 
+    # LoRAs — pixel art sprites
+    "loras/pokemon-sprite-xl.safetensors" = {
+      url = "https://civitai.com/api/download/models/422724";
+      civitai = true;
+    };
+    "loras/super-pixelart-sprite-xl.safetensors" = {
+      url = "https://civitai.com/api/download/models/646044";
+      civitai = true;
+    };
+    "loras/pixel-art-sprite-sheet.safetensors" = {
+      url = "https://civitai.com/api/download/models/1153191";
+      civitai = true;
+    };
+    "loras/pixel-character-sprite.safetensors" = {
+      url = "https://civitai.com/api/download/models/2192164";
+      civitai = true;
+    };
+
     # LoRAs — anime style
     "loras/madbear-anime-flux.safetensors" = {
       url = "https://civitai.com/api/download/models/761857";
