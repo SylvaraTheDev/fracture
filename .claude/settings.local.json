@@ -126,7 +126,16 @@
       "Bash(xxd:*)",
       "Bash(/persist-games/games/steam/SteamLibrary/steamapps/common/tModLoader/dotnet/dotnet:*)",
       "Bash(nix-shell:*)",
-      "Bash(node --version:*)"
+      "Bash(node --version:*)",
+      "Bash(gcc:*)",
+      "Bash(sort:*)",
+      "Bash(# The file exists but find doesn''t find it - probably symlinks or bind mounts # Let''s just use a simple for loop with globbing for f in /persist-games/games/steam/SteamLibrary/steamapps/workshop/content/1281930/*/*/*.tmod; do echo \"\"$f\"\" done)",
+      "Bash(zstd:*)",
+      "Bash(split:*)",
+      "Bash(chmod:*)",
+      "Bash(export:*)",
+      "Bash(source:*)",
+      "Bash(python -c:*)"
     ]
   }
 }

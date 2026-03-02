@@ -21,7 +21,7 @@
     models = "/projects/ollama/models";
     loadModels = [
       "nomic-embed-text"
-      "qwen2.5:1.5b"
+      "qwen3:4b"
       "llama3.2:3b"
     ];
     syncModels = true;
