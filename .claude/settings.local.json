@@ -135,7 +135,13 @@
       "Bash(chmod:*)",
       "Bash(export:*)",
       "Bash(source:*)",
-      "Bash(python -c:*)"
+      "Bash(python -c:*)",
+      "Bash(awk 'NR==1 || NR==5000 || NR==15000 || NR==30000 || NR==50000 || NR==70000 || NR==82000')",
+      "Bash(while read f)",
+      "Bash(shuf:*)",
+      "Bash(xargs -I{} sh -c 'echo \"\"{}: $\\(cat {}\\)\"\"')",
+      "Bash(xargs:*)",
+      "Bash(# Check unique caption patterns \\(what categories are represented\\) find /projects/repos/github.com/SylvaraTheDev/tlora/dataset/ -name \"\"*.txt\"\" -exec cat {} \\\\;)"
     ]
   }
 }
