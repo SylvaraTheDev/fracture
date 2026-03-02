@@ -22,6 +22,7 @@
     loadModels = [
       "nomic-embed-text"
       "qwen2.5:1.5b"
+      "llama3.2:3b"
     ];
     syncModels = true;
     host = "0.0.0.0";

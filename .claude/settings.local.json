@@ -120,7 +120,13 @@
       "Bash(sudo cat:*)",
       "Bash(systemctl cat:*)",
       "Bash(git checkout:*)",
-      "mcp__comfyui__uninstall_custom_node"
+      "mcp__comfyui__uninstall_custom_node",
+      "Bash(for f in Acc_Back_1.xnb NPC_0.xnb Player_0_0.xnb Item_1.xnb)",
+      "Bash(do echo \"=== $f ===\")",
+      "Bash(xxd:*)",
+      "Bash(/persist-games/games/steam/SteamLibrary/steamapps/common/tModLoader/dotnet/dotnet:*)",
+      "Bash(nix-shell:*)",
+      "Bash(node --version:*)"
     ]
   }
 }
