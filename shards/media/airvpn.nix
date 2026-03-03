@@ -63,7 +63,7 @@ in
         set -euo pipefail
 
         # Resolve endpoint on host (namespace DNS not available yet)
-        ENDPOINT=$(${pkgs.glibc.getent}/bin/getent ahostsv4 ${peer.host} | head -1 | cut -d' ' -f1)
+        ENDPOINT=$(${pkgs.getent}/bin/getent ahostsv4 ${peer.host} | head -1 | cut -d' ' -f1)
 
         # Create namespace
         ip netns add ${ns}
