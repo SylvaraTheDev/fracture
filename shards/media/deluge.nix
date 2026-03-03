@@ -5,8 +5,8 @@ let
 in
 {
   networking.firewall = {
-    allowedTCPPorts = [ 6881 ];
-    allowedUDPPorts = [ 6881 ];
+    allowedTCPPorts = [ 51702 ];
+    allowedUDPPorts = [ 51702 ];
   };
 
   home-manager.users.${login} = _: {

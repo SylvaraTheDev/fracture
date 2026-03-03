@@ -141,7 +141,8 @@
       "Bash(shuf:*)",
       "Bash(xargs -I{} sh -c 'echo \"\"{}: $\\(cat {}\\)\"\"')",
       "Bash(xargs:*)",
-      "Bash(# Check unique caption patterns \\(what categories are represented\\) find /projects/repos/github.com/SylvaraTheDev/tlora/dataset/ -name \"\"*.txt\"\" -exec cat {} \\\\;)"
+      "Bash(# Check unique caption patterns \\(what categories are represented\\) find /projects/repos/github.com/SylvaraTheDev/tlora/dataset/ -name \"\"*.txt\"\" -exec cat {} \\\\;)",
+      "Bash(ss:*)"
     ]
   }
 }
