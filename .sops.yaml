@@ -28,3 +28,7 @@ creation_rules:
     key_groups:
       - age:
           - *user
+  - path_regex: secrets/vpn/.*\.yaml$
+    key_groups:
+      - age:
+          - *user
