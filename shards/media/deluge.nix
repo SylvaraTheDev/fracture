@@ -9,7 +9,7 @@ let
   inherit (config.fracture.user) login;
 
   delugeVpn = pkgs.writeShellScriptBin "deluge" ''
-    exec sudo ${pkgs.iproute2}/bin/ip netns exec airvpn sudo -u "$USER" -- ${lib.getExe pkgs.deluge} "$@"
+    exec sudo ${pkgs.iproute2}/bin/ip netns exec airvpn sudo -u "$USER" -- ${lib.getExe' pkgs.deluge "deluge"} "$@"
   '';
 in
 {
