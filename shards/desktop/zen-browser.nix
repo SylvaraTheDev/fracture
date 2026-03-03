@@ -89,6 +89,7 @@ in
       stylix.targets.zen-browser.enable = false;
 
       home.persistence."/persist".directories = [
+        ".cache/zen"
         ".config/zen"
       ];
     };
