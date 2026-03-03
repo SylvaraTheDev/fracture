@@ -53,6 +53,7 @@ in
       iproute2
       wireguard-tools
       coreutils
+      glibc.bin
     ];
 
     serviceConfig = {
